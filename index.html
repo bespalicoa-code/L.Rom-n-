@@ -1,602 +1,630 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#3a1f1f">
-<title>LITTERA | Catalog de Limba și Literatura Română</title>
-<style>
-:root{
-  --bg:#f6f1e7; --panel:#fffdf7; --ink:#2b2320; --muted:#8a7a6c;
-  --line:#e6dcc9; --accent:#8c2f39; --accent2:#b3454f; --gold:#b8860b;
-  --green:#2f7d5b; --red:#a83232; --serif:Georgia,'Times New Roman',serif;
-  --sans:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-  --shadow:0 10px 28px rgba(80,50,30,.10); --radius:14px;
-}
-body.dark{--bg:#221c19;--panel:#2c2420;--ink:#f0e8dc;--muted:#a8988a;--line:#453a32;--shadow:0 10px 28px rgba(0,0,0,.35)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:
-  radial-gradient(ellipse at 85% -10%, rgba(140,47,57,.06), transparent 55%),
-  radial-gradient(ellipse at -10% 110%, rgba(184,134,11,.07), transparent 55%),
-  var(--bg);
-  color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #c98a8a;outline-offset:2px}
-.app{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
-/* ===== Sidebar ===== */
-.sidebar{background:linear-gradient(180deg,#31181c,#241216);color:#f3e6dc;padding:26px 16px 20px;display:flex;flex-direction:column;gap:22px;min-height:100vh;position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:thin}
-.brand{display:flex;align-items:center;gap:12px;padding:0 8px}
-.brand-mark{width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 32% 28%,#e8b86b,#b8860b 60%,#7a5506);color:#3a2410;font-family:var(--serif);font-size:26px;font-weight:700;box-shadow:0 5px 14px #0006,inset 0 1px 2px #fff6;border:2px solid #d8c49a}
-.brand-title{font-family:var(--serif);font-weight:700;letter-spacing:.14em;font-size:19px;color:#f6ead8}
-.brand-sub{font-size:10px;color:#c8a898;letter-spacing:.08em;margin-top:2px}
-.cs-label{color:#b08e7d;text-transform:uppercase;font-size:9px;letter-spacing:.16em;font-weight:800;padding:0 12px;margin-bottom:6px}
-.class-select{width:100%;appearance:none;border:1px solid #6b4a44;border-radius:11px;padding:10px 32px 10px 12px;background:#ffffff12 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e8cdbb' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/13px;color:#f6ead8;font-weight:700;font-size:13px;text-overflow:ellipsis}
-.class-select option{color:#2b2320;background:#fff}
-.class-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
-.class-actions button{border:1px solid #6b4a44;background:transparent;color:#e0c6b8;border-radius:9px;padding:7px 6px;font-size:11px;font-weight:700}
-.class-actions button:hover{background:#ffffff14;color:#fff}
-.nav-label{color:#b08e7d;text-transform:uppercase;font-size:9px;letter-spacing:.16em;font-weight:800;padding:0 12px;margin-bottom:-14px}
-.nav{display:grid;gap:5px}
-.nav button{border:0;background:transparent;color:#d8bfb2;padding:11px 12px;border-radius:11px;text-align:left;display:flex;align-items:center;gap:11px;font-weight:650;font-size:13px;transition:.15s}
-.nav button:hover{background:#ffffff10;color:#fff}
-.nav button.active{background:linear-gradient(100deg,#8c2f39,#6d222b);color:#fff;box-shadow:0 6px 16px #0004}
-.nav svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.spacer{flex:1}
-.sidebar-card{border:1px solid #6b4a4466;background:#ffffff0a;border-radius:13px;padding:14px}
-.sidebar-card strong{display:block;font-family:var(--serif);font-size:13px;color:#f0dfc8}
-.sidebar-card p{font-size:11px;line-height:1.55;color:#c4a898;margin:5px 0 0}
-.version{color:#9a7868;font-size:10px;padding:0 12px}
-/* ===== Main ===== */
-.main{min-width:0}
-.topbar{height:70px;background:color-mix(in srgb,var(--panel) 82%,transparent);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,3vw,32px);gap:14px;position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
-.eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-weight:850}
-.top-title{font-family:var(--serif);font-size:17px;font-weight:700}
-.top-right{display:flex;align-items:center;gap:9px}
-.pill{background:#f3e9d8;color:#7a5a20;border:1px solid #e0d0ae;border-radius:999px;padding:7px 12px;font-weight:750;font-size:11px;white-space:nowrap}
-body.dark .pill{background:#3a2f22;color:#e2c98a;border-color:#55452f}
-.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#f6ead8;background:linear-gradient(145deg,#a13b45,#5c1d24);font-weight:800;font-size:12px}
-.mobile-menu{display:none}
-.content{max-width:1500px;margin:0 auto;padding:24px clamp(12px,3vw,32px) 34px}
-.page-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px;flex-wrap:wrap}
-.page-intro h1{font-family:var(--serif);font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em;line-height:1.15;margin:5px 0 7px}
-.page-intro p{margin:0;color:var(--muted);font-size:13px}
-.intro-actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{border:1px solid transparent;border-radius:10px;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:750;font-size:12px;transition:transform .15s}
-.btn:hover{transform:translateY(-1px)}
-.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.primary{background:var(--accent);color:#fff;box-shadow:0 5px 13px #8c2f3930}
-.primary:hover{background:#762630}
-.white{background:var(--panel);border-color:var(--line);color:#5c4a3a}
-body.dark .white{color:#d8c8b8}
-.light{background:#f3ead9;color:#6d5220;border-color:#e2d3b2}
-body.dark .light{background:#3a2f22;color:#e2c98a;border-color:#55452f}
-.green{background:#e6f2ec;color:#1f6b4b;border-color:#cde7da}
-.danger{background:#fbeaea;color:var(--red);border-color:#efd0d0}
-/* ===== Hero ===== */
-.hero{position:relative;overflow:hidden;padding:26px 30px;border-radius:var(--radius);background:linear-gradient(115deg,#3a1b20,#6d222b 62%,#8a5a1e);color:#f7ecdd;margin-bottom:20px;box-shadow:var(--shadow)}
-.hero:after{content:"„";position:absolute;right:4%;top:-30px;font-family:var(--serif);font-size:260px;color:#ffffff10;pointer-events:none;line-height:1}
-.hero-label{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:850;letter-spacing:.18em;text-transform:uppercase;color:#e8c9a0}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#7fd8a8;box-shadow:0 0 0 4px #7fd8a820}
-.hero h2{font-family:var(--serif);font-size:clamp(20px,2.3vw,29px);letter-spacing:-.02em;margin:9px 0 7px}
-.hero p{color:#e8d5c4;margin:0;font-size:12px;max-width:560px;line-height:1.6}
-.hero-quote{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:13px;color:#d8b98f}
-/* ===== Stats ===== */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
-.stat-card{border-radius:13px;background:var(--panel);border:1px solid var(--line);padding:15px 16px;display:flex;align-items:center;gap:12px;min-width:0;box-shadow:var(--shadow)}
-.stat-icon{width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;font-size:19px}
-.ic-red{background:#f6e3e3;color:var(--accent)} .ic-gold{background:#f6edd8;color:#96700f}
-.ic-green{background:#e3f1ea;color:var(--green)} .ic-violet{background:#ece6f2;color:#6a5a8c}
-.stat-label{color:var(--muted);font-size:10px;font-weight:700;white-space:nowrap}
-.stat-value{font-size:22px;font-weight:850;letter-spacing:-.03em;line-height:1.25;margin-top:2px;font-variant-numeric:tabular-nums}
-.stat-foot{font-size:10px;color:var(--muted);margin-top:2px}
-/* ===== Panels ===== */
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
-.panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.panel-heading{display:flex;align-items:center;gap:11px}
-.section-icon{width:36px;height:36px;border-radius:11px;background:#f3e4e4;color:var(--accent);display:grid;place-items:center;font-size:17px}
-body.dark .section-icon{background:#4a2b2e}
-.panel-heading h2{font-family:var(--serif);font-size:15px;margin:0}
-.panel-heading p{margin:3px 0 0;color:var(--muted);font-size:11px}
-.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.searchbox{position:relative;min-width:190px}
-.searchbox span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
-.searchbox input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px 9px 32px;background:color-mix(in srgb,var(--panel) 70%,#fff);color:var(--ink);font-size:12px}
-.select{border:1px solid var(--line);border-radius:9px;padding:9px;background:color-mix(in srgb,var(--panel) 70%,#fff);color:var(--muted);font-size:12px}
-.table-scroll{overflow:auto}
-table{width:100%;border-collapse:separate;border-spacing:0;min-width:760px;font-size:12px}
-thead th{background:#f2ebdc;color:#7d6a55;text-transform:uppercase;letter-spacing:.06em;font-size:9px;font-weight:850;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:left}
-body.dark thead th{background:#33291f;color:#b8a68e}
-thead th:first-child{padding-left:18px;width:46px}
-tbody td{border-bottom:1px solid var(--line);padding:8px 12px;vertical-align:middle}
-tbody tr:last-child td{border-bottom:0}
-tbody tr:hover td{background:#00000006}
-body.dark tbody tr:hover td{background:#ffffff08}
-tbody td:first-child{padding-left:18px;color:var(--muted);font-weight:700;width:46px}
-.student-name{font-weight:750;font-size:12px}
-.student-sub{color:var(--muted);font-size:10px;margin-top:2px}
-/* note chips */
-.grade-chips{display:flex;flex-wrap:wrap;gap:4px;max-width:280px}
-.chip{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:8px;font-weight:800;font-size:12px;border:1px solid;cursor:pointer}
-.chip:hover{filter:brightness(.95)}
-.chip.g9{background:#e3f1ea;color:#1f6b4b;border-color:#bfe0cd}
-.chip.g6{background:#f0ecd8;color:#7a6510;border-color:#e2d8a8}
-.chip.g4{background:#f8e9e0;color:#a0521f;border-color:#ecd0bc}
-.chip.g1{background:#f8e3e3;color:#a83232;border-color:#eec3c3}
-.grade-badge{display:inline-flex;align-items:center;justify-content:center;min-width:42px;padding:5px 9px;border-radius:8px;font-weight:900;font-size:13px;border:1px solid}
-.grade-badge.g9{background:#e3f1ea;color:#1f6b4b;border-color:#bfe0cd}
-.grade-badge.g6{background:#f0ecd8;color:#7a6510;border-color:#e2d8a8}
-.grade-badge.g4{background:#f8e9e0;color:#a0521f;border-color:#ecd0bc}
-.grade-badge.g1{background:#f8e3e3;color:#a83232;border-color:#eec3c3}
-.grade-badge.pending{background:#00000008;color:var(--muted);border-color:var(--line)}
-.abs-badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.abs-n,.abs-m{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:8px;font-weight:800;font-size:11px;border:1px solid}
-.abs-n{background:#f8e3e3;color:#a83232;border-color:#eec3c3}
-.abs-m{background:#e3ecf6;color:#2f5d8c;border-color:#c3d6ec}
-.abs-zero{background:#00000008;color:var(--muted);border-color:var(--line)}
-.abs-warn{color:#a83232;font-weight:800;font-size:10px;margin-left:7px}
-.inline-score{display:flex;align-items:center;gap:5px}
-.inline-score input{width:60px;border:1px solid var(--line);border-radius:8px;padding:7px 5px;text-align:center;color:var(--ink);background:var(--panel);font-weight:700;font-size:12px}
-.icon-btn{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:8px}
-.icon-btn:hover{background:#f3e9e9;color:var(--accent);border-color:#d8b8b8}
-.icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.action-row{display:flex;justify-content:flex-end;gap:5px}
-.add-row{width:30px;height:30px;border:0;border-radius:8px;display:grid;place-items:center;color:#fff;background:var(--accent);font-size:17px;font-weight:700}
-.add-row:hover{background:#762630}
-.table-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:#faf6ee;border-top:1px solid var(--line);color:var(--muted);font-size:11px;flex-wrap:wrap}
-body.dark .table-foot{background:#2c241e}
-.empty{text-align:center;padding:32px 14px;color:var(--muted)}
-.hidden{display:none!important}
-.two-col{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px}
-.dist-row{display:grid;grid-template-columns:150px minmax(50px,1fr) 42px;gap:11px;align-items:center;margin:13px 0;font-size:12px;color:var(--muted)}
-.bar{height:8px;background:#00000010;border-radius:99px;overflow:hidden}
-.bar span{display:block;height:100%;border-radius:99px}
-.dist-num{text-align:right;font-weight:800}
-.rank-list{padding:5px 18px 15px}
-.rank{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
-.rank:last-child{border:0}
-.rank-num{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#f3e4e4;color:var(--accent);font-size:11px;font-weight:850;flex:none}
-.rank-name{font-size:12px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rank-value{font-size:11px;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
-.notice{background:#fbf3df;border:1px solid #ecd9a8;border-radius:12px;padding:12px 14px;color:#7a5a20;font-size:11px;margin:0 18px 16px;line-height:1.55}
-body.dark .notice{background:#3a2f1c;color:#e2c98a;border-color:#55452a}
-.footer{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;background:linear-gradient(115deg,#3a1b20,#5c1d24);color:#e8d5c4;border-radius:12px;padding:14px 18px;font-size:11px}
-.footer span:last-child{font-style:italic;font-family:var(--serif);color:#c8a878}
-/* absențe list */
-.abs-item{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
-.abs-item:last-child{border:0}
-.abs-dot{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none}
-.abs-dot.nm{background:#f8e3e3;color:#a83232}
-.abs-dot.mo{background:#e3ecf6;color:#2f5d8c}
-.abs-dot.rec{background:#e3f1ea;color:#1f6b4b}
-.abs-main{flex:1;min-width:0}
-.abs-main strong{display:block;font-size:12px}
-.abs-main span{display:block;font-size:10px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
-.abs-tag{font-size:9px;font-weight:850;padding:3px 8px;border-radius:99px;white-space:nowrap}
-.abs-tag.nm{background:#f8e3e3;color:#a83232}
-.abs-tag.mo{background:#e3ecf6;color:#2f5d8c}
-.abs-tag.rec{background:#e3f1ea;color:#1f6b4b}
-.abs-tag.rec2{background:#f0ecd8;color:#7a6510}
-/* ===== Modals ===== */
-.modal-backdrop{position:fixed;inset:0;background:#24121080;backdrop-filter:blur(5px);z-index:30;display:none;align-items:center;justify-content:center;padding:18px}
-.modal-backdrop.open{display:flex}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:17px;width:min(500px,100%);max-height:calc(100dvh - 36px);overflow:auto;box-shadow:0 25px 70px #300a0e60}
-.modal.wide{width:min(600px,100%)}
-.modal-head{display:flex;align-items:flex-start;justify-content:space-between;padding:19px 21px;border-bottom:1px solid var(--line);gap:14px}
-.modal-head h2{font-family:var(--serif);margin:0;font-size:18px}
-.modal-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
-.close{width:31px;height:31px;border:1px solid var(--line);background:var(--panel);border-radius:9px;font-size:17px;color:var(--muted);flex:none}
-.modal-body{padding:19px 21px}
-.form-row{display:grid;gap:6px;margin-bottom:14px}
-.form-row label{font-weight:750;font-size:12px}
-.form-row input,.form-row select,.form-row textarea{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--panel) 70%,#fff);color:var(--ink)}
-.form-row textarea{min-height:70px;resize:vertical}
-.form-help{font-size:10px;color:var(--muted);margin-top:-6px}
-.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}
-.modal-actions .push-left{margin-right:auto}
-.toast{position:fixed;bottom:20px;right:20px;max-width:min(400px,calc(100vw - 30px));background:#3a1b20;color:#f6ead8;border-radius:11px;padding:12px 16px;box-shadow:0 12px 32px #0006;z-index:50;font-size:12px;font-weight:650;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
-.toast.show{opacity:1;transform:translateY(0)}
-.toast.error{background:#8c2828}
-.hist-entry{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:10px 0}
-.hist-entry:last-child{border:0}
-.hist-entry strong{display:block;font-size:12px}
-.hist-entry span{display:block;font-size:10px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
-.hist-entry button{border:1px solid #efd0d0;background:#fbeaea;color:var(--red);border-radius:8px;padding:5px 8px;font-size:10px;font-weight:750;white-space:nowrap}
-.hist-empty{padding:18px 0;text-align:center;color:var(--muted);font-size:12px}
-.stu-edit-list{display:grid;gap:6px;max-height:min(38vh,300px);overflow:auto;padding:2px 4px 2px 2px}
-.stu-edit{display:grid;grid-template-columns:26px minmax(0,1fr) 30px;gap:8px;align-items:center}
-.stu-n{color:var(--muted);font-weight:700;font-size:11px;text-align:right}
-.stu-edit input{padding:8px 10px!important;border-radius:9px!important;font-size:12px}
-.stu-edit.removed input{text-decoration:line-through;opacity:.5}
-.stu-edit.removed .icon-btn{background:#f3e9e9;color:var(--accent)}
-.settings-grid{display:grid}
-.setting-item{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 2px;border-bottom:1px solid var(--line)}
-.setting-item:last-child{border:0}
-.setting-item strong{font-size:13px}
-.setting-item p{margin:3px 0 0;color:var(--muted);font-size:11px}
-.switch{position:relative;display:inline-block;width:46px;height:26px;flex:none}
-.switch input{opacity:0;width:0;height:0}
-.switch span{position:absolute;inset:0;background:#b8a898;border-radius:20px;cursor:pointer;transition:.2s}
-.switch span:before{content:"";position:absolute;width:18px;height:18px;left:4px;top:4px;background:#fff;border-radius:50%;transition:.2s}
-.switch input:checked+span{background:var(--accent)}
-.switch input:checked+span:before{transform:translateX(20px)}
-.switch input:focus-visible+span{outline:3px solid #c98a8a;outline-offset:2px}
-.scrim{position:fixed;inset:0;background:#24121070;z-index:24;display:none}
-.scrim.show{display:block}
-kbd{background:#00000010;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:10px;font-family:var(--sans)}
-@media(max-width:1100px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}}
-@media(max-width:760px){
-  .app{display:block}.sidebar{position:fixed;left:-270px;top:0;width:250px;height:100dvh;z-index:25;transition:left .2s;min-height:0}.sidebar.open{left:0}
-  .mobile-menu{display:grid;place-items:center;width:35px;height:35px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:#5c4a3a;font-size:17px}
-  .topbar{height:62px;padding:0 12px}.top-right .pill{display:none}
-  .content{padding:18px 11px 24px}.page-intro{align-items:flex-start;flex-direction:column}.hero{padding:20px}
-}
-@page{margin:12mm}
-@media print{
-  body{background:#fff}.sidebar,.scrim,.topbar,.intro-actions,.controls,.inline-score,.action-row,.modal-backdrop,.footer,.toast,.table-foot,.btn,.mobile-menu{display:none!important}
-  .app{display:block}.content{padding:0;max-width:none}.stats{grid-template-columns:repeat(4,1fr)}
-  .panel{box-shadow:none;break-inside:avoid}.table-scroll{overflow:visible}table{min-width:0;font-size:9px}
-  tbody td{padding:5px}thead th{padding:6px}tr{break-inside:avoid}.hero{background:#faf3ea;color:#3a1b20;box-shadow:none;border:1px solid #e6dcc9}
-  .hero p,.hero-label,.hero-quote{color:#6d5a4a}.hero:after{display:none}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINA Tech | Premium Electronics Store</title>
+    
+    <!-- Google Fonts: Inter & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Paletă de culori Premium Dark */
+            --bg-deep: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            --glass: rgba(30, 41, 59, 0.7);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            background: var(--bg-deep);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 12px;
+            color: white;
+            width: 250px;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            width: 350px;
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            color: var(--text-muted);
+        }
+
+        .cart-trigger {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: var(--transition);
+        }
+
+        .cart-trigger:hover { color: var(--accent); }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--accent);
+            color: var(--bg-deep);
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            margin-top: 80px;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        /* --- CATEGORIES --- */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .cat-btn {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.7rem 1.5rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* --- CATALOG GRID --- */
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 0 5% 5rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .product-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .product-details p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .btn-add {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .btn-add:hover {
+            background: var(--white);
+            transform: rotate(90deg);
+        }
+
+        /* --- CART DRAWER --- */
+        .cart-drawer {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            background: var(--bg-card);
+            z-index: 2000;
+            transition: var(--transition);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .cart-drawer.open { right: 0; }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+        }
+
+        .close-cart {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: var(--bg-deep);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .cart-item-info h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .cart-item-info p { color: var(--accent); font-weight: 600; font-size: 0.8rem; }
+
+        .cart-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+        }
+
+        .total-box {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover { background: var(--white); color: var(--bg-deep); }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            position: relative;
+            animation: modalAnim 0.4s ease;
+        }
+
+        @keyframes modalAnim {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .modal-info { padding: 3rem; position: relative; }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 20px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+            .modal-img { height: 300px; }
+            .nav-actions .search-box input { width: 150px; }
+            .nav-actions .search-box input:focus { width: 200px; }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar" id="sidebar">
-  <div class="brand">
-    <div class="brand-mark">L</div>
-    <div><div class="brand-title">LITTERA</div><div class="brand-sub">CATALOG · LB. ȘI LIT. ROMÂNĂ</div></div>
-  </div>
-  <div>
-    <div class="cs-label">Clasa activă</div>
-    <select class="class-select" id="classSelect"></select>
-    <div class="class-actions"><button type="button" id="classNew">+ Clasă nouă</button><button type="button" id="classEdit">Editează clasa</button></div>
-  </div>
-  <div class="nav-label">Meniu principal</div>
-  <nav class="nav" aria-label="Meniu principal">
-    <button class="active" data-page="catalog"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>Catalog note</button>
-    <button data-page="absente"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M10 16l4 4M14 16l-4 4"/></svg>Absențe și recuperări</button>
-    <button data-page="stats"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-7M22 19H2"/></svg>Statistici</button>
-    <button id="navAdd"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Adaugă notă</button>
-    <button id="navSettings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.7 1l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.6-1.5-2.6 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.7-1l.3-1.8h3l.3 1.8a8 8 0 0 1 1.7 1l1.7-.6 1.5 2.6-1.4 1.1a7 7 0 0 1 0 2z"/></svg>Setări</button>
-    <button id="navExport"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>Exportă catalogul</button>
-    <button id="navBackup"><svg viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v4h16v-4"/></svg>Copie de siguranță</button>
-    <button id="navRestore"><svg viewBox="0 0 24 24"><path d="M12 4v12m-5-5 5 5 5-5M4 4h16"/></svg>Restaurează copia</button>
-  </nav>
-  <div class="spacer"></div>
-  <div class="sidebar-card"><strong>„Cartea e o minune..."</strong><p>Un catalog elegant pentru note, absențe și recuperări, gândit pentru catedra de limba și literatura română.</p></div>
-  <div class="version">LITTERA · Versiunea 1.0</div>
-</aside>
-<div class="scrim" id="scrim"></div>
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:11px;min-width:0">
-      <button class="mobile-menu" id="menuToggle" aria-label="Deschide meniul">☰</button>
-      <div><div class="eyebrow">Spațiu educațional digital</div><div class="top-title" id="topTitle">Catalog de note</div></div>
+
+    <nav>
+        <a href="#" class="logo">LUMINA<span>TECH</span></a>
+        <div class="nav-actions">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Caută tehnologie...">
+            </div>
+            <div class="cart-trigger" id="cartTrigger">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Viitorul începe aici.</h1>
+        <p>Experimentați performanță fără precedent cu colecția noastră de dispozitive premium selectate pentru profesioniști.</p>
+        <div class="categories" id="categoryFilters">
+            <button class="cat-btn active" data-cat="all">Toate</button>
+            <button class="cat-btn" data-cat="laptop">Laptopuri</button>
+            <button class="cat-btn" data-cat="telefon">Telefoane</button>
+            <button class="cat-btn" data-cat="audio">Audio</button>
+            <button class="cat-btn" data-cat="gaming">Gaming</button>
+        </div>
+    </section>
+
+    <main class="catalog" id="catalogGrid"></main>
+
+    <!-- CART DRAWER -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h2>Coșul Tău</h2>
+            <i class="fas fa-times close-cart" id="closeCart"></i>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Items generate via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="total-box">
+                <span>Total:</span>
+                <span id="cartTotal">0 RON</span>
+            </div>
+            <button class="checkout-btn">Finalizează Comanda</button>
+        </div>
     </div>
-    <div class="top-right"><span class="pill" id="classPill">CLASA —</span><span class="avatar" id="classAvatar">?</span></div>
-  </header>
-  <main class="content">
-    <div class="page-intro">
-      <div><div class="eyebrow" id="pageEyebrow">PREZENTARE GENERALĂ</div><h1 id="pageTitle">Catalog de Limba și Literatura Română</h1><p id="pageSubtitle">Note, absențe și recuperări — evidența clasei într-un singur loc</p></div>
-      <div class="intro-actions"><button class="btn white" id="printBtn"><svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>Tipărește</button><button class="btn primary" id="introAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adaugă notă</button></div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-info">
+                <i class="fas fa-times close-modal" id="closeModal"></i>
+                <span id="modalCat" style="color: var(--accent); font-weight: 600; text-transform: uppercase; font-size: 0.8rem;"></span>
+                <h2 id="modalTitle" style="font-size: 2rem; margin: 0.5rem 0 1rem;"></h2>
+                <p id="modalDesc" style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6;"></p>
+                <div class="card-footer" style="margin-bottom: 2rem;">
+                    <span id="modalPrice" class="price"></span>
+                    <button class="btn-add" id="modalAddBtn" style="width: auto; padding: 0 1.5rem; border-radius: 10px; font-size: 1rem; color: var(--bg-deep); font-weight: 700;">
+                        Adaugă în Coș
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <section class="hero"><div class="hero-label"><span class="live-dot"></span> PROFIL EDUCAȚIONAL · LIMBA ȘI LITERATURA ROMÂNĂ</div><h2>Cuvântul dăruit, cunoașterea câștigată.</h2><p>Un instrument modern pentru evidența notelor, absențelor și recuperărilor, pentru fiecare clasă și fiecare elev.</p><div class="hero-quote">„A citi înseamnă a privi, prin litere, adevărul." — Mihai Eminescu</div></section>
-    <section class="stats" id="statsCards">
-      <div class="stat-card"><div class="stat-icon ic-red">👥</div><div><div class="stat-label">Elevi în catalog</div><div class="stat-value" id="statStudents">0</div><div class="stat-foot" id="statStudentsFoot">—</div></div></div>
-      <div class="stat-card"><div class="stat-icon ic-gold">✎</div><div><div class="stat-label">Note acordate</div><div class="stat-value" id="statGrades">0</div><div class="stat-foot">Total înregistrări</div></div></div>
-      <div class="stat-card"><div class="stat-icon ic-violet">∅</div><div><div class="stat-label">Media clasei</div><div class="stat-value" id="statAverage">—</div><div class="stat-foot">Media notelor</div></div></div>
-      <div class="stat-card"><div class="stat-icon ic-green">⚑</div><div><div class="stat-label">Absențe neachitate</div><div class="stat-value" id="statAbs">0</div><div class="stat-foot">Nemotivate + motivate nerecuperate</div></div></div>
-    </section>
 
-    <section class="page" id="catalogPage">
-      <div class="panel">
-        <div class="panel-head"><div class="panel-heading"><div class="section-icon">✎</div><div><h2>Catalogul notelor</h2><p>Adaugă note de la 1 la 10 și urmărește media fiecărui elev.</p></div></div>
-        <div class="controls"><label class="searchbox"><span>⌕</span><input id="searchInput" type="search" placeholder="Caută elev..." autocomplete="off"></label><select class="select" id="sortSelect"><option value="number">Ordinea din listă</option><option value="name">Nume A–Z</option><option value="avgDesc">Media: descrescător</option><option value="avgAsc">Media: crescător</option></select></div></div>
-        <div class="table-scroll"><table><thead><tr><th>Nr.</th><th>Nume și prenume</th><th>Note</th><th>Media</th><th>Adaugă notă</th><th>Absențe</th><th>Acțiuni</th></tr></thead><tbody id="studentRows"></tbody></table><div class="empty hidden" id="tableEmpty">Nu a fost găsit niciun elev.</div></div>
-        <div class="table-foot"><span id="tableCount">0 elevi</span><span>Notele se calculează ca medie aritmetică · Date salvate pe acest dispozitiv · <span id="backupInfo"></span></span></div>
-      </div>
-      <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">◒</div><div><h2>Distribuția mediilor</h2><p>Elevi pe intervale de medii</p></div></div></div><div style="padding:17px 19px" id="distribution"></div></div>
-    </section>
+    <script>
+        // Baza de date extinsă
+        const PRODUCTS = [
+            { id: 1, title: "ZenBook Pro Duo", cat: "laptop", price: 8900, desc: "Dual screen, OLED 4K, Intel i9, 32GB RAM. Ideal pentru editare video.", image: "https://images.unsplash.com/photo-1541807084-6a4acc990573?auto=format&fit=crop&w=600" },
+            { id: 2, title: "Pixel 7 Pro", cat: "telefon", price: 4200, desc: "Google AI Camera, 120Hz LTPO display, baterie 5000mAh.", image: "https://images.unsplash.com/photo-1678911820864-1974564669c2?auto=format&fit=crop&w=600" },
+            { id: 3, title: "AirPods Max", cat: "audio", price: 2100, desc: "Active Noise Cancellation, Spatial Audio, design premium din aluminiu.", image: "https://images.unsplash.com/photo-1588423770574-91993ca0727a?auto=format&fit=crop&w=600" },
+            { id: 4, title: "RTX 4090 GPU", cat: "gaming", price: 8500, desc: "Cea mai puternică placă video din lume, 24GB VRAM, DLSS 3.", image: "https://images.unsplash.com/photo-1591488376768-f9967663317d?auto=format&fit=crop&w=600" },
+            { id: 5, title: "MacBook Air M2", cat: "laptop", price: 6100, desc: "Ultra-thin, silent design, bateria rezistă 18 ore, cip M2.", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600" },
+            { id: 6, title: "Samsung S23 Ultra", cat: "telefon", price: 5400, desc: "S Pen inclus, Zoom 100x, ecran Dynamic AMOLED 2X.", image: "https://images.unsplash.com/photo-1678911820864-1974564669c2?auto=format&fit=crop&w=600" },
+            { id: 7, title: "Keychron K2", cat: "gaming", price: 600, desc: "Tastatură mecanică hot-swappable, RGB, compatibilă Mac/Win.", image: "https://images.unsplash.com/photo-1511467687858-23d96c377401?auto=format&fit=crop&w=600" },
+            { id: 8, title: "Sony WH-1000XM5", cat: "audio", price: 1600, desc: "Liderul pieței în anularea zgomotului, autonomie 30h.", image: "https://images.unsplash.com/photo-1505740420928-5e5647149055?auto=format&fit=crop&w=600" },
+        ];
 
-    <section class="page hidden" id="absentePage">
-      <div class="panel">
-        <div class="panel-head"><div class="panel-heading"><div class="section-icon">∅</div><div><h2>Absențe și recuperări</h2><p>Toate absențele clasei, cu motivare și recuperare.</p></div></div>
-        <div class="controls"><label class="searchbox"><span>⌕</span><input id="absSearch" type="search" placeholder="Caută elev..." autocomplete="off"></label></div></div>
-        <div class="table-scroll"><table><thead><tr><th>Nr.</th><th>Nume și prenume</th><th>Nemotivate</th><th>Motivate</th><th>Neachitate</th><th>Adaugă absență</th><th>Acțiuni</th></tr></thead><tbody id="absRows"></tbody></table><div class="empty hidden" id="absEmpty">Nu a fost găsit niciun elev.</div></div>
-        <div class="table-foot"><span id="absCount"></span><span>„Neachitate" = absențe nemotivate + motivate fără recuperare.</span></div>
-      </div>
-      <div class="two-col">
-        <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">⚑</div><div><h2>Situația recuperărilor</h2><p>Absențe care trebuie achitate</p></div></div></div><div id="recapList" style="padding:15px 18px"></div></div>
-        <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">◷</div><div><h2>Ultimele absențe</h2><p>Înregistrări recente</p></div></div></div><div id="recentAbs" style="padding:8px 18px"></div></div>
-      </div>
-    </section>
+        // Starea globală a aplicației
+        let state = {
+            cart: JSON.parse(localStorage.getItem('lumina_cart')) || [],
+            filter: 'all',
+            searchTerm: ''
+        };
 
-    <section class="page hidden" id="statsPage">
-      <div class="two-col">
-        <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">↗</div><div><h2>Clasament elevi</h2><p>Ordonați după medie</p></div></div></div><div class="rank-list" id="ranking"></div></div>
-        <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">▥</div><div><h2>Indicatori</h2><p>Sinteza clasei</p></div></div></div><div style="padding:17px 19px" id="statsBars"></div><div class="notice">Media clasei și distribuțiile se recalculează automat la fiecare notă sau absență introdusă.</div></div>
-      </div>
-      <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">☷</div><div><h2>Raport complet</h2><p>Medie, note, absențe — pentru fiecare elev</p></div></div><button class="btn light" id="statsExport">Exportă CSV</button></div>
-      <div class="table-scroll"><table><thead><tr><th>Loc</th><th>Elev</th><th>Note</th><th>Media</th><th>Abs. nemotivate</th><th>Abs. motivate</th><th>Neachitate</th></tr></thead><tbody id="summaryRows"></tbody></table></div></div>
-    </section>
+        // DOM Elements
+        const grid = document.getElementById('catalogGrid');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const modal = document.getElementById('productModal');
 
-    <section class="page hidden" id="settingsPage">
-      <div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">⚙</div><div><h2>Setări LITTERA</h2><p>Personalizează aspectul și gestionează datele.</p></div></div></div>
-      <div class="settings-grid" style="padding:4px 19px">
-        <div class="setting-item"><div><strong>Mod întunecat</strong><p>Tema „seri de lectură" — pe acest dispozitiv.</p></div><label class="switch"><input type="checkbox" id="darkModeToggle"><span></span></label></div>
-        <div class="setting-item"><div><strong>Numele instituției</strong><p>Apare în antetul rapoartelor tipărite.</p></div><input id="schoolName" maxlength="100" placeholder="Numele școlii" style="max-width:280px;border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:var(--panel);color:var(--ink)"></div>
-        <div class="setting-item"><div><strong>Anul școlar</strong><p>Folosit în rapoarte și exporturi.</p></div><input id="schoolYear" maxlength="20" placeholder="2026–2027" style="max-width:280px;border:1px solid var(--line);border-radius:9px;padding:9px 11px;background:var(--panel);color:var(--ink)"></div>
-        <div class="setting-item"><div><strong>Raport PDF</strong><p>Deschide fereastra de imprimare pentru salvare ca PDF.</p></div><button class="btn light" id="pdfExport">Generează PDF</button></div>
-        <div class="setting-item"><div><strong>Protejarea datelor</strong><p>Fă periodic o copie de siguranță (fișier JSON).</p></div><button class="btn light" id="settingsBackup">Creează copie</button></div>
-      </div></div>
-    </section>
+        // --- FUNCTII CORE ---
 
-    <div class="footer"><span id="footerClass">LITTERA · Limba și literatura română</span><span>„Literatura e limba noastră cea mai frumoasă."</span></div>
-  </main>
-</div>
-</div>
+        function saveCart() {
+            localStorage.setItem('lumina_cart', JSON.stringify(state.cart));
+            updateCartUI();
+        }
 
-<!-- Modal: notă -->
-<div class="modal-backdrop" id="gradeModal"><div class="modal"><div class="modal-head"><div><h2>Adaugă notă</h2><p>Înregistrează o notă nouă pentru un elev.</p></div><button type="button" class="close" data-close="gradeModal">×</button></div>
-<form id="gradeForm" class="modal-body"><div class="form-row"><label>Elev</label><select id="gradeStudent" required></select></div>
-<div class="form-row"><label>Nota (1–10)</label><input id="gradeValue" type="number" min="1" max="10" step="1" inputmode="numeric" required placeholder="De exemplu: 8"><div class="form-help">Număr întreg sau cu zecimale, între 1 și 10.</div></div>
-<div class="form-row"><label>Data (opțional)</label><input id="gradeDate" type="date"></div>
-<div class="form-row"><label>Motiv / observație (opțional)</label><textarea id="gradeNote" maxlength="300" placeholder="Ex.: teză, test de evaluare, recitare, eseu..."></textarea></div>
-<div class="modal-actions"><button type="button" class="btn white" data-close="gradeModal">Anulează</button><button type="submit" class="btn primary">Salvează nota</button></div></form></div></div>
+        function updateCartUI() {
+            const itemsContainer = document.getElementById('cartItems');
+            const countBadge = document.getElementById('cartCount');
+            const totalDisplay = document.getElementById('cartTotal');
+            
+            itemsContainer.innerHTML = "";
+            let total = 0;
+            let count = 0;
 
-<!-- Modal: absență -->
-<div class="modal-backdrop" id="absModal"><div class="modal"><div class="modal-head"><div><h2>Adaugă absență</h2><p>Înregistrează o absență pentru un elev.</p></div><button type="button" class="close" data-close="absModal">×</button></div>
-<form id="absForm" class="modal-body"><div class="form-row"><label>Elev</label><select id="absStudent" required></select></div>
-<div class="form-row"><label>Tipul absenței</label><select id="absType"><option value="nemotivata">Nemotivată</option><option value="motivata">Motivată (justificată)</option></select></div>
-<div class="form-row"><label>Data</label><input id="absDate" type="date" required></div>
-<div class="form-row"><label>Observație (opțional)</label><textarea id="absNote" maxlength="300" placeholder="Ex.: ora 3, la cerere, cu adeverință..."></textarea></div>
-<div class="form-actions modal-actions"><button type="button" class="btn white" data-close="absModal">Anulează</button><button type="submit" class="btn primary">Salvează absența</button></div></form></div></div>
+            state.cart.forEach((item, index) => {
+                total += item.price;
+                count++;
+                itemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}">
+                        <div class="cart-item-info">
+                            <h4>${item.title}</h4>
+                            <p>${item.price} RON</p>
+                        </div>
+                        <i class="fas fa-trash" style="margin-left:auto; cursor:pointer; color:#ff4d4d" onclick="removeFromCart(${index})"></i>
+                    </div>
+                `;
+            });
 
-<!-- Modal: fișa elevului -->
-<div class="modal-backdrop" id="studentModal"><div class="modal wide"><div class="modal-head"><div><h2 id="studentModalTitle">Fișa elevului</h2><p id="studentModalSubtitle"></p></div><button type="button" class="close" data-close="studentModal">×</button></div>
-<div class="modal-body"><h3 style="margin:0 0 8px;font-family:var(--serif);font-size:14px">Note</h3><div id="studentGradesList"></div>
-<h3 style="margin:20px 0 8px;font-family:var(--serif);font-size:14px">Absențe</h3><div id="studentAbsList"></div>
-<div class="modal-actions"><button type="button" class="btn light" id="studentReportBtn">Raport elev (Excel)</button><button type="button" class="btn white" data-close="studentModal">Închide</button></div></div></div></div>
+            countBadge.innerText = count;
+            totalDisplay.innerText = `${total} RON`;
+        }
 
-<!-- Modal: clasă -->
-<div class="modal-backdrop" id="classModal"><div class="modal wide"><div class="modal-head"><div><h2 id="classModalTitle">Clasă nouă</h2><p id="classModalSub"></p></div><button type="button" class="close" data-close="classModal">×</button></div>
-<form id="classForm" class="modal-body" novalidate>
-<div class="form-row"><label>Denumirea clasei</label><input id="className" maxlength="30" placeholder="Ex.: a IX-a A, 10B" required></div>
-<div class="form-row hidden" id="classExistingWrap"><label>Elevii clasei</label><div class="stu-edit-list" id="classStudentRows"></div><div class="form-help">Corectează numele direct în listă. Elevii eliminați se șterg la salvare, împreună cu notele și absențele lor.</div></div>
-<div class="form-row"><label id="classNewLabel">Lista elevilor</label><textarea id="classNewStudents" rows="9" spellcheck="false" placeholder="Un elev pe linie:&#10;POPESCU ION&#10;IONESCU MARIA"></textarea><div class="form-help">Un elev pe linie. Poți lipi o listă din Word sau Excel; numerotarea de la începutul rândului se elimină automat.</div></div>
-<div class="modal-actions"><button type="button" class="btn danger push-left hidden" id="classDelete">Șterge clasa</button><button type="button" class="btn white" data-close="classModal">Anulează</button><button type="submit" class="btn primary" id="classSave">Creează clasa</button></div></form></div></div>
+        function addToCart(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            state.cart.push(product);
+            saveCart();
+            
+            // Feedback vizual
+            const btn = document.querySelector('.btn-add');
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => btn.innerHTML = '<i class="fas fa-plus"></i>', 1000);
+            }
+        }
 
-<input type="file" id="restoreFile" accept="application/json,.json" hidden>
-<div class="toast" id="toast"></div>
+        window.removeFromCart = function(index) {
+            state.cart.splice(index, 1);
+            saveCart();
+        }
 
-<script>
-'use strict';
-const STORAGE_KEY='littera-lbromana-v1',ACTIVE_KEY='littera-active-class',BACKUP_KEY='littera-last-backup',SETTINGS_KEY='littera-settings-v1';
-const MAX_STUDENTS=200;
-let db={classes:[]},activeId=null,appSettings={dark:false,school:'',year:'2026–2027'},currentPage='catalog',toastTimer=null,editingClassId=null,currentSid=null;
-const $=id=>document.getElementById(id);
-const norm=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLocaleLowerCase('ro');
-const clean=s=>String(s??'').replace(/\s+/g,' ').trim();
-const uid=()=>(crypto.randomUUID?crypto.randomUUID():'id-'+Date.now()+'-'+Math.random().toString(16).slice(2));
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt=n=>(Number(n)||0).toLocaleString('ro-RO',{maximumFractionDigits:2});
-const pl=(n,a,b)=>n===1?a:b;
-function classCode(name){const m=clean(name).match(/(\d+)/);return m?m[1]:clean(name).replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase()||'?'}
+        function renderCatalog() {
+            grid.innerHTML = "";
+            const filtered = PRODUCTS.filter(p => {
+                const matchCat = state.filter === 'all' || p.cat === state.filter;
+                const matchSearch = p.title.toLowerCase().includes(state.searchTerm.toLowerCase());
+                return matchCat && matchSearch;
+            });
 
-const cls=()=>db.classes.find(c=>c.id===activeId)||db.classes[0];
-function gradesOf(sid){return cls().grades.filter(g=>g.sid===sid)}
-function absOf(sid){return cls().absences.filter(a=>a.sid===sid)}
-function avgOf(sid){const g=gradesOf(sid);return g.length?g.reduce((s,x)=>s+x.v,0)/g.length:null}
-function neachitatOf(sid){return absOf(sid).filter(a=>!a.recuperata).length}
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card" onclick="openModal(${p.id})">
+                        <div class="product-img-wrapper">
+                            <img src="${p.image}" alt="${p.title}">
+                        </div>
+                        <div class="product-details">
+                            <h3>${p.title}</h3>
+                            <p>${p.desc}</p>
+                            <div class="card-footer">
+                                <span class="price">${p.price} RON</span>
+                                <button class="btn-add" onclick="event.stopPropagation(); addToCart(${p.id})">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-/* ---------- date ---------- */
-function sanitize(arr){return (Array.isArray(arr)?arr:[]).map(x=>x&&{id:String(x.id||uid()),sid:String(x.sid||''),v:Number(x.v),note:String(x.note||'').slice(0,300),date:String(x.date||''),ts:Number(x.ts)||Date.now()}).filter(x=>x.sid&&Number.isFinite(x.v)&&x.v>=1&&x.v<=10)}
-function sanitizeAbs(arr){return (Array.isArray(arr)?arr:[]).map(x=>x&&{id:String(x.id||uid()),sid:String(x.sid||''),tip:x.tip==='motivata'?'motivata':'nemotivata',motiv:x.tip==='motivata',recuperata:!!x.recuperata,note:String(x.note||'').slice(0,300),date:String(x.date||''),ts:Number(x.ts)||Date.now()}).filter(x=>x.sid)}
-function loadData(){let raw=null;try{raw=JSON.parse(localStorage.getItem(STORAGE_KEY))}catch(e){}
-  db={classes:(raw&&Array.isArray(raw.classes)?raw.classes:[]).map(c=>{const sids=new Set();const students=(Array.isArray(c.students)?c.students:[]).map(s=>{const id=s&&String(s.id||''),name=s&&clean(s.name).slice(0,80);if(id&&name&&!sids.has(id)){sids.add(id);return{id,name}}return null}).filter(Boolean);return{id:String(c.id||uid()),name:clean(c.name).slice(0,30)||'Clasă',students,grades:sanitize(c.grades).filter(g=>sids.has(g.sid)),absences:sanitizeAbs(c.absences).filter(a=>sids.has(a.sid))}}).filter(c=>c.students.length)};
-  if(!db.classes.length)db={classes:[{id:uid(),name:'Clasa mea',students:[],grades:[],absences:[]}]};
-  let saved=null;try{saved=localStorage.getItem(ACTIVE_KEY)}catch(e){}
-  activeId=db.classes.some(c=>c.id===saved)?saved:db.classes[0].id;
-  try{appSettings={...appSettings,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch(e){}}
-function saveData(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db))}catch(e){toast('Nu s-au putut salva datele!',true)}}
-function saveActive(){try{localStorage.setItem(ACTIVE_KEY,activeId)}catch(e){}}
-function saveSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(appSettings))}catch(e){}}
+        // --- INTERACTIUNI UI ---
 
-/* ---------- afișare ---------- */
-function toast(msg,err){const t=$('toast');t.textContent=msg;t.classList.toggle('error',err);t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3200)}
-function gradeClass(v){return v>=8.5?'g9':v>=6.5?'g6':v>=5?'g4':'g1'}
+        window.openModal = function(id) {
+            const p = PRODUCTS.find(prod => prod.id === id);
+            document.getElementById('modalImg').src = p.image;
+            document.getElementById('modalTitle').innerText = p.title;
+            document.getElementById('modalDesc').innerText = p.desc;
+            document.getElementById('modalPrice').innerText = `${p.price} RON`;
+            document.getElementById('modalCat').innerText = p.cat;
+            document.getElementById('modalAddBtn').onclick = () => addToCart(p.id);
+            modal.style.display = 'flex';
+        }
 
-function renderStats(){const c=cls(),n=c.students.length,allG=c.grades,ng=allG.length;
-  const avg=ng?(allG.reduce((s,g)=>s+g.v,0)/ng):null;
-  const neach=c.absences.filter(a=>!a.recuperata).length;
-  $('statStudents').textContent=n;$('statStudentsFoot').textContent='Lista clasei '+c.name;
-  $('statGrades').textContent=ng;$('statAverage').textContent=avg==null?'—':fmt(Math.round(avg*100)/100);
-  $('statAbs').textContent=neach;}
+        // Event Listeners
+        document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
+        document.getElementById('cartTrigger').onclick = () => cartDrawer.classList.add('open');
+        document.getElementById('closeCart').onclick = () => cartDrawer.classList.remove('open');
+        
+        document.getElementById('searchInput').oninput = (e) => {
+            state.searchTerm = e.target.value;
+            renderCatalog();
+        };
 
-function renderRows(){const c=cls(),q=norm($('searchInput').value.trim()),sort=$('sortSelect').value;
-  let rows=c.students.map((s,i)=>{const g=gradesOf(s.id),avg=avgOf(s.id);return{i,sid:s.id,name:s.name,grades:g,avg,absN:absOf(s.id).filter(a=>a.tip==='nemotivata').length,absM:absOf(s.id).filter(a=>a.tip==='motivata').length,neach:neachitatOf(s.id)}});
-  if(sort==='name')rows.sort((a,b)=>a.name.localeCompare(b.name,'ro'));
-  if(sort==='avgDesc')rows.sort((a,b)=>(b.avg??-1)-(a.avg??-1)||a.i-b.i);
-  if(sort==='avgAsc')rows.sort((a,b)=>(a.avg??99)-(b.avg??99)||a.i-b.i);
-  rows=rows.filter(x=>norm(x.name).includes(q));
-  $('studentRows').innerHTML=rows.map(x=>{
-    const chips=x.grades.map(g=>`<span class="chip ${gradeClass(g.v)}" data-gdel="${g.id}" title="${esc(g.date||'')} · ${esc(g.note||'notă')} — click pentru a șterge">${String(g.v).replace('.',',')}</span>`).join('')||'<span style="color:var(--muted);font-size:11px">fără note</span>';
-    const avgBadge=x.avg==null?'<span class="grade-badge pending">—</span>':`<span class="grade-badge ${gradeClass(x.avg)}">${fmt(Math.round(x.avg*100)/100)}</span>`;
-    const absHtml=`<span class="abs-badge"><span class="abs-n ${x.absN?'':'abs-zero'}" title="Nemotivate">${x.absN} nm</span><span class="abs-m ${x.absM?'':'abs-zero'}" title="Motivate">${x.absM} m</span>${x.neach?`<span class="abs-warn">${x.neach} neachitate</span>`:''}</span>`;
-    return `<tr><td>${x.i+1}.</td><td><div class="student-name">${esc(x.name)}</div><div class="student-sub">Nr. ${String(x.i+1).padStart(2,'0')} · Clasa ${esc(c.name)}</div></td><td><div class="grade-chips">${chips}</div></td><td>${avgBadge}</td><td><form class="inline-score" data-gstudent="${esc(x.sid)}"><input type="number" min="1" max="10" step="0.5" placeholder="Notă" required><button class="add-row" type="submit" title="Adaugă notă">+</button></form></td><td>${absHtml}</td><td><div class="action-row"><button class="icon-btn" data-sheet="${esc(x.sid)}" title="Fișa elevului"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon-btn" data-gadd="${esc(x.sid)}" title="Adaugă notă cu detalii"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="icon-btn" data-aadd="${esc(x.sid)}" title="Adaugă absență"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></button></div></td></tr>`}).join('');
-  $('tableEmpty').classList.toggle('hidden',rows.length>0);
-  $('tableCount').textContent=`${rows.length} din ${c.students.length} elevi`;}
+        document.getElementById('categoryFilters').onclick = (e) => {
+            if(e.target.classList.contains('cat-btn')) {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                state.filter = e.target.dataset.cat;
+                renderCatalog();
+            }
+        };
 
-function renderDistribution(){const avgs=cls().students.map(s=>avgOf(s.id)).filter(a=>a!=null);
-  const bands=[{l:'9–10 (excelent)',n:avgs.filter(a=>a>=8.5).length,c:'#2f7d5b'},{l:'8–8,4',n:avgs.filter(a=>a>=6.5&&a<8.5).length,c:'#6a9a3f'},{l:'6–7,9',n:avgs.filter(a=>a>=5&&a<6.5).length,c:'#b8860b'},{l:'5–5,9',n:avgs.filter(a=>a>=4&&a<5).length,c:'#c0762f'},{l:'Sub 5',n:avgs.filter(a=>a<4).length,c:'#a83232'},{l:'Fără note',n:cls().students.length-avgs.length,c:'#aebbc7'}];
-  const top=Math.max(1,...bands.map(b=>b.n));
-  $('distribution').innerHTML=bands.map(b=>`<div class="dist-row"><span>${b.l}</span><div class="bar"><span style="width:${b.n/top*100}%;background:${b.c}"></span></div><span class="dist-num">${b.n}</span></div>`).join('');}
+        // Init
+        renderCatalog();
+        updateCartUI();
 
-function renderAbsPage(){const c=cls(),q=norm($('absSearch').value.trim());
-  let rows=c.students.map((s,i)=>{const a=absOf(s.id);return{i,sid:s.id,name:s.name,nm:a.filter(x=>x.tip==='nemotivata').length,mo:a.filter(x=>x.tip==='motivata').length,ne:a.filter(x=>!x.recuperata).length}});
-  rows=rows.filter(x=>norm(x.name).includes(q));
-  $('absRows').innerHTML=rows.map(x=>`<tr><td>${x.i+1}.</td><td><div class="student-name">${esc(x.name)}</div></td><td><span class="abs-n ${x.nm?'':'abs-zero'}">${x.nm}</span></td><td><span class="abs-m ${x.mo?'':'abs-zero'}">${x.mo}</span></td><td>${x.ne?`<span class="abs-warn">${x.ne}</span>`:'<span style="color:var(--green);font-weight:800">✓</span>'}</td><td><form class="inline-score" data-astudent="${esc(x.sid)}"><input type="number" min="1" max="20" value="1" title="Număr de absențe" style="width:52px"><button class="add-row" type="submit" title="Adaugă absență">+</button></form></td><td><div class="action-row"><button class="icon-btn" data-sheet="${esc(x.sid)}" title="Fișa elevului"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td></tr>`).join('');
-  $('absEmpty').classList.toggle('hidden',rows.length>0);
-  const all=c.absences,ne=all.filter(a=>!a.recuperata);
-  $('absCount').textContent=`${all.length} absențe înregistrate · ${ne.length} neachitate`;
-  const byName=id=>esc((c.students.find(s=>s.id===id)||{}).name||'');
-  $('recapList').innerHTML=ne.length?ne.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(a=>`<div class="abs-item"><div class="abs-dot ${a.tip==='motivata'?'mo':'nm'}">${a.tip==='motivata'?'M':'N'}</div><div class="abs-main"><strong>${byName(a.sid)}</strong><span>${esc(a.date||'')} · ${a.tip==='motivata'?'motivată':'nemotivată'}${a.note?' · '+esc(a.note):''}</span></div><button class="btn green" style="padding:6px 11px;font-size:11px" data-recup="${a.id}">Recuperată ✓</button></div>`).join(''):'<div class="empty">Toate absențele au fost achitate. ✓</div>';
-  const recent=[...all].sort((a,b)=>b.ts-a.ts).slice(0,8);
-  $('recentAbs').innerHTML=recent.length?recent.map(a=>{const rec=a.recuperata;return `<div class="abs-item"><div class="abs-dot ${rec?'rec':a.tip==='motivata'?'mo':'nm'}">${rec?'✓':a.tip==='motivata'?'M':'N'}</div><div class="abs-main"><strong>${byName(a.sid)}</strong><span>${esc(a.date||'')} · ${a.tip==='motivata'?'motivată':'nemotivată'}${a.note?' · '+esc(a.note):''}</span></div><span class="abs-tag ${rec?'rec':a.tip==='motivata'?'mo':'nm'}">${rec?'recuperată':a.tip==='motivata'?'motivată':'nemotivată'}</span></div>`}).join(''):'<div class="empty">Nu există absențe înregistrate.</div>';}
-
-function renderStatsPage(){const c=cls();
-  const arr=c.students.map(s=>({name:s.name,avg:avgOf(s.id),ng:gradesOf(s.id).length,nm:absOf(s.id).filter(a=>a.tip==='nemotivata').length,mo:absOf(s.id).filter(a=>a.tip==='motivata').length,ne:neachitatOf(s.id)})).sort((a,b)=>(b.avg??-1)-(a.avg??-1)||a.name.localeCompare(b.name,'ro'));
-  let place=0;arr.forEach((x,i)=>{place=i>0&&x.avg===arr[i-1].avg?place:i+1;x.place=place});
-  $('ranking').innerHTML=arr.filter(x=>x.avg!=null).slice(0,10).map(x=>`<div class="rank"><span class="rank-num">${x.place}</span><span class="rank-name">${esc(x.name)}</span><span class="rank-value" style="color:${x.avg>=5?'var(--green)':'var(--red)'}">${fmt(Math.round(x.avg*100)/100)}</span></div>`).join('')||'<div class="empty">Încă nu există note.</div>';
-  const allG=c.grades,ng=allG.length,avg=ng?allG.reduce((s,g)=>s+g.v,0)/ng:0;
-  const na=c.absences.filter(a=>a.tip==='nemotivata').length,ma=c.absences.filter(a=>a.tip==='motivata').length,ne=c.absences.filter(a=>!a.recuperata').length;
-  const prom=arr.filter(x=>x.avg!=null&&x.avg>=5).length;
-  const items=[['Elevi cu note',String(arr.filter(x=>x.avg!=null).length),(arr.filter(x=>x.avg!=null).length/Math.max(1,arr.length))*100,'#8c2f39'],['Promoți (medie ≥ 5)',String(prom),arr.length?prom/arr.length*100:0,'#2f7d5b'],['Rata de promovare',arr.filter(x=>x.avg!=null).length?Math.round(prom/arr.filter(x=>x.avg!=null).length*100)+'%':'—',arr.filter(x=>x.avg!=null).length?prom/arr.filter(x=>x.avg!=null).length*100:0,'#b8860b'],['Media notelor',ng?fmt(Math.round(avg*100)/100):'—',avg*10,'#6a5a8c'],['Absențe neachitate',String(ne),0,'#a83232']];
-  $('statsBars').innerHTML=items.map(x=>`<div class="dist-row"><span>${x[0]}</span><div class="bar"><span style="width:${Math.max(0,Math.min(100,x[2]))}%;background:${x[3]}"></span></div><span class="dist-num">${x[1]}</span></div>`).join('');
-  $('summaryRows').innerHTML=arr.map(x=>`<tr><td>${x.avg!=null?x.place:'—'}</td><td><div class="student-name">${esc(x.name)}</div></td><td>${x.ng}</td><td>${x.avg==null?'<span class="grade-badge pending">—</span>':`<span class="grade-badge ${gradeClass(x.avg)}">${fmt(Math.round(x.avg*100)/100)}</span>`}</td><td>${x.nm||'—'}</td><td>${x.mo||'—'}</td><td>${x.ne?`<span class="abs-warn">${x.ne}</span>`:'✓'}</td></tr>`).join('');}
-
-function renderBackupInfo(){let v=null;try{v=localStorage.getItem(BACKUP_KEY)}catch(e){}$('backupInfo').textContent=v?'Ultima copie: '+new Date(Number(v)).toLocaleString('ro-RO'):'nu ai creat încă o copie'}
-
-function renderClassSwitch(){$('classSelect').innerHTML=db.classes.map(c=>`<option value="${esc(c.id)}" ${c.id===activeId?'selected':''}>${esc(c.name)} · ${c.students.length} ${pl(c.students.length,'elev','elevi')}</option>`).join('')}
-function renderClassInfo(){const c=cls();document.title=`LITTERA | ${c.name} — Limba și Literatura Română`;$('classPill').textContent='CLASA '+c.name.toLocaleUpperCase('ro');$('classAvatar').textContent=classCode(c.name);$('footerClass').textContent=`LITTERA · Limba și literatura română · Clasa ${c.name}`;updateHeader()}
-function renderAll(){renderClassSwitch();renderClassInfo();renderStats();renderRows();renderDistribution();renderAbsPage();renderStatsPage();renderBackupInfo()}
-function pageInfo(p){const n=cls().name;return{catalog:['PREZENTARE GENERALĂ','Catalog de note',`Clasa ${n} · Note, medii și absențe`],absente:['EVIDENȚĂ','Absențe și recuperări',`Clasa ${n} · Absențe motivate, nemotivate și achitate`],stats:['STATISTICI','Statistici și progres',`Clasa ${n} · Media clasei, promovabilitate, absenteism`],settings:['PREFERINȚE','Setări',`Personalizare și gestionarea datelor`]}[p]}
-function updateHeader(){const p=pageInfo(currentPage)||pageInfo('catalog');$('topTitle').textContent=p[1];$('pageEyebrow').textContent=p[0];$('pageTitle').textContent=p[1];$('pageSubtitle').textContent=p[2]}
-function showPage(p){if(!pageInfo(p))return;currentPage=p;document.querySelectorAll('.page').forEach(el=>el.classList.toggle('hidden',el.id!==p+'Page'));document.querySelectorAll('.nav [data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));updateHeader();setSidebar(false);window.scrollTo({top:0,behavior:'smooth'})}
-function setSidebar(o){$('sidebar').classList.toggle('open',o);$('scrim').classList.toggle('show',o)}
-
-/* ---------- acțiuni ---------- */
-function addGrade(sid,v,note='',date=''){const n=Number(v);if(!nameOf(sid)){toast('Elev necunoscut.',true);return false}
-  if(!Number.isFinite(n)||n<1||n>10){toast('Nota trebuie să fie între 1 și 10.',true);return false}
-  const c=cls(),d=date||new Date().toISOString().slice(0,10);
-  c.grades.push({id:uid(),sid,v:Math.round(n*100)/100,note:clean(note).slice(0,300),date:d,ts:Date.now()});
-  saveData();renderAll();toast(`Nota ${String(n).replace('.',',')} a fost adăugată pentru ${nameOf(sid)}.`);return true}
-function addAbs(sid,n=1,tip='nemotivata',date='',note=''){const k=Number(n);if(!nameOf(sid)||!Number.isInteger(k)||k<1||k>20)return false;
-  const c=cls(),d=date||new Date().toISOString().slice(0,10),now=Date.now();
-  for(let i=0;i<k;i++)c.absences.push({id:uid(),sid,tip,motiv:tip==='motivata',recuperata:false,note:clean(note).slice(0,300),date:d,ts:now+i});
-  saveData();renderAll();toast(`${k} ${pl(k,'absență','absențe')} ${tip==='motivata'?'motivată':'nemotivată'} pentru ${nameOf(sid)}.`);return true}
-const nameOf=sid=>(cls().students.find(s=>s.id===sid)||{}).name||'';
-
-function openModal(id,focus){$(id).classList.add('open');setTimeout(()=>{(focus||$(id).querySelector('input,select,button'))?.focus()},50)}
-function closeModal(id){$(id).classList.remove('open')}
-function fillStudentSelect(sel,selId){sel.innerHTML=cls().students.map(s=>`<option value="${esc(s.id)}" ${s.id===selId?'selected':''}>${esc(s.name)}</option>`).join('')}
-function openGradeModal(sid=''){if(!cls().students.length)return toast('Adaugă întâi elevi în clasă.',true);fillStudentSelect($('gradeStudent'),sid);$('gradeValue').value='';$('gradeNote').value='';$('gradeDate').value=new Date().toISOString().slice(0,10);openModal('gradeModal',$('gradeValue'))}
-function openAbsModal(sid=''){if(!cls().students.length)return toast('Adaugă întâi elevi în clasă.',true);fillStudentSelect($('absStudent'),sid);$('absType').value='nemotivata';$('absNote').value='';$('absDate').value=new Date().toISOString().slice(0,10);openModal('absModal',$('absDate'))}
-
-function openStudentSheet(sid){currentSid=sid;const c=cls(),st=c.students.find(s=>s.id===sid);if(!st)return;
-  $('studentModalTitle').textContent=st.name;
-  const g=gradesOf(sid),a=absOf(sid),avg=avgOf(sid);
-  $('studentModalSubtitle').textContent=`Clasa ${c.name} · ${g.length} ${pl(g.length,'notă','note')}${avg!=null?' · media '+fmt(Math.round(avg*100)/100):''} · ${a.filter(x=>!x.recuperata).length} absențe neachitate`;
-  $('studentGradesList').innerHTML=g.length?[...g].sort((x,y)=>y.ts-x.ts).map(x=>`<div class="hist-entry"><div><strong style="color:${x.v>=5?'var(--green)':'var(--red)'}">Nota ${String(x.v).replace('.',',')}</strong><span>${esc(x.date||'')} · ${esc(x.note||'—')}</span></div><button type="button" data-gdel2="${x.id}">Șterge</button></div>`).join(''):'<div class="hist-empty">Nu există note.</div>';
-  $('studentAbsList').innerHTML=a.length?[...a].sort((x,y)=>y.ts-x.ts).map(x=>`<div class="hist-entry"><div><strong>${x.tip==='motivata'?'Absență motivată':'Absență nemotivată'}${x.recuperata?' · recuperată ✓':''}</strong><span>${esc(x.date||'')} · ${esc(x.note||'—')}</span></div><div style="display:flex;gap:5px">${x.recuperata?`<button type="button" data-unrecup="${x.id}">Anulează recuperarea</button>`:`<button type="button" data-recup2="${x.id}">Recuperată ✓</button>`}<button type="button" data-adel="${x.id}">Șterge</button></div></div>`).join(''):'<div class="hist-empty">Nu există absențe.</div>';
-  openModal('studentModal')}
-
-/* ---------- clase ---------- */
-function studentEditRow(s,i,stats){return `<div class="stu-edit" data-sid="${esc(s.id)}"><span class="stu-n">${i+1}.</span><input type="text" value="${esc(s.name)}" maxlength="80" autocomplete="off"><span></span></div>`}
-function openClassModal(id=null){const c=id?db.classes.find(x=>x.id===id):null;editingClassId=c?c.id:null;
-  $('classModalTitle').textContent=c?'Editează clasa':'Clasă nouă';
-  $('classModalSub').textContent=c?'Redenumește clasa, corectează numele elevilor sau adaugă elevi noi.':'Introdu denumirea clasei și lista elevilor. Fiecare clasă are propriile note și absențe.';
-  $('className').value=c?c.name:'';$('classNewStudents').value='';$('classNewStudents').rows=c?3:9;
-  $('classExistingWrap').classList.toggle('hidden',!c);$('classNewLabel').textContent=c?'Adaugă elevi noi (opțional)':'Lista elevilor';
-  $('classSave').textContent=c?'Salvează modificările':'Creează clasa';
-  $('classDelete').classList.toggle('hidden',!c);$('classDelete').disabled=db.classes.length<2;
-  if(c){const st=new Map();c.students.forEach(s=>st.set(s.id,{ng:0,na:0}));c.grades.forEach(g=>{if(st.has(g.sid))st.get(g.sid).ng++});c.absences.forEach(a=>{if(st.has(a.sid))st.get(a.sid).na++});
-    $('classStudentRows').innerHTML=c.students.map((s,i)=>{const d=st.get(s.id);return `<div class="stu-edit" data-sid="${esc(s.id)}"><span class="stu-n">${i+1}.</span><input type="text" value="${esc(s.name)}" maxlength="80" autocomplete="off"><button type="button" class="icon-btn" data-stu-rm title="Elimină elevul">🗑</button></div>`}).join('')}
-  else $('classStudentRows').innerHTML='';
-  openModal('classModal',$('className'))}
-function parseNames(t){return String(t).split(/\r?\n/).map(l=>clean(l.replace(/^\s*\d+\s*(?:[.)\-–]\s*|\t\s*)/,'').replace(/^\s*[•*\-–]\s+/,'')).slice(0,80)).filter(Boolean)}
-function saveClass(e){e.preventDefault();const name=clean($('className').value).slice(0,30),old=editingClassId?db.classes.find(c=>c.id===editingClassId):null;
-  if(editingClassId&&!old){closeModal('classModal');return toast('Clasa nu mai există.',true)}
-  if(!name)return toast('Introdu denumirea clasei.'),$('className').focus();
-  if(db.classes.some(c=>c.id!==editingClassId&&norm(c.name)===norm(name)))return toast(`Există deja o clasă „${name}".`),$('className').focus();
-  const kept=[],removed=new Set();
-  if(old)for(const row of $('classStudentRows').querySelectorAll('.stu-edit')){const sid=row.dataset.sid;if(row.classList.contains('removed')){removed.add(sid);continue}const n=clean(row.querySelector('input').value).slice(0,80);if(!n)return toast('Un nume de elev este gol.'),row.querySelector('input').focus();kept.push({id:sid,name:n})}
-  const students=[...kept,...parseNames($('classNewStudents').value).map(n=>({id:uid(),name:n}))];
-  if(!students.length)return toast('Adaugă cel puțin un elev.'),$('classNewStudents').focus();
-  if(students.length>MAX_STUDENTS)return toast(`Maximum ${MAX_STUDENTS} de elevi.`);
-  const seen=new Set();for(const s of students){const k=norm(s.name);if(seen.has(k))return toast(`„${s.name}" apare de două ori.`),$('classNewStudents').focus();seen.add(k)}
-  if(removed.size&&!confirm(`Se vor elimina ${removed.size} ${pl(removed.size,'elev','elevi')} și toate notele și absențele lor. Continuați?`))return;
-  if(old){const keep=new Set(kept.map(s=>s.id));Object.assign(old,{name,students});old.grades=old.grades.filter(g=>keep.has(g.sid));old.absences=old.absences.filter(a=>keep.has(a.sid))}
-  else{const c={id:uid(),name,students,grades:[],absences:[]};db.classes.push(c);activeId=c.id;saveActive()}
-  saveData();closeModal('classModal');renderAll();toast(old?`Clasa ${name} a fost actualizată.`:`Clasa ${name} a fost creată.`)}
-function deleteClass(){const c=db.classes.find(x=>x.id===editingClassId);if(!c||db.classes.length<2)return;
-  if(!confirm(`Ștergeți definitiv clasa ${c.name}? Acțiunea nu poate fi anulată.`))return;
-  const i=db.classes.indexOf(c);db.classes.splice(i,1);activeId=db.classes[Math.min(i,db.classes.length-1)].id;saveActive();saveData();closeModal('classModal');renderAll();toast(`Clasa ${c.name} a fost ștearsă.`)}
-
-/* ---------- export / backup ---------- */
-function csvCell(v){let s=String(v??'');if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
-function downloadBlob(data,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
-function exportCSV(){const c=cls();const rows=[['Nr.','Nume și prenume','Număr note','Media','Note (data: nota — motiv)','Absențe nemotivate','Absențe motivate','Absențe neachitate']];
-  c.students.forEach((s,i)=>{const g=gradesOf(s.id),a=absOf(s.id),avg=avgOf(s.id);
-    rows.push([i+1,s.name,g.length,avg==null?'':Math.round(avg*100)/100,g.map(x=>`${x.date}: ${x.v}${x.note?' — '+x.note:''}`).join(' | '),a.filter(x=>x.tip==='nemotivata').length,a.filter(x=>x.tip==='motivata').length,a.filter(x=>!x.recuperata).length])});
-  downloadBlob('﻿'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n'),`catalog_lbromana_${classCode(c.name)||'clasa'}.csv`,'text/csv;charset=utf-8;');toast('Catalogul a fost exportat în CSV.')}
-function backup(){downloadBlob(JSON.stringify({app:'LITTERA — Catalog Limba și Literatura Română',version:1,exportedAt:new Date().toISOString(),classes:db.classes,settings:appSettings},null,2),'littera_backup_'+new Date().toISOString().slice(0,10)+'.json','application/json');
-  try{localStorage.setItem(BACKUP_KEY,String(Date.now()))}catch(e){}renderBackupInfo();toast(`Copia de siguranță a fost creată (${db.classes.length} ${pl(db.classes.length,'clasă','clase')}).`)}
-function restoreFile(f){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.classes))throw 0;
-  const classes=d.classes.map(c=>({id:String(c.id||uid()),name:clean(c.name).slice(0,30)||'Clasă',students:(Array.isArray(c.students)?c.students:[]).map(s=>({id:String(s.id||uid()),name:clean(s.name).slice(0,80)})).filter(s=>s.name),
-    grades:sanitize(c.grades),absences:sanitizeAbs(c.absences)})).filter(c=>c.students.length);
-  if(!classes.length)throw 0;
-  if(!confirm(`Copia conține ${classes.length} ${pl(classes.length,'clasă','clase')}. Înlocuiești TOATE datele actuale?`))return;
-  db={classes};activeId=classes[0].id;saveActive();
-  if(d.settings&&typeof d.settings==='object'){appSettings={...appSettings,...d.settings};saveSettings()}
-  saveData();renderAll();toast('Copia de siguranță a fost restaurată.')}catch(e){toast('Fișier invalid. Selectează o copie LITTERA validă.',true)}finally{$('restoreFile').value=''}};r.readAsText(f)}
-
-/* ---------- evenimente ---------- */
-document.querySelectorAll('.nav [data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-$('navAdd').addEventListener('click',()=>{setSidebar(false);openGradeModal()});
-$('introAdd').addEventListener('click',()=>openGradeModal());
-$('navSettings').addEventListener('click',()=>showPage('settings'));
-$('navExport').addEventListener('click',()=>{setSidebar(false);exportCSV()});
-$('statsExport').addEventListener('click',exportCSV);
-$('navBackup').addEventListener('click',()=>{setSidebar(false);backup()});
-$('settingsBackup').addEventListener('click',backup);
-$('navRestore').addEventListener('click',()=>{setSidebar(false);$('restoreFile').click()});
-$('restoreFile').addEventListener('change',e=>{if(e.target.files[0])restoreFile(e.target.files[0])});
-$('printBtn').addEventListener('click',()=>window.print());
-$('pdfExport').addEventListener('click',()=>window.print());
-$('menuToggle').addEventListener('click',()=>setSidebar(!$('sidebar').classList.contains('open')));
-$('scrim').addEventListener('click',()=>setSidebar(false));
-$('classSelect').addEventListener('change',e=>{activeId=e.target.value;saveActive();$('searchInput').value='';$('absSearch').value='';setSidebar(false);renderAll()});
-$('classNew').addEventListener('click',()=>{setSidebar(false);openClassModal()});
-$('classEdit').addEventListener('click',()=>{setSidebar(false);openClassModal(activeId)});
-$('classForm').addEventListener('submit',saveClass);
-$('classDelete').addEventListener('click',deleteClass);
-$('searchInput').addEventListener('input',renderRows);
-$('absSearch').addEventListener('input',renderAbsPage);
-$('sortSelect').addEventListener('change',renderRows);
-$('gradeForm').addEventListener('submit',e=>{e.preventDefault();if(addGrade($('gradeStudent').value,$('gradeValue').value,$('gradeNote').value,$('gradeDate').value))closeModal('gradeModal')});
-$('absForm').addEventListener('submit',e=>{e.preventDefault();if(addAbs($('absStudent').value,1,$('absType').value,$('absDate').value,$('absNote').value))closeModal('absModal')});
-$('studentReportBtn').addEventListener('click',()=>{const sid=currentSid;if(!sid)return;const st=cls().students.find(s=>s.id===sid);if(!st)return;
-  const g=gradesOf(sid),a=absOf(sid),avg=avgOf(sid);
-  const rows=[['Data','Nota','Motiv'],['',avg==null?'':Math.round(avg*100)/100+' (media)',''],['', '', '']];
-  g.forEach(x=>rows.push([x.date,x.v,x.note||'']));
-  rows.push(['','','']);rows.push(['Data absență','Tip','Recuperată / Observație']);
-  a.forEach(x=>rows.push([x.date,x.tip==='motivata'?'motivată':'nemotivată',(x.recuperata?'recuperată':'neachitată')+(x.note?' — '+x.note:'')]));
-  downloadBlob('﻿'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n'),`fisa_${norm(st.name).replace(/\s+/g,'_')}.csv`,'text/csv;charset=utf-8;');toast('Fișa elevului a fost descărcată.')});
-document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
-document.querySelectorAll('.modal-backdrop').forEach(el=>el.addEventListener('mousedown',e=>{if(e.target===el&&el.id!=='classModal')closeModal(el.id)}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal-backdrop.open').forEach(el=>{if(el.id!=='classModal')closeModal(el.id)});setSidebar(false)}});
-document.addEventListener('submit',e=>{const gf=e.target.closest('.inline-score[data-gstudent]');if(gf){e.preventDefault();const inp=gf.querySelector('input');if(addGrade(gf.dataset.gstudent,inp.value)){inp.value='';inp.focus()}return}
-  const af=e.target.closest('.inline-score[data-astudent]');if(af){e.preventDefault();const inp=af.querySelector('input');if(addAbs(af.dataset.astudent,inp.value||1,'nemotivata')){inp.value='1'}}});
-document.addEventListener('click',e=>{
-  const sheet=e.target.closest('[data-sheet]');if(sheet){openStudentSheet(sheet.dataset.sheet);return}
-  const ga=e.target.closest('[data-gadd]');if(ga){openGradeModal(ga.dataset.gadd);return}
-  const aa=e.target.closest('[data-aadd]');if(aa){openAbsModal(aa.dataset.aadd);return}
-  const rec=e.target.closest('[data-recup],[data-recup2]');if(rec){const id=rec.dataset.recup||rec.dataset.recup2;const a=cls().absences.find(x=>x.id===id);if(a){a.recuperata=true;saveData();renderAll();if(currentSid)openStudentSheet(currentSid);toast(`Absența din ${a.date||'—'} a fost marcată recuperată.`)}return}
-  const unrec=e.target.closest('[data-unrecup]');if(unrec){const a=cls().absences.find(x=>x.id===unrec.dataset.unrecup);if(a){a.recuperata=false;saveData();renderAll();if(currentSid)openStudentSheet(currentSid)}return}
-  const adel=e.target.closest('[data-adel]');if(adel){const a=cls().absences.find(x=>x.id===adel.dataset.adel);if(a&&confirm(`Ștergi absența din ${a.date||'—'} (${nameOf(a.sid)})?`)){cls().absences=cls().absences.filter(x=>x.id!==a.id);saveData();renderAll();if(currentSid)openStudentSheet(currentSid);toast('Absența a fost ștearsă.')}return}
-  const gdel=e.target.closest('[data-gdel],[data-gdel2]');if(gdel){const id=gdel.dataset.gdel||gdel.dataset.gdel2;const g=cls().grades.find(x=>x.id===id);if(g&&confirm(`Ștergi nota ${g.v} pentru ${nameOf(g.sid)}?`)){cls().grades=cls().grades.filter(x=>x.id!==id);saveData();renderAll();if(currentSid)openStudentSheet(currentSid);toast('Nota a fost ștearsă.')}return}
-  const rm=e.target.closest('[data-stu-rm]');if(rm){const row=rm.closest('.stu-edit'),on=row.classList.toggle('removed');row.querySelector('input').disabled=on;rm.textContent=on?'↩':'🗑';rm.title=on?'Restabilește':'Elimină';return}});
-$('darkModeToggle').addEventListener('change',e=>{appSettings.dark=e.target.checked;saveSettings();applyTheme();toast(appSettings.dark?'Mod întunecat activat. 🌙':'Mod luminos activat. ☀️')});
-$('schoolName').addEventListener('change',e=>{appSettings.school=clean(e.target.value);saveSettings()});
-$('schoolYear').addEventListener('change',e=>{appSettings.year=clean(e.target.value);saveSettings()});
-function applyTheme(){document.body.classList.toggle('dark',!!appSettings.dark);$('darkModeToggle').checked=!!appSettings.dark;$('schoolName').value=appSettings.school||'';$('schoolYear').value=appSettings.year||'2026–2027'}
-
-/* ---------- start ---------- */
-loadData();applyTheme();renderAll();
-if(!cls().students.length)setTimeout(()=>openClassModal(activeId),400);
-</script>
+    </script>
 </body>
 </html>
