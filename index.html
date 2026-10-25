@@ -3,540 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduManage Pro | Catalogul Electronic al Profesorului</title>
+    <title>EduSphere Pro | Enterprise Gradebook System</title>
     
+    <!-- Tailwind CSS pentru design profesional rapid -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js pentru analize vizuale -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #64748b;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --transition: all 0.2s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-dark);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 260px;
-            background: #0f172a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            transition: var(--transition);
-        }
-
-        .sidebar-header {
-            padding: 2rem 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .sidebar-header span { color: var(--primary); }
-
-        .nav-menu {
-            padding: 1.5rem 0;
-            flex-grow: 1;
-        }
-
-        .nav-item {
-            padding: 0.8rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #94a3b8;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border-left-color: var(--primary);
-        }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            margin-left: 260px;
-            width: calc(100% - 260px);
-            padding: 2rem;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .user-info h1 { font-size: 1.8rem; font-weight: 700; }
-        .user-info p { color: var(--text-muted); }
-
-        /* --- DASHBOARD CARDS --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-        }
-
-        .stat-info h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-        .stat-info p { font-size: 1.5rem; font-weight: 700; }
-
-        /* --- DATA TABLE --- */
-        .table-container {
-            background: var(--bg-card);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .table-actions {
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th {
-            background: #f1f5f9;
-            padding: 1rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-        }
-
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-        }
-
-        .student-name { font-weight: 600; color: var(--text-dark); }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge-success { background: #dcfce7; color: #166534; }
-        .badge-danger { background: #fee2e2; color: #991b1b; }
-        .badge-warning { background: #fef3c7; color: #92400e; }
-
-        /* --- FORMS & MODALS --- */
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-dark); }
-        
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
-        .btn-outline:hover { background: #f1f5f9; }
-
-        .modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 400px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-        }
-
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
-        .form-group input {
-            width: 100%;
-            padding: 0.7rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            outline: none;
-        }
-
-        .input-group-grade {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* --- UTILS --- */
-        .hidden { display: none; }
-
-        @media (max-width: 1024px) {
-            .sidebar { width: 80px; }
-            .sidebar-header span, .nav-item span { display: none; }
-            .main-content { margin-left: 80px; width: calc(100% - 80px); }
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .sidebar-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-active { border-left: 4px solid #3b82f6; background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+        .custom-shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
     </style>
 </head>
-<body>
+<body class="text-slate-800">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <i class="fas fa-graduation-cap"></i>
-            <span>EduManage<span>Pro</span></span>
-        </div>
-        <div class="nav-menu">
-            <div class="nav-item active" onclick="switchTab('dashboard')">
-                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
-            </div>
-            <div class="nav-item" onclick="switchTab('students')">
-                <i class="fas fa-users"></i> <span>Elevi</span>
-            </div>
-            <div class="nav-item" onclick="switchTab('grades')">
-                <i class="fas fa-star"></i> <span>Note & Medii</span>
-            </div>
-            <div class="nav-item" onclick="switchTab('attendance')">
-                <i class="fas fa-calendar-check"></i> <span>Prezențe</span>
-            </div>
-        </div>
-        <div class="nav-item" style="margin-bottom: 2rem;" onclick="exportData()">
-            <i class="fas fa-file-export"></i> <span>Export Raport</span>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <header>
-            <div class="user-info">
-                <h1 id="pageTitle">Dashboard General</h1>
-                <p>Bun venit, Prof. Andrei Popescu | Clasa a X-A</p>
-            </div>
-            <button class="btn btn-primary" onclick="openModal('studentModal')">
-                <i class="fas fa-plus"></i> Adaugă Elev
-            </button>
-        </header>
-
-        <!-- DASHBOARD SECTION -->
-        <div id="tab-dashboard">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #dbeafe; color: #1e40af;"><i class="fas fa-users"></i></div>
-                    <div class="stat-info">
-                        <h3>Total Elevi</h3>
-                        <p id="stat-total-students">0</p>
-                    </div>
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-slate-900 text-slate-300 flex flex-col sidebar-transition">
+            <div class="p-6 flex items-center gap-3 text-white">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i class="fas fa-graduation-cap text-xl"></i>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #dcfce7; color: #166534;"><i class="fas fa-chart-bar"></i></div>
-                    <div class="stat-info">
-                        <h3>Media Clasei</h3>
-                        <p id="stat-class-avg">0.00</p>
-                    </div>
+                <span class="text-xl font-bold tracking-tight">EduSphere<span class="text-blue-500">Pro</span></span>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2">Meniu Principal</div>
+                <a href="#" onclick="switchTab('dashboard')" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all tab-active" id="link-dashboard">
+                    <i class="fas fa-chart-pie w-5"></i> <span>Dashboard</span>
+                </a>
+                <a href="#" onclick="switchTab('students')" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all" id="link-students">
+                    <i class="fas fa-user-graduate w-5"></i> <span>Gestionare Elevi</span>
+                </a>
+                <a href="#" onclick="switchTab('grades')" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all" id="link-grades">
+                    <i class="fas fa-star-half-alt w-5"></i> <span>Registru Note</span>
+                </a>
+                <a href="#" onclick="switchTab('attendance')" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all" id="link-attendance">
+                    <i class="fas fa-calendar-check w-5"></i> <span>Prezențe</span>
+                </a>
+
+                <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-8 mb-4 px-2">Configurare</div>
+                <div class="px-2">
+                    <select onchange="switchClass(this.value)" id="classSelector" class="w-full bg-slate-800 border border-slate-700 text-white p-2 rounded-lg outline-none focus:ring-2 ring-blue-500">
+                        <!-- Classes generated by JS -->
+                    </select>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: #fee2e2; color: #991b1b;"><i class="fas fa-user-slash"></i></div>
-                    <div class="stat-info">
-                        <h3>Absențe Total</h3>
-                        <p id="stat-total-absences">0</p>
+            </nav>
+
+            <div class="p-6 border-t border-slate-800">
+                <div class="flex items-center gap-3 p-2">
+                    <img src="https://ui-avatars.com/api/?name=Prof+Andrei&background=3b82f6&color=fff" class="w-10 h-10 rounded-full border-2 border-blue-500">
+                    <div>
+                        <p class="text-sm font-semibold text-white">Prof. Andrei</p>
+                        <p class="text-xs text-slate-500">Administrator</p>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <div class="table-container">
-                <div class="table-actions">
-                    <h3 style="font-weight: 600;">Top Performanțe</h3>
-                    <button class="btn btn-outline" onclick="switchTab('grades')">Vezi toate notele</button>
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-y-auto relative">
+            <!-- TOPBAR -->
+            <header class="glass sticky top-0 z-10 px-8 py-4 flex justify-between items-center custom-shadow">
+                <div>
+                    <h2 id="currentTabTitle" class="text-2xl font-bold text-slate-800">Dashboard General</h2>
+                    <p class="text-sm text-slate-500" id="currentClassDisplay">Clasa Selectată: a X-A</p>
                 </div>
-                <table id="top-students-table">
-                    <thead>
-                        <tr>
-                            <th>Elev</th>
-                            <th>Media</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="top-students-body">
-                        <!-- JS generated -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="flex gap-4">
+                    <button onclick="exportToPDF()" class="bg-white border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <i class="fas fa-download text-slate-400"></i> Export Raport
+                    </button>
+                    <button onclick="openModal('studentModal')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Adaugă Elev
+                    </button>
+                </div>
+            </header>
 
-        <!-- STUDENTS SECTION -->
-        <div id="tab-students" class="hidden">
-            <div class="table-container">
-                <div class="table-actions">
-                    <h3 style="font-weight: 600;">Lista Elevilor</h3>
-                    <div class="search-box">
-                        <input type="text" id="studentSearch" placeholder="Caută elev..." style="padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+            <div class="p-8">
+                <!-- DASHBOARD TAB -->
+                <section id="tab-dashboard" class="space-y-8">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <p class="text-slate-500 text-sm font-medium">Total Elevi</p>
+                            <h3 class="text-3xl font-bold mt-1" id="stat-total">0</h3>
+                            <div class="mt-2 text-xs text-green-500 font-semibold"><i class="fas fa-arrow-up"></i> Actualizat</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <p class="text-slate-500 text-sm font-medium">Media Clasei</p>
+                            <h3 class="text-3xl font-bold mt-1" id="stat-avg">0.00</h3>
+                            <div class="mt-2 text-xs text-blue-500 font-semibold">Performanță Generală</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <p class="text-slate-500 text-sm font-medium">Rata Prezență</p>
+                            <h3 class="text-3xl font-bold mt-1" id="stat-attendance">0%</h3>
+                            <div class="mt-2 text-xs text-orange-500 font-semibold">Media Zilnică</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <p class="text-slate-500 text-sm font-medium">Promovabilitate</p>
+                            <h3 class="text-3xl font-bold mt-1" id="stat-pass">0%</h3>
+                            <div class="mt-2 text-xs text-green-500 font-semibold">Sănătatea Clasei</div>
+                        </div>
                     </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nume Elev</th>
-                            <th>Media</th>
-                            <th>Prezență</th>
-                            <th>Acțiuni</th>
-                        </tr>
-                    </thead>
-                    <tbody id="students-list-body">
-                        <!-- JS generated -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <!-- GRADES SECTION -->
-        <div id="tab-grades" class="hidden">
-            <div class="table-container">
-                <div class="table-actions">
-                    <h3 style="font-weight: 600;">Gestionare Note</h3>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Elev</th>
-                            <th>Note</th>
-                            <th>Media</th>
-                            <th>Acțiune</th>
-                        </tr>
-                    </thead>
-                    <tbody id="grades-list-body">
-                        <!-- JS generated -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    <!-- Charts Row -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <h3 class="font-bold text-lg mb-6">Analiza Distribuției Notelor</h3>
+                            <canvas id="gradesChart" height="120"></canvas>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl custom-shadow border border-slate-100">
+                            <h3 class="font-bold text-lg mb-6">Top Performanțe</h3>
+                            <div id="topStudentsList" class="space-y-4">
+                                <!-- JS Generated -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-        <!-- ATTENDANCE SECTION -->
-        <div id="tab-attendance" class="hidden">
-            <div class="table-container">
-                <div class="table-actions">
-                    <h3 style="font-weight: 600;">Registru Prezențe - Data: <span id="current-date"></span></h3>
-                    <button class="btn btn-outline" onclick="saveAttendance()">Salvează Prezența</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Elev</th>
-                            <th>Status Prezență</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendance-list-body">
-                        <!-- JS generated -->
-                    </tbody>
-                </table>
+                <!-- STUDENTS TAB -->
+                <section id="tab-students" class="hidden space-y-6">
+                    <div class="bg-white rounded-2xl custom-shadow border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                            <h3 class="font-bold text-lg">Lista Elevilor</h3>
+                            <input type="text" id="searchStudent" oninput="renderStudents()" placeholder="Caută elev..." class="bg-slate-50 border border-slate-200 px-4 py-2 rounded-lg text-sm outline-none focus:ring-2 ring-blue-500">
+                        </div>
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-semibold">
+                                <tr>
+                                    <th class="px-6 py-4">Elev</th>
+                                    <th class="px-6 py-4">Media</th>
+                                    <th class="px-6 py-4">Absențe</th>
+                                    <th class="px-6 py-4 text-right">Acțiuni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-body" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- GRADES TAB -->
+                <section id="tab-grades" class="hidden space-y-6">
+                    <div class="bg-white rounded-2xl custom-shadow border border-slate-100 overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-semibold">
+                                <tr>
+                                    <th class="px-6 py-4">Elev</th>
+                                    <th class="px-6 py-4">Note</th>
+                                    <th class="px-6 py-4">Media</th>
+                                    <th class="px-6 py-4 text-right">Acțiuni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="grades-body" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ATTENDANCE TAB -->
+                <section id="tab-attendance" class="hidden space-y-6">
+                    <div class="bg-white rounded-2xl custom-shadow border border-slate-100 overflow-hidden">
+                        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                            <h3 class="font-bold text-lg">Registru Prezență <span class="text-slate-400 font-normal" id="todayDate"></span></h3>
+                            <button onclick="saveAttendance()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700">Salvează Prezența</button>
+                        </div>
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-semibold">
+                                <tr>
+                                    <th class="px-6 py-4">Elev</th>
+                                    <th class="px-6 py-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-body" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
     </div>
 
     <!-- MODAL: ADD STUDENT -->
-    <div class="modal" id="studentModal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 1.5rem;">Adaugă Elev Nou</h2>
-            <div class="form-group">
-                <label>Numele Complet</label>
-                <input type="text" id="newStudentName" placeholder="Ex: Ion Popescu">
-            </div>
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="btn btn-outline" onclick="closeModal('studentModal')">Anulează</button>
-                <button class="btn btn-primary" onclick="addStudent()">Adaugă în Catalog</button>
+    <div id="studentModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl transform transition-all scale-100">
+            <h2 class="text-2xl font-bold mb-6">Adaugă Elev Nou</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Numele Complet</label>
+                    <input type="text" id="newStudentName" class="w-full p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 ring-blue-500">
+                </div>
+                <div class="flex gap-3 mt-8">
+                    <button onclick="closeModal('studentModal')" class="flex-1 py-3 rounded-xl font-semibold text-slate-600 hover:bg-slate-100 transition-all">Anulează</button>
+                    <button onclick="addStudent()" class="flex-1 py-3 rounded-xl font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">Salvează</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- MODAL: ADD GRADE -->
-    <div class="modal" id="gradeModal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 1.5rem;">Adaugă Notă</h2>
-            <div class="form-group">
-                <label>Elev</label>
-                <input type="text" id="gradeStudentName" disabled>
-            </div>
-            <div class="form-group">
-                <label>Notă (1-10)</label>
-                <input type="number" id="gradeValue" min="1" max="10">
-            </div>
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="btn btn-outline" onclick="closeModal('gradeModal')">Anulează</button>
-                <button class="btn btn-primary" onclick="saveGrade()">Salvează Nota</button>
+    <div id="gradeModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl">
+            <h2 class="text-2xl font-bold mb-6">Înregistrează Notă</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Elev</label>
+                    <input type="text" id="gradeStudentName" disabled class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Valoare Notă (1-10)</label>
+                    <input type="number" id="gradeValue" min="1" max="10" class="w-full p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 ring-blue-500">
+                </div>
+                <div class="flex gap-3 mt-8">
+                    <button onclick="closeModal('gradeModal')" class="flex-1 py-3 rounded-xl font-semibold text-slate-600 hover:bg-slate-100 transition-all">Anulează</button>
+                    <button onclick="saveGrade()" class="flex-1 py-3 rounded-xl font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">Salvează Nota</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // DATA STATE
+        // --- STATE MANAGEMENT ---
         let state = {
-            students: JSON.parse(localStorage.getItem('edu_students')) || [],
-            attendance: JSON.parse(localStorage.getItem('edu_attendance')) || {}
+            classes: JSON.parse(localStorage.getItem('esp_classes')) || {
+                "a X-A": { students: [] },
+                "a XI-B": { students: [] }
+            },
+            currentClass: "a X-A"
         };
 
         let activeStudentId = null;
+        let gradeChart = null;
 
-        // UTILS
-        const saveToDisk = () => {
-            localStorage.setItem('edu_students', JSON.stringify(state.students));
-            localStorage.setItem('edu_attendance', JSON.stringify(state.attendance));
-            updateDashboard();
-        }
+        const save = () => localStorage.setItem('esp_classes', JSON.stringify(state.classes));
 
-        const calculateAvg = (grades) => {
-            if (!grades || grades.length === 0) return 0;
-            const sum = grades.reduce((a, b) => a + b, 0);
-            return (sum / grades.length).toFixed(2);
-        }
-
-        // TAB SYSTEM
+        // --- UI UTILS ---
         function switchTab(tab) {
-            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tab).classList.remove('hidden');
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
             
-            const titles = { 'dashboard': 'Dashboard General', 'students': 'Lista Elevilor', 'grades': 'Note & Medii', 'attendance': 'Registru Prezențe' };
-            document.getElementById('pageTitle').innerText = titles[tab];
-            
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('tab-active'));
+            document.getElementById(`link-${tab}`).classList.add('tab-active');
 
+            const titles = { 'dashboard': 'Dashboard General', 'students': 'Gestionare Elevi', 'grades': 'Registru Note', 'attendance': 'Registru Prezențe' };
+            document.getElementById('currentTabTitle').innerText = titles[tab];
+
+            if(tab === 'dashboard') renderDashboard();
             if(tab === 'students') renderStudents();
             if(tab === 'grades') renderGrades();
             if(tab === 'attendance') renderAttendance();
         }
 
-        // MODALS
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // STUDENT LOGIC
+        // --- CLASS MANAGEMENT ---
+        function initClassSelector() {
+            const sel = document.getElementById('classSelector');
+            sel.innerHTML = "";
+            Object.keys(state.classes).forEach(c => {
+                sel.innerHTML += `<option value="${c}" ${c === state.currentClass ? 'selected' : ''}>${c}</option>`;
+            });
+        }
+
+        function switchClass(cls) {
+            state.currentClass = cls;
+            document.getElementById('currentClassDisplay').innerText = `Clasa Selectată: ${cls}`;
+            renderDashboard();
+            renderStudents();
+            renderGrades();
+            renderAttendance();
+        }
+
+        // --- STUDENT LOGIC ---
         function addStudent() {
             const name = document.getElementById('newStudentName').value;
-            if(!name) return alert("Te rog introdu numele!");
-
-            state.students.push({
+            if(!name) return;
+            
+            state.classes[state.currentClass].students.push({
                 id: Date.now(),
                 name: name,
                 grades: [],
                 absences: 0
             });
-
-            saveToDisk();
+            
+            save();
             closeModal('studentModal');
             document.getElementById('newStudentName').value = "";
             renderStudents();
         }
 
         function deleteStudent(id) {
-            if(confirm("Sigur vrei să ștergi acest elev?")) {
-                state.students = state.students.filter(s => s.id !== id);
-                saveToDisk();
+            if(confirm("Ștergi elevul?")) {
+                state.classes[state.currentClass].students = state.classes[state.currentClass].students.filter(s => s.id !== id);
+                save();
                 renderStudents();
             }
         }
 
-        // GRADES LOGIC
+        // --- GRADES LOGIC ---
         function openGradeModal(id) {
             activeStudentId = id;
-            const student = state.students.find(s => s.id === id);
+            const student = state.classes[state.currentClass].students.find(s => s.id === id);
             document.getElementById('gradeStudentName').value = student.name;
             openModal('gradeModal');
         }
 
         function saveGrade() {
             const val = parseInt(document.getElementById('gradeValue').value);
-            if(isNaN(val) || val < 1 || val > 10) return alert("Introdu o notă între 1 și 10!");
+            if(isNaN(val) || val < 1 || val > 10) return alert("Nota trebuie să fie între 1 și 10");
 
-            const student = state.students.find(s => s.id === activeStudentId);
+            const student = state.classes[state.currentClass].students.find(s => s.id === activeStudentId);
             student.grades.push(val);
-            
-            saveToDisk();
+            save();
             closeModal('gradeModal');
             renderGrades();
         }
 
-        // ATTENDANCE LOGIC
+        // --- ATTENDANCE ---
         function renderAttendance() {
-            const body = document.getElementById('attendance-list-body');
+            const body = document.getElementById('attendance-body');
             body.innerHTML = "";
-            state.students.forEach(s => {
+            state.classes[state.currentClass].students.forEach(s => {
                 body.innerHTML += `
                     <tr>
-                        <td class="student-name">${s.name}</td>
-                        <td>
-                            <select class="attendance-select" data-id="${s.id}" style="padding: 5px; border-radius: 5px;">
+                        <td class="px-6 py-4 font-semibold">${s.name}</td>
+                        <td class="px-6 py-4">
+                            <select class="att-select bg-slate-50 border p-1 rounded" data-id="${s.id}">
                                 <option value="P">Prezent</option>
                                 <option value="A">Absent</option>
                                 <option value="I">Întârziere</option>
@@ -548,87 +345,135 @@
         }
 
         function saveAttendance() {
-            document.querySelectorAll('.attendance-select').forEach(select => {
-                const id = parseInt(select.dataset.id);
-                const status = select.value;
-                if(status === 'A') {
-                    const student = state.students.find(s => s.id === id);
-                    student.absences += 1;
+            document.querySelectorAll('.att-select').forEach(sel => {
+                if(sel.value === 'A') {
+                    const s = state.classes[state.currentClass].students.find(st => st.id == sel.dataset.id);
+                    s.absences++;
                 }
             });
-            saveToDisk();
-            alert("Prezența a fost salvată!");
+            save();
+            alert("Prezența salvată!");
         }
 
-        // RENDERING
+        // --- ANALYTICS & RENDERING ---
+        function calculateAvg(grades) {
+            if(!grades.length) return 0;
+            return (grades.reduce((a,b) => a+b, 0) / grades.length).toFixed(2);
+        }
+
+        function renderDashboard() {
+            const students = state.classes[state.currentClass].students;
+            const total = students.length;
+            
+            // Stats
+            let classSum = 0;
+            let absTotal = 0;
+            let passed = 0;
+            
+            students.forEach(s => {
+                const avg = parseFloat(calculateAvg(s.grades));
+                classSum += avg;
+                absTotal += s.absences;
+                if(avg >= 5) passed++;
+            });
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-avg').innerText = total ? (classSum/total).toFixed(2) : "0.00";
+            document.getElementById('stat-attendance').innerText = total ? Math.round(100 - (absTotal/total)*10) + "%" : "0%";
+            document.getElementById('stat-pass').innerText = total ? Math.round((passed/total)*100) + "%" : "0%";
+
+            // Top Students
+            const sorted = [...students].sort((a,b) => calculateAvg(b.grades) - calculateAvg(a.grades)).slice(0,5);
+            const topList = document.getElementById('topStudentsList');
+            topList.innerHTML = "";
+            sorted.forEach((s, i) => {
+                topList.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full text-xs font-bold">${i+1}</span>
+                            <span class="text-sm font-medium">${s.name}</span>
+                        </div>
+                        <span class="text-sm font-bold text-blue-600">${calculateAvg(s.grades)}</span>
+                    </div>
+                `;
+            });
+
+            updateChart(students);
+        }
+
+        function updateChart(students) {
+            const ctx = document.getElementById('gradesChart').getContext('2d');
+            const counts = new Array(10).fill(0); // Index 0-9 pentru notele 1-10
+            
+            students.forEach(s => {
+                s.grades.forEach(g => counts[g-1]++);
+            });
+
+            if(gradeChart) gradeChart.destroy();
+            gradeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['1','2','3','4','5','6','7','8','9','10'],
+                    datasets: [{
+                        label: 'Număr Elevi',
+                        data: counts,
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+
         function renderStudents() {
-            const body = document.getElementById('students-list-body');
+            const body = document.getElementById('students-body');
+            const search = document.getElementById('searchStudent').value.toLowerCase();
             body.innerHTML = "";
-            state.students.forEach(s => {
+            
+            state.classes[state.currentClass].students
+                .filter(s => s.name.toLowerCase().includes(search))
+                .forEach(s => {
+                    body.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition-all">
+                            <td class="px-6 py-4 font-semibold">${s.name}</td>
+                            <td class="px-6 py-4">${calculateAvg(s.grades)}</td>
+                            <td class="px-6 py-4"><span class="px-2 py-1 rounded-full text-xs font-bold ${s.absences > 5 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">${s.absences} Abs.</span></td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="deleteStudent(${s.id})" class="text-slate-400 hover:text-red-500 transition-all"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+
+        function renderGrades() {
+            const body = document.getElementById('grades-body');
+            body.innerHTML = "";
+            state.classes[state.currentClass].students.forEach(s => {
                 body.innerHTML += `
-                    <tr>
-                        <td class="student-name">${s.name}</td>
-                        <td>${calculateAvg(s.grades)}</td>
-                        <td><span class="badge ${s.absences > 3 ? 'badge-danger' : 'badge-success'}">${s.absences} Absențe</span></td>
-                        <td>
-                            <button class="btn btn-outline" onclick="deleteStudent(${s.id})" style="color: var(--danger)"><i class="fas fa-trash"></i></button>
+                    <tr class="hover:bg-slate-50 transition-all">
+                        <td class="px-6 py-4 font-semibold">${s.name}</td>
+                        <td class="px-6 py-4 text-sm text-slate-500">${s.grades.join(', ') || 'Fără note'}</td>
+                        <td class="px-6 py-4 font-bold">${calculateAvg(s.grades)}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="openGradeModal(${s.id})" class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold hover:bg-blue-600 hover:text-white transition-all">Adaugă Notă</button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        function renderGrades() {
-            const body = document.getElementById('grades-list-body');
-            body.innerHTML = "";
-            state.students.forEach(s => {
-                body.innerHTML += `
-                    <tr>
-                        <td class="student-name">${s.name}</td>
-                        <td>${s.grades.join(', ') || '-'}</td>
-                        <td><strong>${calculateAvg(s.grades)}</strong></td>
-                        <td><button class="btn btn-primary" onclick="openGradeModal(${s.id})"><i class="fas fa-plus"></i> Notă</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function updateDashboard() {
-            const total = state.students.length;
-            document.getElementById('stat-total-students').innerText = total;
-
-            let classSum = 0;
-            let totalAbs = 0;
-            state.students.forEach(s => {
-                classSum += parseFloat(calculateAvg(s.grades));
-                totalAbs += s.absences;
-            });
-
-            document.getElementById('stat-class-avg').innerText = total > 0 ? (classSum / total).toFixed(2) : "0.00";
-            document.getElementById('stat-total-absences').innerText = totalAbs;
-
-            // Top Students
-            const sorted = [...state.students].sort((a,b) => calculateAvg(b.grades) - calculateAvg(a.grades)).slice(0, 5);
-            const topBody = document.getElementById('top-students-body');
-            topBody.innerHTML = "";
-            sorted.forEach(s => {
-                topBody.innerHTML += `
-                    <tr>
-                        <td class="student-name">${s.name}</td>
-                        <td>${calculateAvg(s.grades)}</td>
-                        <td><span class="badge badge-success">Excelent</span></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function exportData() {
-            window.print();
-        }
+        function exportToPDF() { window.print(); }
 
         // INIT
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString();
-        updateDashboard();
+        window.onload = () => {
+            initClassSelector();
+            document.getElementById('todayDate').innerText = new Date().toLocaleDateString('ro-RO');
+            renderDashboard();
+        };
     </script>
 </body>
 </html>
