@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA Tech | Premium Electronics Store</title>
+    <title>EduManage Pro | Catalogul Electronic al Profesorului</title>
     
-    <!-- Google Fonts: Inter & Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* Paletă de culori Premium Dark */
-            --bg-deep: #0f172a;
-            --bg-card: #1e293b;
-            --accent: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --white: #ffffff;
-            --glass: rgba(30, 41, 59, 0.7);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.2s ease;
         }
 
         * {
@@ -32,599 +34,601 @@
         }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* --- CUSTOM SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 1.5rem 5%;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: var(--transition);
+            min-height: 100vh;
         }
 
-        .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--white);
-            text-decoration: none;
-            letter-spacing: -1px;
-        }
-
-        .logo span { color: var(--accent); }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box input {
-            background: var(--bg-deep);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            border-radius: 12px;
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: #0f172a;
             color: white;
-            width: 250px;
-            transition: var(--transition);
-        }
-
-        .search-box input:focus {
-            width: 350px;
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            color: var(--text-muted);
-        }
-
-        .cart-trigger {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.4rem;
-            transition: var(--transition);
-        }
-
-        .cart-trigger:hover { color: var(--accent); }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -10px;
-            background: var(--accent);
-            color: var(--bg-deep);
-            font-size: 0.7rem;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 60vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 10%;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            margin-top: 80px;
-        }
-
-        .hero h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: clamp(2rem, 5vw, 4rem);
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
-
-        /* --- CATEGORIES --- */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
-        .cat-btn {
-            background: var(--bg-card);
-            color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.7rem 1.5rem;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--accent);
-            color: var(--bg-deep);
-            border-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        /* --- CATALOG GRID --- */
-        .catalog {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-            padding: 0 5% 5rem;
-        }
-
-        .product-card {
-            background: var(--bg-card);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .product-card:hover {
-            transform: translateY(-12px);
-            box-shadow: var(--shadow);
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        .product-img-wrapper {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            background: #0f172a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .product-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            position: fixed;
+            height: 100vh;
             transition: var(--transition);
         }
 
-        .product-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .product-details {
-            padding: 1.5rem;
-        }
-
-        .product-details h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
-
-        .product-details p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            height: 40px;
-            overflow: hidden;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
+        .sidebar-header {
+            padding: 2rem 1.5rem;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--accent);
-        }
-
-        .btn-add {
-            background: var(--accent);
-            color: var(--bg-deep);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .btn-add:hover {
-            background: var(--white);
-            transform: rotate(90deg);
+        .sidebar-header span { color: var(--primary); }
+
+        .nav-menu {
+            padding: 1.5rem 0;
+            flex-grow: 1;
         }
 
-        /* --- CART DRAWER --- */
-        .cart-drawer {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 400px;
-            height: 100%;
-            background: var(--bg-card);
-            z-index: 2000;
-            transition: var(--transition);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        .nav-item {
+            padding: 0.8rem 1.5rem;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-left-color: var(--primary);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
             padding: 2rem;
         }
 
-        .cart-drawer.open { right: 0; }
-
-        .cart-header {
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 1rem;
         }
 
-        .close-cart {
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--text-muted);
+        .user-info h1 { font-size: 1.8rem; font-weight: 700; }
+        .user-info p { color: var(--text-muted); }
+
+        /* --- DASHBOARD CARDS --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .cart-items {
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        .cart-item {
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
             display: flex;
-            gap: 1rem;
             align-items: center;
-            margin-bottom: 1.5rem;
-            background: var(--bg-deep);
-            padding: 1rem;
-            border-radius: 15px;
+            gap: 1.5rem;
+            border: 1px solid var(--border);
         }
 
-        .cart-item img {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            object-fit: cover;
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
         }
 
-        .cart-item-info h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
-        .cart-item-info p { color: var(--accent); font-weight: 600; font-size: 0.8rem; }
+        .stat-info h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .stat-info p { font-size: 1.5rem; font-weight: 700; }
 
-        .cart-footer {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1.5rem;
+        /* --- DATA TABLE --- */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
         }
 
-        .total-box {
+        .table-actions {
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
         }
 
-        .checkout-btn {
+        table {
             width: 100%;
-            padding: 1rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
+            border-collapse: collapse;
+            text-align: left;
         }
 
-        .checkout-btn:hover { background: var(--white); color: var(--bg-deep); }
+        th {
+            background: #f1f5f9;
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
 
-        /* --- MODAL --- */
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .student-name { font-weight: 600; color: var(--text-dark); }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+
+        /* --- FORMS & MODALS --- */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-dark); }
+        .btn-outline:hover { background: #f1f5f9; }
+
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 3000;
+            background: rgba(0,0,0,0.5);
             display: none;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
-            background: var(--bg-card);
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
+        .form-group input {
             width: 100%;
-            max-width: 800px;
-            border-radius: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow: hidden;
-            position: relative;
-            animation: modalAnim 0.4s ease;
+            padding: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
         }
 
-        @keyframes modalAnim {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        .input-group-grade {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
-        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- UTILS --- */
+        .hidden { display: none; }
 
-        .modal-info { padding: 3rem; position: relative; }
-        
-        .close-modal {
-            position: absolute;
-            top: 20px; right: 20px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 768px) {
-            .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
-            .modal-img { height: 300px; }
-            .nav-actions .search-box input { width: 150px; }
-            .nav-actions .search-box input:focus { width: 200px; }
+        @media (max-width: 1024px) {
+            .sidebar { width: 80px; }
+            .sidebar-header span, .nav-item span { display: none; }
+            .main-content { margin-left: 80px; width: calc(100% - 80px); }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">LUMINA<span>TECH</span></a>
-        <div class="nav-actions">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Caută tehnologie...">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-graduation-cap"></i>
+            <span>EduManage<span>Pro</span></span>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="switchTab('dashboard')">
+                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
             </div>
-            <div class="cart-trigger" id="cartTrigger">
-                <i class="fas fa-shopping-bag"></i>
-                <span class="cart-badge" id="cartCount">0</span>
+            <div class="nav-item" onclick="switchTab('students')">
+                <i class="fas fa-users"></i> <span>Elevi</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('grades')">
+                <i class="fas fa-star"></i> <span>Note & Medii</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('attendance')">
+                <i class="fas fa-calendar-check"></i> <span>Prezențe</span>
             </div>
         </div>
-    </nav>
-
-    <section class="hero">
-        <h1>Viitorul începe aici.</h1>
-        <p>Experimentați performanță fără precedent cu colecția noastră de dispozitive premium selectate pentru profesioniști.</p>
-        <div class="categories" id="categoryFilters">
-            <button class="cat-btn active" data-cat="all">Toate</button>
-            <button class="cat-btn" data-cat="laptop">Laptopuri</button>
-            <button class="cat-btn" data-cat="telefon">Telefoane</button>
-            <button class="cat-btn" data-cat="audio">Audio</button>
-            <button class="cat-btn" data-cat="gaming">Gaming</button>
-        </div>
-    </section>
-
-    <main class="catalog" id="catalogGrid"></main>
-
-    <!-- CART DRAWER -->
-    <div class="cart-drawer" id="cartDrawer">
-        <div class="cart-header">
-            <h2>Coșul Tău</h2>
-            <i class="fas fa-times close-cart" id="closeCart"></i>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <!-- Items generate via JS -->
-        </div>
-        <div class="cart-footer">
-            <div class="total-box">
-                <span>Total:</span>
-                <span id="cartTotal">0 RON</span>
-            </div>
-            <button class="checkout-btn">Finalizează Comanda</button>
+        <div class="nav-item" style="margin-bottom: 2rem;" onclick="exportData()">
+            <i class="fas fa-file-export"></i> <span>Export Raport</span>
         </div>
     </div>
 
-    <!-- PRODUCT MODAL -->
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <img src="" alt="" class="modal-img" id="modalImg">
-            <div class="modal-info">
-                <i class="fas fa-times close-modal" id="closeModal"></i>
-                <span id="modalCat" style="color: var(--accent); font-weight: 600; text-transform: uppercase; font-size: 0.8rem;"></span>
-                <h2 id="modalTitle" style="font-size: 2rem; margin: 0.5rem 0 1rem;"></h2>
-                <p id="modalDesc" style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.6;"></p>
-                <div class="card-footer" style="margin-bottom: 2rem;">
-                    <span id="modalPrice" class="price"></span>
-                    <button class="btn-add" id="modalAddBtn" style="width: auto; padding: 0 1.5rem; border-radius: 10px; font-size: 1rem; color: var(--bg-deep); font-weight: 700;">
-                        Adaugă în Coș
-                    </button>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <header>
+            <div class="user-info">
+                <h1 id="pageTitle">Dashboard General</h1>
+                <p>Bun venit, Prof. Andrei Popescu | Clasa a X-A</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('studentModal')">
+                <i class="fas fa-plus"></i> Adaugă Elev
+            </button>
+        </header>
+
+        <!-- DASHBOARD SECTION -->
+        <div id="tab-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #dbeafe; color: #1e40af;"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Elevi</h3>
+                        <p id="stat-total-students">0</p>
+                    </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #dcfce7; color: #166534;"><i class="fas fa-chart-bar"></i></div>
+                    <div class="stat-info">
+                        <h3>Media Clasei</h3>
+                        <p id="stat-class-avg">0.00</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fee2e2; color: #991b1b;"><i class="fas fa-user-slash"></i></div>
+                    <div class="stat-info">
+                        <h3>Absențe Total</h3>
+                        <p id="stat-total-absences">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-actions">
+                    <h3 style="font-weight: 600;">Top Performanțe</h3>
+                    <button class="btn btn-outline" onclick="switchTab('grades')">Vezi toate notele</button>
+                </div>
+                <table id="top-students-table">
+                    <thead>
+                        <tr>
+                            <th>Elev</th>
+                            <th>Media</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top-students-body">
+                        <!-- JS generated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- STUDENTS SECTION -->
+        <div id="tab-students" class="hidden">
+            <div class="table-container">
+                <div class="table-actions">
+                    <h3 style="font-weight: 600;">Lista Elevilor</h3>
+                    <div class="search-box">
+                        <input type="text" id="studentSearch" placeholder="Caută elev..." style="padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nume Elev</th>
+                            <th>Media</th>
+                            <th>Prezență</th>
+                            <th>Acțiuni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-list-body">
+                        <!-- JS generated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- GRADES SECTION -->
+        <div id="tab-grades" class="hidden">
+            <div class="table-container">
+                <div class="table-actions">
+                    <h3 style="font-weight: 600;">Gestionare Note</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elev</th>
+                            <th>Note</th>
+                            <th>Media</th>
+                            <th>Acțiune</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grades-list-body">
+                        <!-- JS generated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE SECTION -->
+        <div id="tab-attendance" class="hidden">
+            <div class="table-container">
+                <div class="table-actions">
+                    <h3 style="font-weight: 600;">Registru Prezențe - Data: <span id="current-date"></span></h3>
+                    <button class="btn btn-outline" onclick="saveAttendance()">Salvează Prezența</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elev</th>
+                            <th>Status Prezență</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-list-body">
+                        <!-- JS generated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD STUDENT -->
+    <div class="modal" id="studentModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">Adaugă Elev Nou</h2>
+            <div class="form-group">
+                <label>Numele Complet</label>
+                <input type="text" id="newStudentName" placeholder="Ex: Ion Popescu">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn btn-outline" onclick="closeModal('studentModal')">Anulează</button>
+                <button class="btn btn-primary" onclick="addStudent()">Adaugă în Catalog</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD GRADE -->
+    <div class="modal" id="gradeModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">Adaugă Notă</h2>
+            <div class="form-group">
+                <label>Elev</label>
+                <input type="text" id="gradeStudentName" disabled>
+            </div>
+            <div class="form-group">
+                <label>Notă (1-10)</label>
+                <input type="number" id="gradeValue" min="1" max="10">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn btn-outline" onclick="closeModal('gradeModal')">Anulează</button>
+                <button class="btn btn-primary" onclick="saveGrade()">Salvează Nota</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Baza de date extinsă
-        const PRODUCTS = [
-            { id: 1, title: "ZenBook Pro Duo", cat: "laptop", price: 8900, desc: "Dual screen, OLED 4K, Intel i9, 32GB RAM. Ideal pentru editare video.", image: "https://images.unsplash.com/photo-1541807084-6a4acc990573?auto=format&fit=crop&w=600" },
-            { id: 2, title: "Pixel 7 Pro", cat: "telefon", price: 4200, desc: "Google AI Camera, 120Hz LTPO display, baterie 5000mAh.", image: "https://images.unsplash.com/photo-1678911820864-1974564669c2?auto=format&fit=crop&w=600" },
-            { id: 3, title: "AirPods Max", cat: "audio", price: 2100, desc: "Active Noise Cancellation, Spatial Audio, design premium din aluminiu.", image: "https://images.unsplash.com/photo-1588423770574-91993ca0727a?auto=format&fit=crop&w=600" },
-            { id: 4, title: "RTX 4090 GPU", cat: "gaming", price: 8500, desc: "Cea mai puternică placă video din lume, 24GB VRAM, DLSS 3.", image: "https://images.unsplash.com/photo-1591488376768-f9967663317d?auto=format&fit=crop&w=600" },
-            { id: 5, title: "MacBook Air M2", cat: "laptop", price: 6100, desc: "Ultra-thin, silent design, bateria rezistă 18 ore, cip M2.", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600" },
-            { id: 6, title: "Samsung S23 Ultra", cat: "telefon", price: 5400, desc: "S Pen inclus, Zoom 100x, ecran Dynamic AMOLED 2X.", image: "https://images.unsplash.com/photo-1678911820864-1974564669c2?auto=format&fit=crop&w=600" },
-            { id: 7, title: "Keychron K2", cat: "gaming", price: 600, desc: "Tastatură mecanică hot-swappable, RGB, compatibilă Mac/Win.", image: "https://images.unsplash.com/photo-1511467687858-23d96c377401?auto=format&fit=crop&w=600" },
-            { id: 8, title: "Sony WH-1000XM5", cat: "audio", price: 1600, desc: "Liderul pieței în anularea zgomotului, autonomie 30h.", image: "https://images.unsplash.com/photo-1505740420928-5e5647149055?auto=format&fit=crop&w=600" },
-        ];
-
-        // Starea globală a aplicației
+        // DATA STATE
         let state = {
-            cart: JSON.parse(localStorage.getItem('lumina_cart')) || [],
-            filter: 'all',
-            searchTerm: ''
+            students: JSON.parse(localStorage.getItem('edu_students')) || [],
+            attendance: JSON.parse(localStorage.getItem('edu_attendance')) || {}
         };
 
-        // DOM Elements
-        const grid = document.getElementById('catalogGrid');
-        const cartDrawer = document.getElementById('cartDrawer');
-        const modal = document.getElementById('productModal');
+        let activeStudentId = null;
 
-        // --- FUNCTII CORE ---
-
-        function saveCart() {
-            localStorage.setItem('lumina_cart', JSON.stringify(state.cart));
-            updateCartUI();
+        // UTILS
+        const saveToDisk = () => {
+            localStorage.setItem('edu_students', JSON.stringify(state.students));
+            localStorage.setItem('edu_attendance', JSON.stringify(state.attendance));
+            updateDashboard();
         }
 
-        function updateCartUI() {
-            const itemsContainer = document.getElementById('cartItems');
-            const countBadge = document.getElementById('cartCount');
-            const totalDisplay = document.getElementById('cartTotal');
-            
-            itemsContainer.innerHTML = "";
-            let total = 0;
-            let count = 0;
+        const calculateAvg = (grades) => {
+            if (!grades || grades.length === 0) return 0;
+            const sum = grades.reduce((a, b) => a + b, 0);
+            return (sum / grades.length).toFixed(2);
+        }
 
-            state.cart.forEach((item, index) => {
-                total += item.price;
-                count++;
-                itemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.image}">
-                        <div class="cart-item-info">
-                            <h4>${item.title}</h4>
-                            <p>${item.price} RON</p>
-                        </div>
-                        <i class="fas fa-trash" style="margin-left:auto; cursor:pointer; color:#ff4d4d" onclick="removeFromCart(${index})"></i>
-                    </div>
-                `;
+        // TAB SYSTEM
+        function switchTab(tab) {
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+            
+            const titles = { 'dashboard': 'Dashboard General', 'students': 'Lista Elevilor', 'grades': 'Note & Medii', 'attendance': 'Registru Prezențe' };
+            document.getElementById('pageTitle').innerText = titles[tab];
+            
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            if(tab === 'students') renderStudents();
+            if(tab === 'grades') renderGrades();
+            if(tab === 'attendance') renderAttendance();
+        }
+
+        // MODALS
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // STUDENT LOGIC
+        function addStudent() {
+            const name = document.getElementById('newStudentName').value;
+            if(!name) return alert("Te rog introdu numele!");
+
+            state.students.push({
+                id: Date.now(),
+                name: name,
+                grades: [],
+                absences: 0
             });
 
-            countBadge.innerText = count;
-            totalDisplay.innerText = `${total} RON`;
+            saveToDisk();
+            closeModal('studentModal');
+            document.getElementById('newStudentName').value = "";
+            renderStudents();
         }
 
-        function addToCart(id) {
-            const product = PRODUCTS.find(p => p.id === id);
-            state.cart.push(product);
-            saveCart();
-            
-            // Feedback vizual
-            const btn = document.querySelector('.btn-add');
-            if(btn) {
-                btn.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => btn.innerHTML = '<i class="fas fa-plus"></i>', 1000);
+        function deleteStudent(id) {
+            if(confirm("Sigur vrei să ștergi acest elev?")) {
+                state.students = state.students.filter(s => s.id !== id);
+                saveToDisk();
+                renderStudents();
             }
         }
 
-        window.removeFromCart = function(index) {
-            state.cart.splice(index, 1);
-            saveCart();
+        // GRADES LOGIC
+        function openGradeModal(id) {
+            activeStudentId = id;
+            const student = state.students.find(s => s.id === id);
+            document.getElementById('gradeStudentName').value = student.name;
+            openModal('gradeModal');
         }
 
-        function renderCatalog() {
-            grid.innerHTML = "";
-            const filtered = PRODUCTS.filter(p => {
-                const matchCat = state.filter === 'all' || p.cat === state.filter;
-                const matchSearch = p.title.toLowerCase().includes(state.searchTerm.toLowerCase());
-                return matchCat && matchSearch;
-            });
+        function saveGrade() {
+            const val = parseInt(document.getElementById('gradeValue').value);
+            if(isNaN(val) || val < 1 || val > 10) return alert("Introdu o notă între 1 și 10!");
 
-            filtered.forEach(p => {
-                grid.innerHTML += `
-                    <div class="product-card" onclick="openModal(${p.id})">
-                        <div class="product-img-wrapper">
-                            <img src="${p.image}" alt="${p.title}">
-                        </div>
-                        <div class="product-details">
-                            <h3>${p.title}</h3>
-                            <p>${p.desc}</p>
-                            <div class="card-footer">
-                                <span class="price">${p.price} RON</span>
-                                <button class="btn-add" onclick="event.stopPropagation(); addToCart(${p.id})">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            const student = state.students.find(s => s.id === activeStudentId);
+            student.grades.push(val);
+            
+            saveToDisk();
+            closeModal('gradeModal');
+            renderGrades();
+        }
+
+        // ATTENDANCE LOGIC
+        function renderAttendance() {
+            const body = document.getElementById('attendance-list-body');
+            body.innerHTML = "";
+            state.students.forEach(s => {
+                body.innerHTML += `
+                    <tr>
+                        <td class="student-name">${s.name}</td>
+                        <td>
+                            <select class="attendance-select" data-id="${s.id}" style="padding: 5px; border-radius: 5px;">
+                                <option value="P">Prezent</option>
+                                <option value="A">Absent</option>
+                                <option value="I">Întârziere</option>
+                            </select>
+                        </td>
+                    </tr>
                 `;
             });
         }
 
-        // --- INTERACTIUNI UI ---
-
-        window.openModal = function(id) {
-            const p = PRODUCTS.find(prod => prod.id === id);
-            document.getElementById('modalImg').src = p.image;
-            document.getElementById('modalTitle').innerText = p.title;
-            document.getElementById('modalDesc').innerText = p.desc;
-            document.getElementById('modalPrice').innerText = `${p.price} RON`;
-            document.getElementById('modalCat').innerText = p.cat;
-            document.getElementById('modalAddBtn').onclick = () => addToCart(p.id);
-            modal.style.display = 'flex';
+        function saveAttendance() {
+            document.querySelectorAll('.attendance-select').forEach(select => {
+                const id = parseInt(select.dataset.id);
+                const status = select.value;
+                if(status === 'A') {
+                    const student = state.students.find(s => s.id === id);
+                    student.absences += 1;
+                }
+            });
+            saveToDisk();
+            alert("Prezența a fost salvată!");
         }
 
-        // Event Listeners
-        document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
-        document.getElementById('cartTrigger').onclick = () => cartDrawer.classList.add('open');
-        document.getElementById('closeCart').onclick = () => cartDrawer.classList.remove('open');
-        
-        document.getElementById('searchInput').oninput = (e) => {
-            state.searchTerm = e.target.value;
-            renderCatalog();
-        };
+        // RENDERING
+        function renderStudents() {
+            const body = document.getElementById('students-list-body');
+            body.innerHTML = "";
+            state.students.forEach(s => {
+                body.innerHTML += `
+                    <tr>
+                        <td class="student-name">${s.name}</td>
+                        <td>${calculateAvg(s.grades)}</td>
+                        <td><span class="badge ${s.absences > 3 ? 'badge-danger' : 'badge-success'}">${s.absences} Absențe</span></td>
+                        <td>
+                            <button class="btn btn-outline" onclick="deleteStudent(${s.id})" style="color: var(--danger)"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
 
-        document.getElementById('categoryFilters').onclick = (e) => {
-            if(e.target.classList.contains('cat-btn')) {
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                state.filter = e.target.dataset.cat;
-                renderCatalog();
-            }
-        };
+        function renderGrades() {
+            const body = document.getElementById('grades-list-body');
+            body.innerHTML = "";
+            state.students.forEach(s => {
+                body.innerHTML += `
+                    <tr>
+                        <td class="student-name">${s.name}</td>
+                        <td>${s.grades.join(', ') || '-'}</td>
+                        <td><strong>${calculateAvg(s.grades)}</strong></td>
+                        <td><button class="btn btn-primary" onclick="openGradeModal(${s.id})"><i class="fas fa-plus"></i> Notă</button></td>
+                    </tr>
+                `;
+            });
+        }
 
-        // Init
-        renderCatalog();
-        updateCartUI();
+        function updateDashboard() {
+            const total = state.students.length;
+            document.getElementById('stat-total-students').innerText = total;
 
+            let classSum = 0;
+            let totalAbs = 0;
+            state.students.forEach(s => {
+                classSum += parseFloat(calculateAvg(s.grades));
+                totalAbs += s.absences;
+            });
+
+            document.getElementById('stat-class-avg').innerText = total > 0 ? (classSum / total).toFixed(2) : "0.00";
+            document.getElementById('stat-total-absences').innerText = totalAbs;
+
+            // Top Students
+            const sorted = [...state.students].sort((a,b) => calculateAvg(b.grades) - calculateAvg(a.grades)).slice(0, 5);
+            const topBody = document.getElementById('top-students-body');
+            topBody.innerHTML = "";
+            sorted.forEach(s => {
+                topBody.innerHTML += `
+                    <tr>
+                        <td class="student-name">${s.name}</td>
+                        <td>${calculateAvg(s.grades)}</td>
+                        <td><span class="badge badge-success">Excelent</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function exportData() {
+            window.print();
+        }
+
+        // INIT
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString();
+        updateDashboard();
     </script>
 </body>
 </html>
