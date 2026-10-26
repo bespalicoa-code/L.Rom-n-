@@ -1,614 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOVA EDU | Intelligence Management System</title>
-    
-    <!-- Tehnologii Externe -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.4);
-            --glass: rgba(255, 255, 255, 0.7);
-            --glass-dark: rgba(15, 23, 42, 0.8);
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0;
-            overflow: hidden; /* Three.js fundalul gestionează scroll-ul */
-            background: #0f172a;
-            color: #f1f5f9;
-        }
-
-        /* Fundal 3D */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* Interfață Glassmorphic */
-        .glass-panel {
-            background: var(--glass);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-        }
-
-        .dark-glass {
-            background: var(--glass-dark);
-            backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Animații de Pagină */
-        .page-transition {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Sidebar Styling */
-        .sidebar-link {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar-link.active {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        /* 3D Card Effect */
-        .stat-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .stat-card:hover {
-            transform: rotateX(5deg) rotateY(5deg) translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-
-        .hidden { display: none; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Catalog electronic pentru management școlar">
+  <title>EduCatalog — Catalog electronic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f5f7fb;--surface:#fff;--surface-2:#f8fafc;--text:#14213d;--muted:#718096;--line:#e7ebf2;--brand:#315bea;--brand-2:#6d5dfc;--success:#0e9f6e;--warning:#d68b16;--danger:#dc4b68;--shadow:0 18px 50px rgba(38,54,92,.08)}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:14px 'DM Sans',sans-serif} button,input,select{font:inherit} button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:260px;background:#111b35;color:#c5cee2;padding:24px 16px;display:flex;flex-direction:column;flex-shrink:0}.brand{display:flex;gap:11px;align-items:center;padding:4px 12px 34px;color:white;font:800 21px Manrope,sans-serif}.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#5874ff,#8b6cff);display:grid;place-items:center;color:white}.brand span{color:#91a7ff}.nav-label{color:#697898;text-transform:uppercase;font-size:10px;font-weight:700;letter-spacing:1.3px;padding:0 13px;margin:10px 0}.nav{display:grid;gap:5px}.nav button{color:#aeb9d1;background:transparent;text-align:left;padding:12px 13px;border-radius:11px;display:flex;align-items:center;gap:12px;transition:.2s}.nav button:hover,.nav button.active{background:#293a75;color:white}.nav button.active{box-shadow:inset 3px 0 #91a7ff}.sidebar-footer{margin-top:auto;border-top:1px solid #263352;padding:18px 8px 0}.profile{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#e0e7ff;color:#315bea;font-weight:700}.profile strong{display:block;color:white;font-size:13px}.profile small{color:#7684a4}.main{min-width:0;flex:1}.topbar{height:76px;background:rgba(255,255,255,.88);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:5}.topbar h1{font:800 23px Manrope;margin:0}.topbar p{margin:4px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;align-items:center;gap:12px}.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;width:230px}.search input{border:0;outline:0;background:transparent;width:100%;color:var(--text)}.icon-btn{background:var(--surface);border:1px solid var(--line);color:var(--muted);width:38px;height:38px;border-radius:10px}.content{padding:30px;max-width:1500px;margin:auto}.page{display:none}.page.active{display:block;animation:rise .25s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.welcome{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.welcome h2{font:800 25px Manrope;margin:0 0 6px}.welcome p{color:var(--muted);margin:0}.primary{background:var(--brand);color:white;padding:11px 16px;border-radius:10px;font-weight:700;box-shadow:0 8px 18px #315bea2b}.primary:hover{background:#264bd1}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.stat{padding:20px;display:flex;justify-content:space-between;align-items:start}.stat-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:18px}.blue{background:#e9efff;color:#315bea}.green{background:#e3f8ef;color:var(--success)}.orange{background:#fff3da;color:var(--warning)}.pink{background:#ffe9ef;color:var(--danger)}.stat small{display:block;color:var(--muted);font-weight:600}.stat strong{font:800 26px Manrope;display:block;margin-top:8px}.trend{color:var(--success);font-size:11px;margin-top:8px;display:block}.dashboard-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-top:16px}.panel{padding:22px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.panel h3{font-size:16px;margin:0}.muted{color:var(--muted)}.chart{height:210px;display:flex;align-items:end;gap:10px;padding:15px 8px 0;border-bottom:1px solid var(--line)}.bar{flex:1;background:linear-gradient(180deg,#7790ff,#315bea);border-radius:7px 7px 0 0;min-height:12px;position:relative}.bar label{position:absolute;bottom:-23px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted)}.ranking{display:grid;gap:10px}.rank{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--surface-2)}.rank-no{width:24px;height:24px;border-radius:7px;background:#e9efff;color:var(--brand);display:grid;place-items:center;font-weight:700;font-size:11px}.rank-name{flex:1;font-weight:600}.rank-grade{font-weight:700;color:var(--brand)}.section-card{overflow:hidden}.section-head{padding:20px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.section-head h2{font:800 18px Manrope;margin:0}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:650px}th,td{text-align:left;padding:15px 22px;border-bottom:1px solid var(--line)}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;background:var(--surface-2)}td{font-size:13px}.student{display:flex;align-items:center;gap:10px;font-weight:700}.student .avatar{width:32px;height:32px;font-size:11px}.badge{display:inline-flex;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700}.badge.good{color:var(--success);background:#e3f8ef}.badge.mid{color:var(--warning);background:#fff3da}.badge.low{color:var(--danger);background:#ffe9ef}.actions{display:flex;gap:7px}.small-btn{background:#eef2ff;color:var(--brand);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:700}.small-btn.danger{background:#fff0f3;color:var(--danger)}.toolbar{display:flex;gap:10px}.toolbar input,.toolbar select,.field input,.field select{border:1px solid var(--line);background:var(--surface-2);padding:9px 11px;border-radius:9px;outline:0}.toolbar input:focus,.field input:focus{border-color:var(--brand)}.empty{text-align:center;color:var(--muted);padding:45px}.modal{position:fixed;inset:0;background:#101a3580;display:none;place-items:center;z-index:20;padding:16px}.modal.open{display:grid}.modal-box{width:min(440px,100%);background:white;border-radius:18px;padding:25px;box-shadow:0 25px 70px #0e183855}.modal-box h2{font:800 20px Manrope;margin:0 0 20px}.field{display:grid;gap:7px;margin-bottom:15px}.field label{font-weight:700;font-size:12px}.field input,.field select{width:100%;padding:11px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.secondary{background:#eef1f6;color:var(--muted);padding:11px 15px;border-radius:9px;font-weight:700}.toast{position:fixed;right:24px;bottom:24px;background:#14213d;color:#fff;padding:13px 17px;border-radius:10px;box-shadow:var(--shadow);display:none;z-index:30}.toast.show{display:block;animation:rise .2s ease}@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}.sidebar{width:220px}}@media(max-width:700px){.sidebar{width:66px;padding:16px 8px}.brand{padding:4px 6px 25px}.brand-text,.nav-label,.nav button span,.sidebar-footer .profile div{display:none}.nav button{justify-content:center;padding:12px}.sidebar-footer{padding:15px 0}.profile{justify-content:center}.topbar{padding:0 16px}.topbar p,.search{display:none}.content{padding:18px}.welcome{align-items:flex-start;gap:12px}.welcome h2{font-size:20px}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:21px}.section-head{align-items:flex-start;gap:12px;flex-wrap:wrap}.toolbar{width:100%}.toolbar input{flex:1}}
+  </style>
 </head>
 <body>
-
-    <!-- 3D Background Container -->
-    <div id="canvas-container"></div>
-
-    <div class="flex h-screen w-full overflow-hidden">
-        
-        <!-- SIDEBAR -->
-        <aside class="w-72 dark-glass h-full flex flex-col text-slate-300 z-10">
-            <div class="p-8 flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/50">
-                    N
-                </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight font-['Outfit']">NOVA<span class="text-indigo-400">EDU</span></span>
-            </div>
-
-            <nav class="flex-1 px-4 space-y-2">
-                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest px-4 mb-4">Management</div>
-                
-                <a href="#" onclick="switchPage('dashboard')" class="sidebar-link active flex items-center gap-3 p-3 rounded-xl text-sm font-medium" id="link-dashboard">
-                    <i class="fa-solid fa-chart-line w-5"></i> Dashboard
-                </a>
-                <a href="#" onclick="switchPage('students')" class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-sm font-medium" id="link-students">
-                    <i class="fa-solid fa-user-group w-5"></i> Elevi și Clase
-                </a>
-                <a href="#" onclick="switchPage('grades')" class="sidebar-//link flex items-center gap-3 p-3 rounded-xl text-sm font-medium" id="link-grades">
-                    <i class="fa-solid fa-graduation-cap w-5"></i> Registrul Notelor
-                </a>
-                <a href="#" onclick="switchPage('attendance')" class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-sm font-medium" id="link-attendance">
-                    <i class="fa-solid fa-calendar-check w-5"></i> Prezențe
-                </a>
-
-                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest px-4 mt-8 mb-4">Sistem</div>
-                <a href="#" onclick="switchPage('settings')" class="sidebar-link flex items-center gap-3 p-3 rounded-xl text-sm font-medium" id="link-settings">
-                    <i class="fa-solid fa-sliders w-5"></i> Configurare
-                </a>
-            </nav>
-
-            <div class="p-6 bg-slate-900/50 border-t border-white/10">
-                <div class="flex items-center gap-3 p-2 rounded-2xl bg-white/5 border border-white/10">
-                    <img src="https://ui-avatars.com/api/?name=Prof+Andrei&background=6366f1&color=fff" class="w-10 h-10 rounded-lg">
-                    <div class="overflow-hidden">
-                        <p class="text-sm font-bold text-white truncate">Prof. Andrei</p>
-                        <p class="text-xs text-slate-500 truncate">Admin System</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="flex-1 flex flex-col overflow-hidden relative">
-            
-            <!-- TOPBAR -->
-            <header class="h-20 glass-panel flex items-center justify-between px-8 z-10">
-                <div class="flex items-center gap-4">
-                    <h1 id="page-title" class="text-2xl font-bold text-slate-800 font-['Outfit']">Dashboard</h1>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input type="text" placeholder="Caută elev..." class="pl-10 pr-4 py-2 rounded-full border border-slate-200 bg-white/50 focus:ring-2 ring-indigo-500 outline-none transition-all w-64 text-sm">
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 cursor-pointer hover:bg-slate-200 transition-all">
-                        <i class="fa-solid fa-bell"></i>
-                    </div>
-                </div>
-            </header>
-
-            <!-- CONTENT AREA -->
-            <div class="flex-1 overflow-y-auto p-8 space-y-8" id="main-scroll">
-                
-                <!-- PAGE: DASHBOARD -->
-                <section id="page-dashboard" class="page-transition space-y-8">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        <div class="stat-card glass-panel p-6 rounded-3xl">
-                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl mb-4">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
-                            <p class="text-slate-500 text-sm font-medium">Total Elevi</p>
-                            <h2 class="text-3xl font-extrabold text-slate-800" id="stat-students">0</h2>
-                        </div>
-                        <div class="stat-card glass-panel p-6 rounded-3xl">
-                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl mb-4">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <p class="text-slate-500 text-sm font-medium">Media Clasei</p>
-                            <h2 class="text-3xl font-extrabold text-slate-800" id="stat-avg">0.00</h2>
-                        </div>
-                        <div class="stat-card glass-panel p-6 rounded-3xl">
-                            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl mb-4">
-                                <i class="fa-solid fa-circle-exclamation"></i>
-                            </div>
-                            <p class="text-slate-500 text-sm font-medium">Absențe</p>
-                            <h2 class="text-3xl font-extrabold text-slate-800" id="stat-abs">0</h2>
-                        </div>
-                        <div class="stat-card glass-panel p-6 rounded-3xl">
-                            <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-xl mb-4">
-                                <i class="fa-solid fa-chart-line"></i>
-                            </div>
-                            <p class="text-slate-500 text-sm font-medium">Promovabilitate</p>
-                            <h2 class="text-3xl font-extrabold text-slate-800" id="stat-pass">0%</h2>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-2 glass-panel p-8 rounded-3xl">
-                            <h3 class="text-xl font-bold text-slate-800 mb-6">Analiza Performanței</h3>
-                            <canvas id="analyticsChart" height="100"></canvas>
-                        </div>
-                        <div class="glass-panel p-8 rounded-3xl">
-                            <h3 class="text-xl font-bold text-slate-800 mb-6">Top Performanțe</h3>
-                            <div id="top-students" class="space-y-4">
-                                <!-- JS Generated -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PAGE: STUDENTS -->
-                <section id="page-students" class="hidden page-transition">
-                    <div class="glass-panel rounded-3xl overflow-hidden">
-                        <div class="p-6 border-b border-slate-200 flex justify-between items-center">
-                            <h3 class="text-xl font-bold text-slate-800">Gestionare Elevi</h3>
-                            <button onclick="openModal('studentModal')" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
-                                <i class="fa-solid fa-plus mr-2"></i> Adaugă Elev
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-50/50 text-slate-500 text-xs uppercase font-bold">
-                                    <tr>
-                                        <th class="px-6 py-4">Nume Elev</th>
-                                        <th class="px-6 py-4">Media</th>
-                                        <th class="px-6 py-4">Absențe</th>
-                                        <th class="px-6 py-4 text-right">Acțiuni</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="students-body" class="divide-y divide-slate-100"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PAGE: GRADES -->
-                <section id="page-grades" class="hidden page-transition">
-                    <div class="glass-panel rounded-3xl overflow-hidden">
-                        <div class="p-6 border-b border-slate-200">
-                            <h3 class="text-xl font-bold text-slate-800">Registrul Notelor</h3>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-50/50 text-slate-500 text-xs uppercase font-bold">
-                                    <tr>
-                                        <th class="px-6 py-4">Elev</th>
-                                        <th class="px-6 py-4">Note</th>
-                                        <th class="px-6 py-4">Media</th>
-                                        <th class="px-6 py-4 text-right">Acțiuni</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="grades-body" class="divide-y divide-slate-100"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PAGE: ATTENDANCE -->
-                <section id="page-attendance" class="hidden page-transition">
-                    <div class="glass-panel rounded-3xl overflow-hidden">
-                        <div class="p-6 border-b border-slate-200 flex justify-between items-center">
-                            <h3 class="text-xl font-bold text-slate-800">Prezențe Zile</h3>
-                            <button onclick="saveAttendance()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">Salvează Prezența</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-50/50 text-slate-500 text-xs uppercase font-bold">
-                                    <tr>
-                                        <th class="px-6 py-4">Elev</th>
-                                        <th class="px-6 py-4">Status</th>
-                                        <th class="px-6 py-4">Observații</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="attendance-body" class="divide-y divide-slate-100"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PAGE: SETTINGS -->
-                <section id="page-settings" class="hidden page-transition">
-                    <div class="glass-panel rounded-3xl p-8 max-w-2xl mx-auto">
-                        <h3 class="text-xl font-bold text-slate-800 mb-6">Configurare Sistem</h3>
-                        <div class="space-y-6">
-                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
-                                <div>
-                                    <p class="font-bold text-slate-800">Mod Întunecat</p>
-                                    <p class="text-xs text-slate-500">Schimbă tema interfeței</p>
-                                </div>
-                                <input type="checkbox" id="darkToggle" onchange="toggleDark()" class="w-12 h-6 rounded-full appearance-none bg-slate-300 checked:bg-indigo-600 relative cursor-pointer transition-all after:content-[''] after:absolute after:w-4 after:h-4 after:bg-white after:rounded-full after:top-1 after:left-1 checked:after:left-7 after:transition-all">
-                            </div>
-                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
-                                <div>
-                                    <p class="font-bold text-slate-800">Resetare Date</p>
-                                    <p class="text-xs text-slate-500">Șterge toate datele locale</p>
-                                </div>
-                                <button onclick="clearData()" class="bg-rose-100 text-rose-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-rose-200 transition-all">Șterge</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </main>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">E</div><div class="brand-text">Edu<span>Catalog</span></div></div>
+    <div class="nav-label">Principal</div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard">▦ <span>Panou de control</span></button>
+      <button data-page="students">♙ <span>Elevi și clase</span></button>
+      <button data-page="grades">★ <span>Registrul notelor</span></button>
+      <button data-page="attendance">✓ <span>Prezențe</span></button>
+    </nav>
+    <div class="nav-label">Sistem</div>
+    <nav class="nav"><button data-page="settings">⚙ <span>Setări</span></button></nav>
+    <div class="sidebar-footer"><div class="profile"><div class="avatar">AP</div><div><strong>Andrei Popescu</strong><small>Administrator</small></div></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><h1 id="page-title">Panou de control</h1><p id="today"></p></div><div class="top-actions"><label class="search">⌕ <input id="globalSearch" placeholder="Caută elev..." autocomplete="off"></label><button class="icon-btn" title="Notificări">♧</button><div class="avatar">AP</div></div></header>
+    <div class="content">
+      <section id="page-dashboard" class="page active">
+        <div class="welcome"><div><h2>Bun venit, Andrei!</h2><p>Iată situația clasei pentru astăzi.</p></div><button class="primary" data-open="studentModal">＋ Adaugă elev</button></div>
+        <div class="stats"><div class="card stat"><div><small>Total elevi</small><strong id="statStudents">0</strong><span class="trend">● An școlar activ</span></div><div class="stat-icon blue">♙</div></div><div class="card stat"><div><small>Media clasei</small><strong id="statAverage">0,00</strong><span class="trend">↑ Evoluție pozitivă</span></div><div class="stat-icon green">★</div></div><div class="card stat"><div><small>Absențe totale</small><strong id="statAbsences">0</strong><span class="trend" style="color:var(--warning)">● Luna curentă</span></div><div class="stat-icon orange">!</div></div><div class="card stat"><div><small>Promovabilitate</small><strong id="statPass">0%</strong><span class="trend">↑ 4,2% față de semestrul trecut</span></div><div class="stat-icon pink">↗</div></div></div>
+        <div class="dashboard-grid"><div class="card panel"><div class="panel-head"><h3>Distribuția notelor</h3><span class="muted">Anul școlar 2024–2025</span></div><div id="chart" class="chart"></div></div><div class="card panel"><div class="panel-head"><h3>Top performanțe</h3><span class="muted">Media generală</span></div><div id="ranking" class="ranking"></div></div></div>
+      </section>
+      <section id="page-students" class="page"><div class="card section-card"><div class="section-head"><div><h2>Elevi și clase</h2><span class="muted">Gestionează lista elevilor</span></div><div class="toolbar"><input id="studentFilter" placeholder="Caută după nume..."><button class="primary" data-open="studentModal">＋ Adaugă elev</button></div></div><div class="table-wrap"><table><thead><tr><th>Elev</th><th>Clasa</th><th>Media</th><th>Absențe</th><th>Acțiuni</th></tr></thead><tbody id="studentsBody"></tbody></table></div></div></section>
+      <section id="page-grades" class="page"><div class="card section-card"><div class="section-head"><div><h2>Registrul notelor</h2><span class="muted">Notele și mediile elevilor</span></div><select id="gradeFilter"><option value="all">Toate clasele</option><option>VII A</option><option>VIII A</option></select></div><div class="table-wrap"><table><thead><tr><th>Elev</th><th>Note</th><th>Media</th><th>Acțiuni</th></tr></thead><tbody id="gradesBody"></tbody></table></div></div></section>
+      <section id="page-attendance" class="page"><div class="card section-card"><div class="section-head"><div><h2>Prezențe</h2><span class="muted">Înregistrează prezența pentru astăzi</span></div><button id="saveAttendance" class="primary">Salvează prezența</button></div><div class="table-wrap"><table><thead><tr><th>Elev</th><th>Clasa</th><th>Status</th><th>Observații</th></tr></thead><tbody id="attendanceBody"></tbody></table></div></div></section>
+      <section id="page-settings" class="page"><div class="card panel" style="max-width:620px"><h2 style="font:800 20px Manrope;margin-top:0">Setări aplicație</h2><p class="muted">Personalizează catalogul și datele locale.</p><div class="field"><label>Numele instituției</label><input id="schoolName" value="Liceul Teoretic EduCatalog"></div><div class="field"><label>Semestrul activ</label><select><option>Semestrul I, 2024–2025</option><option>Semestrul II, 2024–2025</option></select></div><button id="clearData" class="secondary">Resetează datele locale</button></div></section>
     </div>
-
-    <!-- MODAL: ADD STUDENT -->
-    <div class="modal-overlay hidden fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm items-center justify-center" id="studentModal">
-        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl transform transition-all scale-100">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6 font-['Outfit']">Adaugă Elev Nou</h2>
-            <div class="space-y-4">
-                <div class="form-group">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Numele Complet</label>
-                    <input type="text" id="studentName" placeholder="Ex: Popescu Ion" class="w-full p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 ring-indigo-500">
-                </div>
-                <div class="flex gap-3 mt-8">
-                    <button onclick="closeModal('studentModal')" class="flex-1 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-all">Anulează</button>
-                    <button onclick="addStudent()" class="flex-1 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">Salvează</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: ADD GRADE -->
-    <div class="modal-overlay hidden fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm items-center justify-center" id="gradeModal">
-        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6 font-['Outfit']">Înregistrează Notă</h2>
-            <div class="space-y-4">
-                <div class="form-group">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Elev</label>
-                    <input type="text" id="gradeStudentName" disabled class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 outline-none">
-                </div>
-                <div class="form-group">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Valoare (1-10)</label>
-                    <input type="number" id="gradeValue" min="1" max="10" step="0.5" class="w-full p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 ring-indigo-500">
-                </div>
-                <div class="flex gap-3 mt-8">
-                    <button onclick="closeModal('gradeModal')" class="flex-1 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-all">Anulează</button>
-                    <button onclick="saveGrade()" class="flex-1 py-3 rounded-xl font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">Salvează</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // --- THREE.JS 3D BACKGROUND ---
-        let scene, camera, renderer, particles;
-
-        function init3D() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-            const geometry = new THREE.BufferGeometry();
-            const vertices = [];
-            for (let i = 0; i < 5000; i++) {
-                vertices.push(THREE.MathUtils.randFloatSpread(2000)); // x
-                vertices.push(THREE.MathUtils.randFloatSpread(2000)); // y
-                vertices.push(THREE.MathUtils.randFloatSpread(2000)); // z
-            }
-            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-            const material = new THREE.PointsMaterial({ color: 0x6366f1, size: 2, transparent: true, opacity: 0.5 });
-            particles = new THREE.Points(geometry, material);
-            scene.add(particles);
-
-            camera.position.z = 500;
-        }
-
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            particles.rotation.x += 0.0005;
-            particles.rotation.y += 0.0005;
-            renderer.render(scene, camera);
-        }
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // --- APPLICATION STATE ---
-        let state = {
-            students: JSON.parse(localStorage.getItem('nova_students')) || [],
-            currentStudentId: null
-        };
-
-        const save = () => localStorage.setItem('nova_students', JSON.stringify(state.students));
-
-        function switchPage(pageId) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.getElementById(`page-${pageId}`).classList.remove('hidden');
-            
-            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-            document.getElementById(`link-${pageId}`).classList.add('active');
-
-            const titles = { 'dashboard': 'Dashboard Analitic', 'students': 'Gestionare Elevi', 'grades': 'Registrul Notelor', 'attendance': 'Prezență Zilnică', 'settings': 'Configurări' };
-            document.getElementById('page-title').innerText = titles[pageId];
-
-            if(pageId === 'dashboard') renderDashboard();
-            if(pageId === 'students') renderStudents();
-            if(pageId === 'grades') renderGrades();
-            if(pageId === 'attendance') renderAttendance();
-        }
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        function toggleDark() {
-            document.body.classList.toggle('dark');
-        }
-
-        // --- LOGICĂ ELEVI ---
-        function addStudent() {
-            const name = document.getElementById('studentName').value;
-            if(!name) return alert("Introdu numele!");
-            
-            state.students.push({
-                id: Date.now(),
-                name: name,
-                grades: [],
-                absences: 0
-            });
-            
-            save();
-            closeModal('studentModal');
-            document.getElementById('studentName').value = "";
-            renderStudents();
-        }
-
-        function openGradeModal(id) {
-            state.currentStudentId = id;
-            const s = state.students.find(x => x.id === id);
-            document.getElementById('gradeStudentName').value = s.name;
-            openModal('gradeModal');
-        }
-
-        function saveGrade() {
-            const val = parseFloat(document.getElementById('gradeValue').value);
-            if(isNaN(val) || val < 1 || val > 10) return alert("Nota trebuie să fie între 1 și 10");
-
-            const s = state.students.find(x => x.id === state.currentStudentId);
-            s.grades.push(val);
-            
-            save();
-            closeModal('gradeModal');
-            renderGrades();
-        }
-
-        function calcAvg(grades) {
-            if(!grades.length) return null;
-            return (grades.reduce((a,b) => a+b, 0) / grades.length).toFixed(2);
-        }
-
-        function getGradeStyle(avg) {
-            if(avg === null) return 'bg-slate-100 text-slate-500';
-            if(avg >= 8.5) return 'bg-emerald-100 text-emerald-600';
-            if(avg >= 5) return 'bg-amber-100 text-amber-600';
-            return 'bg-rose-100 text-rose-600';
-        }
-
-        // --- RENDERING ---
-        function renderDashboard() {
-            const total = state.students.length;
-            let sumAvg = 0;
-            let totalAbs = 0;
-            let passed = 0;
-
-            state.students.forEach(s => {
-                const a = calcAvg(s.//grades);
-                if(a) {
-                    sumAvg += parseFloat(a);
-                    if(a >= 5) passed++;
-                }
-                totalAbs += s.absences;
-            });
-
-            document.getElementById('stat-students').innerText = total;
-            document.getElementById('stat-avg').innerText = total ? (sumAvg/total).toFixed(2) : "0.00";
-            document.getElementById('stat-abs').innerText = totalAbs;
-            document.getElementById('stat-pass').innerText = total ? Math.round((passed/total)*100) + "%" : "0%";
-
-            const sorted = [...state.students].sort((a,b) => calcAvg(b.grades) - calcAvg(a.grades)).slice(0,5);
-            const topBody = document.getElementById('top-students');
-            topBody.innerHTML = sorted.map((s, i) => `
-                <div class="flex items-center justify-between p-3 bg-white/50 rounded-2xl border border-white/50">
-                    <div class="flex items-center gap-3">
-                        <span class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">${i+1}</span>
-                        <span class="font-semibold text-slate-800">${s.name}</span>
-                    </div>
-                    <span class="font-bold text-indigo-600">${calcAvg(s.grades) || '—'}</span>
-                </div>
-            `).join('');
-
-            updateChart();
-        }
-
-        let myChart = null;
-        function updateChart() {
-            const ctx = document.getElementById('analyticsChart').getContext('2d');
-            if(myChart) myChart.destroy();
-            
-            const gradeCounts = new Array(10).fill(0);
-            state.students.forEach(s => {
-                s.grades.forEach(g => gradeCounts[Math.floor(g)-1]++);
-            });
-
-            myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['1','2','3','4','5','6','7','8','9','10'],
-                    datasets: [{
-                        label: 'Distribuție Note',
-                        data: gradeCounts,
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
-            });
-        }
-
-        function renderStudents() {
-            const body = document.getElementById('students-body');
-            body.innerHTML = state.students.map(s => `
-                <tr class="hover:bg-slate-50 transition-all">
-                    <td class="px-6 py-4 font-bold text-slate-800">${s.name}</td>
-                    <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-bold ${getGradeStyle(calcAvg(s.grades))}">${calcAvg(s.grades) || '—'}</span></td>
-                    <td class="px-6 py-4 text-slate-500">${s.absences}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-rose-500 hover:text-rose-700 transition-all" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderGrades() {
-            const body = document.getElementById('grades-body');
-            body.innerHTML = state.students.map(s => `
-                <tr class="hover:bg-slate-50 transition-all">
-                    <td class="px-6 py-4 font-bold text-slate-800">${s.name}</td>
-                    <td class="px-6 py-4 text-sm text-slate-500">${s.grades.join(', ') || '—'}</td>
-                    <td class="px-6 py-4 font-bold">${calcAvg(s.grades) || '—'}</td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-lg text-xs font-bold hover:bg-indigo-600 hover:text-white transition-all" onclick="openGradeModal(${s.id})">Adaugă Notă</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderAttendance() {
-            const body = document.getElementById('attendance-body');
-            body.innerHTML = state.students.map(s => `
-                <tr class="hover:bg-slate-50 transition-all">
-                    <td class="px-6 py-4 font-bold text-slate-800">${s.name}</td>
-                    <td class="px-6 py-4">
-                        <select onchange="updateAbs(${s.id}, this.value)" class="p-2 rounded-lg border border-slate-200 outline-none text-sm">
-                            <option value="0">Prezent</option>
-                            <option value="1">Absent</option>
-                        </select>
-                    </td>
-                    <td class="px-6 py-4"><input type="text" placeholder="Observații..." class="p-2 rounded-lg border border-slate-200 outline-none text-sm w-full"></td>
-                </tr>
-            `).join('');
-        }
-
-        function updateAbs(id, val) {
-            const s = state.students.find(x => x.id === id);
-            if(val === "1") s.absences++; else s.absences = Math.max(0, s.absences - 1);
-            save();
-        }
-
-        function deleteStudent(id) {
-            if(confirm("Ștergi elevul?")) {
-                state.students = state.students.filter(s => s.id !== id);
-                save();
-                renderStudents();
-            }
-        }
-
-        function clearData() {
-            if(confirm("Ștergi tot?")) {
-                localStorage.clear();
-                state.students = [];
-                save();
-                location.reload();
-            }
-        }
-
-        // --- INIT ---
-        window.onload = () => {
-            init3D();
-            animate3D();
-            switchPage('dashboard');
-        };
-    </script>
+  </main>
+</div>
+<div id="studentModal" class="modal"><div class="modal-box"><h2>Adaugă un elev</h2><div class="field"><label for="studentName">Numele complet</label><input id="studentName" placeholder="Ex. Popescu Maria"></div><div class="field"><label for="studentClass">Clasa</label><select id="studentClass"><option>VII A</option><option>VIII A</option><option>IX B</option></select></div><div class="modal-actions"><button class="secondary" data-close>Renunță</button><button id="addStudent" class="primary">Salvează elevul</button></div></div></div>
+<div id="gradeModal" class="modal"><div class="modal-box"><h2>Adaugă o notă</h2><p id="gradeStudent" class="muted"></p><div class="field"><label for="gradeValue">Nota (1–10)</label><input id="gradeValue" type="number" min="1" max="10" step="0.5" placeholder="Ex. 9,50"></div><div class="modal-actions"><button class="secondary" data-close>Renunță</button><button id="addGrade" class="primary">Salvează nota</button></div></div></div>
+<div id="toast" class="toast"></div>
+<script>
+  const KEY='educatalog_students_v1';
+  const initial=[{id:1,name:'Maria Popescu',className:'VII A',grades:[9,10,9.5],absences:1},{id:2,name:'Andrei Ionescu',className:'VII A',grades:[8,9,8.5],absences:0},{id:3,name:'Elena Dumitru',className:'VIII A',grades:[10,9.5,10],absences:0},{id:4,name:'Radu Marin',className:'VIII A',grades:[7,8,8.5],absences:2}];
+  let students=JSON.parse(localStorage.getItem(KEY)||'null')||initial, selectedId=null;
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const save=()=>localStorage.setItem(KEY,JSON.stringify(students));
+  const avg=s=>s.grades.length?s.grades.reduce((a,b)=>a+b,0)/s.grades.length:null;
+  const fmt=n=>n==null?'—':n.toFixed(2).replace('.',',');
+  const initials=n=>n.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const gradeClass=a=>a==null?'':a>=8.5?'good':a>=5?'mid':'low';
+  function notify(text){const t=$('#toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+  function render(){renderDashboard();renderStudents();renderGrades();renderAttendance()}
+  function renderDashboard(){
+    const total=students.length, valid=students.map(avg).filter(a=>a!=null), average=valid.length?valid.reduce((a,b)=>a+b,0)/valid.length:0, abs=students.reduce((a,s)=>a+s.absences,0), passed=students.filter(s=>(avg(s)||0)>=5).length;
+    $('#statStudents').textContent=total;$('#statAverage').textContent=fmt(average);$('#statAbsences').textContent=abs;$('#statPass').textContent=total?Math.round(passed/total*100)+'%':'0%';
+    const counts=Array(10).fill(0);students.forEach(s=>s.grades.forEach(g=>counts[Math.max(0,Math.min(9,Math.ceil(g)-1))]++));const max=Math.max(1,...counts);
+    $('#chart').innerHTML=counts.map((n,i)=>`<div class="bar" style="height:${Math.max(7,n/max*100)}%" title="Nota ${i+1}: ${n}"><label>${i+1}</label></div>`).join('');
+    $('#ranking').innerHTML=[...students].sort((a,b)=>(avg(b)||0)-(avg(a)||0)).slice(0,5).map((s,i)=>`<div class="rank"><span class="rank-no">${i+1}</span><span class="rank-name">${esc(s.name)}</span><span class="rank-grade">${fmt(avg(s))}</span></div>`).join('')||'<div class="empty">Nu există elevi.</div>';
+  }
+  function renderStudents(){const q=($('#studentFilter')?.value||$('#globalSearch')?.value||'').toLowerCase();const list=students.filter(s=>s.name.toLowerCase().includes(q));$('#studentsBody').innerHTML=list.map(s=>`<tr><td><div class="student"><span class="avatar">${initials(s.name)}</span>${esc(s.name)}</div></td><td>${esc(s.className)}</td><td><span class="badge ${gradeClass(avg(s))}">${fmt(avg(s))}</span></td><td>${s.absences}</td><td><div class="actions"><button class="small-btn" data-grade="${s.id}">＋ Notă</button><button class="small-btn danger" data-delete="${s.id}">Șterge</button></div></td></tr>`).join('')||'<tr><td colspan="5" class="empty">Nu a fost găsit niciun elev.</td></tr>'}
+  function renderGrades(){$('#gradesBody').innerHTML=students.map(s=>`<tr><td><div class="student"><span class="avatar">${initials(s.name)}</span>${esc(s.name)}</div></td><td>${s.grades.join(' · ')||'—'}</td><td><strong>${fmt(avg(s))}</strong></td><td><button class="small-btn" data-grade="${s.id}">＋ Adaugă notă</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nu există elevi.</td></tr>'}
+  function renderAttendance(){$('#attendanceBody').innerHTML=students.map(s=>`<tr><td><div class="student"><span class="avatar">${initials(s.name)}</span>${esc(s.name)}</div></td><td>${esc(s.className)}</td><td><select data-attendance="${s.id}"><option value="present">Prezent</option><option value="absent">Absent</option><option value="late">Întârziat</option></select></td><td><input class="attendance-note" placeholder="Observații..."></td></tr>`).join('')||'<tr><td colspan="4" class="empty">Nu există elevi.</td></tr>'}
+  function openModal(id){$('#'+id).classList.add('open')}function closeModal(m){m.classList.remove('open')}
+  $$('[data-page]').forEach(b=>b.onclick=()=>{const p=b.dataset.page;$$('.page').forEach(x=>x.classList.remove('active'));$('#page-'+p).classList.add('active');$$('[data-page]').forEach(x=>x.classList.toggle('active',x===b));const titles={dashboard:'Panou de control',students:'Elevi și clase',grades:'Registrul notelor',attendance:'Prezențe',settings:'Setări'};$('#page-title').textContent=titles[p]});
+  $$('[data-open]').forEach(b=>b.onclick=()=>openModal(b.dataset.open));$$('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.closest('.modal')));$$('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)closeModal(m)});
+  $('#addStudent').onclick=()=>{const name=$('#studentName').value.trim();if(!name)return notify('Introdu numele elevului.');students.push({id:Date.now(),name,className:$('#studentClass').value,grades:[],absences:0});save();$('#studentName').value='';closeModal($('#studentModal'));render();notify('Elevul a fost adăugat.')};
+  document.addEventListener('click',e=>{const del=e.target.closest('[data-delete]'),grade=e.target.closest('[data-grade]');if(del){const s=students.find(x=>x.id==del.dataset.delete);if(confirm(`Ștergi elevul ${s.name}?`)){students=students.filter(x=>x.id!=del.dataset.delete);save();render();notify('Elevul a fost șters.')}}if(grade){selectedId=Number(grade.dataset.grade);$('#gradeStudent').textContent=students.find(s=>s.id===selectedId).name;openModal('gradeModal')}});
+  $('#addGrade').onclick=()=>{const value=Number($('#gradeValue').value);if(!value||value<1||value>10)return notify('Nota trebuie să fie între 1 și 10.');students.find(s=>s.id===selectedId).grades.push(value);save();$('#gradeValue').value='';closeModal($('#gradeModal'));render();notify('Nota a fost salvată.')};
+  $('#studentFilter').oninput=renderStudents;$('#globalSearch').oninput=()=>{const value=$('#globalSearch').value;$('#studentFilter').value=value;$$('[data-page]').find(b=>b.dataset.page==='students').click();renderStudents()};
+  $('#saveAttendance').onclick=()=>{document.querySelectorAll('[data-attendance]').forEach(s=>{const student=students.find(x=>x.id==s.dataset.attendance);if(s.value==='absent')student.absences++});save();render();notify('Prezența a fost salvată.')};
+  $('#clearData').onclick=()=>{if(confirm('Sigur vrei să ștergi toate datele locale?')){students=[];save();render();notify('Datele au fost resetate.')}};
+  $('#today').textContent=new Intl.DateTimeFormat('ro-RO',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());render();
+</script>
 </body>
 </html>
+
