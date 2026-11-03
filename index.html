@@ -129,6 +129,11 @@ body.reading-mode .page{font-size:1.06em}
 @media(max-width:900px){.admin-two-col{grid-template-columns:1fr}.admin-toolbar{width:100%}}
 @media(max-width:760px){.admin-week-chart{padding:12px 8px;gap:4px}.week-bar-wrap{height:125px}.admin-backup-actions{padding:13px}.admin-toolbar .btn{flex:1}.admin-two-col{gap:12px}}
 
+
+.admin-assist-banner{position:sticky;top:72px;z-index:9;background:linear-gradient(100deg,#fff2d9,#fff9ed);border-bottom:1px solid #ecd8aa;padding:10px clamp(14px,3vw,36px);display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 4px 14px #4b31100b}
+.admin-assist-banner>div{display:flex;flex-direction:column;gap:2px}.admin-assist-banner b{font-size:12px;color:#805414}.admin-assist-banner span{font-size:11px;color:#8c7655}.admin-enter-btn{white-space:nowrap;padding:7px 10px;font-size:10px}
+@media(max-width:760px){.admin-assist-banner{top:64px;align-items:flex-start;flex-direction:column}.admin-assist-banner .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -178,6 +183,7 @@ body.reading-mode .page{font-size:1.06em}
         <div class="top-left"><button class="mobile-menu" id="menuToggle" aria-label="Deschide meniul">☰</button><div><div class="eyebrow">Spațiu educațional digital</div><div class="top-title" id="topTitle">Catalog de limba și literatura română</div></div></div>
         <div class="top-right"><span class="sync-chip pending" id="syncChip">⟳ Se salvează...</span><span class="account-chip" id="accountChip"></span><span class="pill" id="classPill">CLASA IX-A</span><span class="avatar" id="classAvatar">IX</span></div>
       </header>
+      <div class="admin-assist-banner hidden" id="adminAssistBanner"><div><b>Mod administrator – asistență</b><span id="adminAssistName">Editezi catalogul profesorului.</span></div><button class="btn white" id="adminAssistExit">⟵ Înapoi la administrator</button></div>
       <div class="content">
         <div class="page-intro">
           <div><div class="eyebrow" id="pageEyebrow">PREZENTARE GENERALĂ</div><h1 id="pageTitle">Catalog de limba și literatura română</h1><p id="pageSubtitle"></p></div>
@@ -293,7 +299,7 @@ body.reading-mode .page{font-size:1.06em}
 
           <div class="panel admin-panel">
             <div class="panel-head"><div class="panel-heading"><div class="section-icon">♙</div><div><h2>Administrarea profesorilor</h2><p>Conturi, roluri, clase asociate și ultima autentificare.</p></div></div><div class="activity-filter"><input id="adminTeacherSearch" type="search" placeholder="Caută profesor sau email"><select id="adminRoleFilter"><option value="all">Toate rolurile</option><option value="admin">Administrator</option><option value="teacher">Profesor</option></select></div></div>
-            <div class="table-scroll"><table><thead><tr><th>Profesor / cont</th><th>Rol</th><th>Clase</th><th>Elevi</th><th>Note</th><th>Absențe</th><th>Ultima autentificare</th></tr></thead><tbody id="adminUsersRows"></tbody></table></div>
+            <div class="table-scroll"><table><thead><tr><th>Profesor / cont</th><th>Rol</th><th>Clase</th><th>Elevi</th><th>Note</th><th>Absențe</th><th>Ultima autentificare</th><th>Asistență</th></tr></thead><tbody id="adminUsersRows"></tbody></table></div>
             <div class="card-note">Invitarea deschide aplicația de e-mail. Profesorul își creează profilul conectându-se cu Google. Activarea/dezactivarea și schimbarea efectivă a rolurilor trebuie securizate suplimentar în Firebase Authentication și regulile Firestore.</div>
           </div>
 
@@ -377,7 +383,7 @@ try{fdb=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:per
 
 /* ---------- stare ---------- */
 const EMPTY={id:'',name:'—',students:[],grades:[],absences:[],achievements:[]};
-let me=null,isAdm=false,classes=[],activeId='',page='catalog',editingClass=null,currentStudentId='',unsubClasses=null,promptedFirst=false,adminActs=[],adminToken=0,adminProfiles=[],adminClassesData=[],syncState='pending',loaded=false;
+let me=null,isAdm=false,dataOwnerUid='',actingTeacher=null,classes=[],activeId='',page='catalog',editingClass=null,currentStudentId='',unsubClasses=null,promptedFirst=false,adminActs=[],adminToken=0,adminProfiles=[],adminClassesData=[],syncState='pending',loaded=false;
 const cls=()=>classes.find(c=>c.id===activeId)||classes[0]||EMPTY;
 const hasClass=()=>classes.length>0;
 
@@ -387,7 +393,7 @@ function normClass(c){
     grades:c.grades||[],absences:c.absences||[],achievements:c.achievements||[]};
 }
 const cleanDoc=c=>JSON.parse(JSON.stringify({id:c.id,name:c.name,order:c.order||Date.now(),students:c.students,grades:c.grades,absences:c.absences,achievements:c.achievements}));
-const classRef=id=>doc(fdb,'users',me.uid,'classes',id);
+const classRef=id=>doc(fdb,'users',dataOwnerUid||me.uid,'classes',id);
 
 function fail(e){
   console.error(e);
@@ -397,7 +403,7 @@ const persist=c=>{setDoc(classRef(c.id),cleanDoc(c)).catch(fail)};
 
 function log(kind,text){
   if(!me)return;
-  addDoc(collection(fdb,'activity'),{uid:me.uid,email:me.email,name:me.name,kind,text,ts:Date.now()}).catch(()=>{});
+  addDoc(collection(fdb,'activity'),{uid:me.uid,actorUid:me.uid,actingForUid:(dataOwnerUid&&dataOwnerUid!==me.uid)?dataOwnerUid:null,email:me.email,name:me.name,kind,text,ts:Date.now()}).catch(()=>{});
 }
 
 /* ---------- utilitare UI ---------- */
@@ -529,10 +535,31 @@ function renderAll(){if(!me)return;renderClasses();renderStats();renderCatalog()
 
 
 /* ---------- administrare ---------- */
+function enterTeacherAssist(uidX,name,email){
+  if(!isAdm||!uidX||uidX===me.uid)return;
+  if(!confirm(`Intri în modul de asistență pentru ${name} (${email}).\n\nVei putea modifica clasele, elevii, notele, absențele și reușitele acestui profesor. Toate acțiunile vor fi înregistrate cu contul administratorului. Continui?`))return;
+  if(unsubClasses){unsubClasses();unsubClasses=null;}
+  actingTeacher={uid:uidX,name,email};dataOwnerUid=uidX;classes=[];activeId='';loaded=false;
+  $('adminAssistBanner').classList.remove('hidden');$('adminAssistName').textContent=`Editezi catalogul profesorului ${name} (${email}).`;
+  $('accountChip').textContent=`ADMIN → ${name}`;$('classPill').textContent='CONT PROFESOR';$('classAvatar').textContent='AD';
+  log('auth',`Administratorul a intrat în modul de asistență pentru ${name} (${email})`);
+  page='catalog';showPage('catalog');subscribe();
+}
+function exitTeacherAssist(){
+  if(!isAdm||!actingTeacher)return;
+  const previous=actingTeacher;
+  if(unsubClasses){unsubClasses();unsubClasses=null;}
+  log('auth',`Administratorul a încheiat modul de asistență pentru ${previous.name} (${previous.email})`);
+  actingTeacher=null;dataOwnerUid=me.uid;classes=[];activeId='';loaded=false;
+  $('adminAssistBanner').classList.add('hidden');$('accountChip').textContent=me.email;
+  $('classPill').textContent='CLASA';$('classAvatar').textContent=(me.name||'L').slice(0,2).toUpperCase();
+  subscribe();showPage('admin');renderAdmin();
+}
+
 async function renderAdmin(){
   if(!isAdm)return;
   const token=++adminToken;
-  $('adminUsersRows').innerHTML='<tr><td colspan="7"><div class="empty">Se încarcă...</div></td></tr>';
+  $('adminUsersRows').innerHTML='<tr><td colspan="8"><div class="empty">Se încarcă...</div></td></tr>';
   $('adminClassesRows').innerHTML='<tr><td colspan="7"><div class="empty">Se încarcă...</div></td></tr>';
   try{
     const [us,as]=await Promise.all([
@@ -562,7 +589,7 @@ async function renderAdmin(){
     drawActivity();
   }catch(e){
     console.error(e);
-    $('adminUsersRows').innerHTML='<tr><td colspan="7"><div class="empty">Datele nu au putut fi încărcate. Verifică regulile Firestore.</div></td></tr>';
+    $('adminUsersRows').innerHTML='<tr><td colspan="8"><div class="empty">Datele nu au putut fi încărcate. Verifică regulile Firestore.</div></td></tr>';
     $('adminClassesRows').innerHTML='<tr><td colspan="7"><div class="empty">Catalogul nu a putut fi încărcat.</div></td></tr>';
   }
 }
@@ -575,8 +602,9 @@ function renderAdminTeachers(){
   $('adminUsersRows').innerHTML=list.map(({p,cs})=>{
     const students=cs.reduce((n,c)=>n+(c.students||[]).length,0),grades=cs.reduce((n,c)=>n+(c.grades||[]).length,0),abs=cs.reduce((n,c)=>n+(c.absences||[]).length,0);
     const role=normEmail(p.email)===ADMIN_EMAIL;
-    return `<tr><td><b>${esc(p.name||p.email)}</b><br><span class="muted">${esc(p.email)}</span></td><td>${role?'<span class="role-tag">ADMIN</span>':'Profesor'}</td><td>${cs.length}</td><td>${students}</td><td>${grades}</td><td>${abs}</td><td class="muted">${p.lastLogin?fmtTs(p.lastLogin):'—'}</td></tr>`;
-  }).join('')||'<tr><td colspan="7"><div class="empty">Nu există conturi pentru filtrul ales.</div></td></tr>';
+    const assist=role?'—':`<button class="btn light admin-enter-btn" type="button" data-admin-enter="${esc(p.uid)}" data-admin-name="${esc(p.name||p.email)}" data-admin-email="${esc(p.email)}">Intră în cont ↗</button>`;
+    return `<tr><td><b>${esc(p.name||p.email)}</b><br><span class="muted">${esc(p.email)}</span></td><td>${role?'<span class="role-tag">ADMIN</span>':'Profesor'}</td><td>${cs.length}</td><td>${students}</td><td>${grades}</td><td>${abs}</td><td class="muted">${p.lastLogin?fmtTs(p.lastLogin):'—'}</td><td>${assist}</td></tr>`;
+  }).join('')||'<tr><td colspan="8"><div class="empty">Nu există conturi pentru filtrul ales.</div></td></tr>';
 }
 function renderAdminClasses(){
   const q=lc($('adminCatalogSearch')?.value||''),rows=[];
@@ -793,7 +821,7 @@ function subscribe(){
   if(unsubClasses)unsubClasses();
   let saved='';try{saved=localStorage.getItem(activeKey())||''}catch{}
   activeId=saved;promptedFirst=false;loaded=false;setSyncState('pending');
-  unsubClasses=onSnapshot(collection(fdb,'users',me.uid,'classes'),{includeMetadataChanges:true},snap=>{
+  unsubClasses=onSnapshot(collection(fdb,'users',dataOwnerUid||me.uid,'classes'),{includeMetadataChanges:true},snap=>{
     setSyncState(snap.metadata.hasPendingWrites||snap.metadata.fromCache?'pending':'ok');
     if(!loaded||snap.docChanges().length){
       classes=snap.docs.map(d=>normClass({...d.data(),id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
@@ -806,11 +834,12 @@ function subscribe(){
 onAuthStateChanged(auth,user=>{
   if(!user){
     if(unsubClasses){unsubClasses();unsubClasses=null}
-    me=null;isAdm=false;classes=[];activeId='';
+    me=null;isAdm=false;dataOwnerUid='';actingTeacher=null;classes=[];activeId='';
     $('appShell').classList.add('hidden');$('authScreen').classList.remove('hidden');$('googleLogin').disabled=false;
     return;
   }
   me={uid:user.uid,email:normEmail(user.email),name:user.displayName||user.email,photo:user.photoURL||''};
+  dataOwnerUid=user.uid;actingTeacher=null;
   isAdm=me.email===ADMIN_EMAIL&&user.emailVerified===true;
   $('authScreen').classList.add('hidden');$('appShell').classList.remove('hidden');
   $('adminNav').classList.toggle('visible',isAdm);
@@ -902,6 +931,7 @@ $('adminRestoreBtn')?.addEventListener('click',()=>$('adminRestoreFile').click()
 $('adminRestoreFile')?.addEventListener('change',async e=>{const file=e.target.files[0];e.target.value='';await restoreAdminBackup(file)});
 $('adminExportCsv')?.addEventListener('click',exportAdminCsv);
 $('adminPrintCatalog')?.addEventListener('click',printAdminCatalog);
+$('adminAssistExit')?.addEventListener('click',exitTeacherAssist);
 
 $('clearActivity').addEventListener('click',async()=>{
   if(!isAdm||!confirm('Golești tot jurnalul de activitate? Acțiunea nu poate fi anulată.'))return;
@@ -947,6 +977,7 @@ document.addEventListener('click',async e=>{
   if(el=q('[data-delete-grade]')){if(!confirm('Ștergi această notă?'))return;const c=cls(),g=c.grades.find(x=>x.id===el.dataset.deleteGrade);c.grades=c.grades.filter(x=>x.id!==el.dataset.deleteGrade);persist(c);log('grade',`Notă ștearsă · ${g?nameOf(g.studentId):''}`);renderAll();return toast('Nota a fost ștearsă.')}
   if(el=q('[data-delete-absence]')){if(!confirm('Ștergi această înregistrare?'))return;const c=cls(),a=c.absences.find(x=>x.id===el.dataset.deleteAbsence);c.absences=c.absences.filter(x=>x.id!==el.dataset.deleteAbsence);persist(c);log('absence',`Absență ștearsă · ${a?nameOf(a.studentId):''}`);renderAll();return toast('Înregistrarea a fost ștearsă.')}
   if(el=q('[data-delete-achievement]')){if(!confirm('Ștergi această reușită?'))return;const c=cls(),a=c.achievements.find(x=>x.id===el.dataset.deleteAchievement);c.achievements=c.achievements.filter(x=>x.id!==el.dataset.deleteAchievement);persist(c);log('achievement',`Reușită ștearsă · ${a?nameOf(a.studentId):''}`);renderAll();return toast('Reușita a fost ștearsă.')}
+  if(el=q('[data-admin-enter]'))return enterTeacherAssist(el.dataset.adminEnter,el.dataset.adminName,el.dataset.adminEmail);
   if(el=q('[data-delete-user]')){
     if(!isAdm)return;const uidX=el.dataset.deleteUser,email=el.dataset.email;
     if(!confirm(`Ștergi toate datele contului ${email}? Acțiunea nu poate fi anulată.`))return;
