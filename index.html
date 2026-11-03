@@ -1479,4 +1479,27 @@ document.addEventListener('click',async e=>{
     });
   })();
   </script>
+
+<style id="iphone-safe-area-fix">
+/* iPhone: bara de sus este coborata sub zona Dynamic Island/notch si nu mai foloseste blur */
+@media (max-width: 760px) {
+  html, body { min-height: 100%; }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 70;
+    height: calc(56px + env(safe-area-inset-top, 0px));
+    min-height: calc(56px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    background: #fff;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .topbar .top-left, .topbar .top-right { position: relative; z-index: 1; }
+}
+</style>
+
 </body>
