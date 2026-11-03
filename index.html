@@ -20,7 +20,80 @@
     @media print{body{background:#fff}.app{display:block}.sidebar,.scrim,.topbar,.intro-actions,.controls,.hero-art,.modal-backdrop,.toast,.btn,.table-foot,.action-row{display:none!important}.content{padding:0;max-width:none}.hero{background:#f8eaf0;color:#47182f;box-shadow:none;border:1px solid #e3ccd7}.hero p,.hero-label{color:#68475a}.stats{grid-template-columns:repeat(4,1fr)}.panel{box-shadow:none;break-inside:avoid}.table-scroll{overflow:visible}table{min-width:0;font-size:9px}thead th{padding:6px}tbody td{padding:5px}}
   .account-chip:empty{display:none}@media(max-width:760px){.searchbox{flex:1 1 100%}.controls .select{max-width:none;flex:1}}.scrim{display:none}.google-btn{width:100%;background:#fff;border:1px solid #dfd5db;color:#4e3845;border-radius:12px;padding:13px 14px;font-weight:800;font-size:14px;display:flex;justify-content:center;gap:11px;align-items:center;transition:background .15s,border-color .15s}.google-btn:hover{background:#fff8fb;border-color:#c99aad}.google-btn:disabled{opacity:.6;cursor:wait}
   .sync-chip{border-radius:999px;padding:7px 11px;font-size:11px;font-weight:800;white-space:nowrap;border:1px solid transparent}.sync-chip.ok{background:#e7f7f0;color:#176d59;border-color:#ccefe0}.sync-chip.pending{background:#fff4e7;color:#9a6313;border-color:#f5dfb8}.sync-chip.off{background:#fff0f1;color:#b34855;border-color:#f2d6d8}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.profile{display:flex;align-items:center;gap:16px;padding:20px 19px 8px}.profile-avatar{width:64px;height:64px;flex:none;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,#bd6d91,#692644);color:#fff;font-weight:850;font-size:26px}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-info{min-width:0}.profile-name{font-size:17px;font-weight:850;color:#431c31;overflow-wrap:anywhere}.profile-email{font-size:12px;color:var(--muted);margin:2px 0 7px;overflow-wrap:anywhere}.sync-line{margin:12px 19px 4px;padding:10px 12px;border-radius:11px;font-size:12px;font-weight:700;border:1px solid transparent}.sync-line.ok{background:#e7f7f0;color:#176d59;border-color:#ccefe0}.sync-line.pending{background:#fff4e7;color:#9a6313;border-color:#f5dfb8}.sync-line.off{background:#fff0f1;color:#b34855;border-color:#f2d6d8}.btn-row{display:flex;gap:10px;flex-wrap:wrap;padding:14px 19px 16px}.kv-list{padding:6px 19px 0}.kv{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #f1eaed;font-size:13px;color:#685668}.kv:last-child{border-bottom:0}.kv b{color:#431c31;font-size:14px}@media(max-width:900px){.settings-grid{grid-template-columns:1fr}}@media(max-width:760px){.sync-chip{font-size:10px;padding:6px 9px}}
-  </style>
+  
+/* LEXIS — polish & motion */
+:root{--ease-out:cubic-bezier(.2,.75,.25,1)}
+body{background-image:radial-gradient(ellipse at 85% 0%,rgba(169,75,115,.055),transparent 34%)}
+.sidebar{box-shadow:8px 0 30px rgba(48,12,32,.08)}
+.brand-mark{transition:transform .35s var(--ease-out),box-shadow .35s}
+.brand:hover .brand-mark{transform:rotate(-8deg) scale(1.06);box-shadow:0 10px 24px #15061166}
+.nav button{transition:background .22s,transform .22s,color .22s}
+.nav button:hover{transform:translateX(3px)}
+.panel,.stat-card{transition:transform .25s var(--ease-out),box-shadow .25s,border-color .25s}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 13px 28px rgba(75,31,55,.11);border-color:#e7cbd8}
+.panel:hover{box-shadow:0 15px 38px rgba(75,31,55,.10)}
+.btn,.icon-btn{transition:transform .18s var(--ease-out),box-shadow .18s,background .18s}
+.btn:active,.icon-btn:active{transform:scale(.97)}
+.hero{isolation:isolate}
+.hero:before{content:"";position:absolute;inset:-60% auto -60% -35%;width:32%;background:linear-gradient(90deg,transparent,#ffffff18,transparent);transform:rotate(20deg);animation:heroShimmer 9s ease-in-out infinite;pointer-events:none;z-index:0}
+.hero-art{animation:bookFloat 5s ease-in-out infinite}
+.live-dot{animation:dotPulse 2s ease-out infinite}
+.page:not(.hidden){animation:pageIn .38s var(--ease-out) both}
+.stat-card{animation:riseIn .5s var(--ease-out) both}
+.stat-card:nth-child(2){animation-delay:.05s}.stat-card:nth-child(3){animation-delay:.1s}.stat-card:nth-child(4){animation-delay:.15s}
+tbody tr{transition:background .18s,transform .18s}
+tbody tr:hover{transform:translateX(2px)}
+.literary-studio{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:13px;margin:0 0 21px}
+.studio-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#fff8fb);border:1px solid #eee0e7;border-radius:17px;padding:17px 18px;min-height:150px;box-shadow:0 7px 20px rgba(75,31,55,.045);transition:transform .25s,box-shadow .25s}
+.studio-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(75,31,55,.10)}
+.studio-card:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-35px;bottom:-50px;background:#f7e6ee;opacity:.75}
+.studio-kicker{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#a14b70;font-weight:900}
+.studio-icon{font-size:23px;margin-bottom:9px}
+.studio-card h3{font:700 17px Georgia,serif;color:#4a1d34;margin:7px 0}
+.studio-card p{font-size:11px;line-height:1.55;color:#766875;margin:0;max-width:95%}
+.studio-action{position:relative;z-index:1;border:0;background:transparent;color:#8c355d;font-size:11px;font-weight:900;padding:10px 0 0}
+.studio-action:hover{text-decoration:underline}
+.studio-word{font:italic 25px Georgia,serif;color:#762c50}
+.studio-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.studio-tag{display:inline-block;border-radius:99px;background:#f8eaf0;color:#8b365b;padding:5px 8px;font-size:9px;font-weight:850}
+#focusModeBtn{border:1px solid var(--line);background:#fff;color:#71445a;border-radius:10px;padding:8px 11px;font-size:11px;font-weight:800}
+body.reading-mode .sidebar,body.reading-mode .topbar,body.reading-mode .intro-actions,body.reading-mode #statsCards{filter:saturate(.65);opacity:.28;transition:opacity .25s}
+body.reading-mode .content{max-width:1120px}
+body.reading-mode .page{font-size:1.06em}
+.toast{animation:toastIn .25s var(--ease-out)}
+@keyframes pageIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bookFloat{0%,100%{transform:rotate(-9deg) translateY(0)}50%{transform:rotate(-5deg) translateY(-8px)}}
+@keyframes dotPulse{0%{box-shadow:0 0 0 0 #88e2c160}70%{box-shadow:0 0 0 7px #88e2c100}100%{box-shadow:0 0 0 0 #88e2c100}}
+@keyframes heroShimmer{0%,65%,100%{left:-38%}35%{left:120%}}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:900px){.literary-studio{grid-template-columns:1fr 1fr}.studio-card:first-child{grid-column:1/-1}}
+@media(max-width:560px){.literary-studio{grid-template-columns:1fr}.studio-card:first-child{grid-column:auto}.studio-card{min-height:unset}.hero{padding:20px}.hero-art{font-size:58px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+  
+/* Pictograme discrete + optimizare pentru telefoane */
+.stat-icon,.section-icon,.activity-icon,.studio-icon,.hero-art,.brand-mark{opacity:.68}
+.nav svg{opacity:.7}
+.icon-btn{color:#9a7d8c}
+@media(max-width:760px){
+  /* Pe mobil păstrăm interfața rapidă: fără animații decorative costisitoare. */
+  *,*::before,*::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+  .hero:before{display:none!important}
+  .hero-art{transform:none!important;opacity:.5}
+  .panel,.stat-card,.studio-card{box-shadow:0 2px 8px rgba(75,31,55,.045)}
+  .panel:hover,.stat-card:hover,.studio-card:hover{transform:none;box-shadow:0 2px 8px rgba(75,31,55,.045)}
+  tbody tr:hover{transform:none}
+  .sidebar{will-change:auto}
+  .stat-icon,.section-icon,.activity-icon,.studio-icon,.brand-mark{opacity:.58}
+  .nav svg{opacity:.62}
+}
+
+</style>
 </head>
 <body>
   <!-- AUTENTIFICARE -->
@@ -72,10 +145,33 @@
       <div class="content">
         <div class="page-intro">
           <div><div class="eyebrow" id="pageEyebrow">PREZENTARE GENERALĂ</div><h1 id="pageTitle">Catalog de limba și literatura română</h1><p id="pageSubtitle"></p></div>
-          <div class="intro-actions"><button class="btn white" id="printBtn">⎙ &nbsp;Tipărește</button><button class="btn primary" id="quickAdd">+ &nbsp;Adaugă notă</button><button class="btn light" id="quickAbsence">+ &nbsp;Adaugă absență</button></div>
+          <div class="intro-actions"><button type="button" id="focusModeBtn" title="Ascunde vizual elementele secundare">☷ Mod lectură</button><button class="btn white" id="printBtn">⎙ &nbsp;Tipărește</button><button class="btn primary" id="quickAdd">+ &nbsp;Adaugă notă</button><button class="btn light" id="quickAbsence">+ &nbsp;Adaugă absență</button></div>
         </div>
 
         <section class="hero" id="hero"><div class="hero-copy"><div class="hero-label"><span class="live-dot"></span> PROFIL EDUCAȚIONAL · LIMBA ROMÂNĂ</div><h2>Fiecare elev are propria poveste.</h2><p>Un catalog simplu și clar pentru urmărirea notelor, absențelor și reușitelor la limba și literatura română.</p></div><div class="hero-art">L</div></section>
+
+        <section class="literary-studio" aria-label="Atelier literar">
+          <article class="studio-card">
+            <div class="studio-icon">✒️</div><div class="studio-kicker">Atelier literar · azi</div>
+            <div class="studio-word" id="dailyWord">Elo(c)vență</div>
+            <h3 id="dailyWordTitle">Cuvântul zilei</h3>
+            <p id="dailyWordMeaning">Arta de a exprima clar, frumos și convingător ideile.</p>
+            <div class="studio-bottom"><span class="studio-tag">Vocabular</span><button class="studio-action" id="nextWord">Alt cuvânt ↗</button></div>
+          </article>
+          <article class="studio-card">
+            <div class="studio-icon">📚</div><div class="studio-kicker">Mică recapitulare</div>
+            <h3 id="figureTitle">Figură de stil</h3>
+            <p id="figureText">Metafora — înlocuirea sensului obișnuit al unui cuvânt cu unul figurat, pe baza unei asemănări.</p>
+            <div class="studio-bottom"><span class="studio-tag">Teorie literară</span><button class="studio-action" id="nextFigure">Descoperă alta ↗</button></div>
+          </article>
+          <article class="studio-card">
+            <div class="studio-icon">💡</div><div class="studio-kicker">Provocarea zilei</div>
+            <h3>Scrie în 5 minute</h3>
+            <p id="writingPrompt">Descrie un loc drag folosind cel puțin două comparații și o personificare.</p>
+            <div class="studio-bottom"><span class="studio-tag">Creativitate</span><button class="studio-action" id="newPrompt">Altă provocare ↗</button></div>
+          </article>
+        </section>
+
         <section class="stats" id="statsCards">
           <div class="stat-card"><div class="stat-icon ic-rose">♙</div><div><div class="stat-label">Elevi în catalog</div><div class="stat-value" id="statStudents">0</div><div class="stat-foot">Lista clasei active</div></div></div>
           <div class="stat-card"><div class="stat-icon ic-green">★</div><div><div class="stat-label">Note înregistrate</div><div class="stat-value" id="statGrades">0</div><div class="stat-foot" id="statGradesFoot">Toate notele clasei</div></div></div>
@@ -636,6 +732,52 @@ document.addEventListener('click',async e=>{
     }catch(err){console.error(err);toast('Ștergerea a eșuat.',true)}
   }
 });
+
+
+  // Atelier literar: conținut educațional rotativ, independent de datele catalogului.
+  const literaryWords = [
+    ["Elo(c)vență","Arta de a exprima clar, frumos și convingător ideile."],
+    ["Melancolie","Stare de tristețe blândă, adesea însoțită de dor sau nostalgie."],
+    ["Efemer","Ceea ce durează puțin; trecător, vremelnic."],
+    ["Arhaism","Cuvânt sau formă de limbă ieșită din uzul curent."],
+    ["Perspicace","Care înțelege repede și pătrunde cu ușurință esența lucrurilor."],
+    ["Contemplație","Privire meditativă și atentă asupra unui lucru sau a unei idei."]
+  ];
+  const literaryFigures = [
+    ["Metafora","Înlocuirea sensului obișnuit al unui cuvânt cu unul figurat, pe baza unei asemănări."],
+    ["Personificarea","Atribuirea unor însușiri omenești ființelor necuvântătoare, obiectelor sau fenomenelor naturii."],
+    ["Comparația","Alăturarea a doi termeni pe baza unei asemănări, adesea cu ajutorul lui «ca» sau «precum»."],
+    ["Epitetul","Cuvântul care exprimă o însușire deosebită și contribuie la expresivitatea unei descrieri."],
+    ["Hiperbola","Exagerarea intenționată a unei însușiri, a unei situații sau a unei acțiuni."],
+    ["Antiteza","Punerea în opoziție a două idei, personaje, imagini sau stări."]
+  ];
+  const writingPrompts = [
+    "Descrie un loc drag folosind cel puțin două comparații și o personificare.",
+    "Scrie un scurt dialog între două personaje care au opinii diferite despre prietenie.",
+    "Imaginează-ți că anotimpurile sunt personaje. Prezintă-l pe cel preferat în 4–5 enunțuri.",
+    "Continuă fraza «Dacă aș putea păstra o singură amintire...» într-un text de 5–6 rânduri.",
+    "Descrie o dimineață de toamnă fără să folosești cuvintele «frumos» și «rece».",
+    "Scrie o mini-povestire care începe cu: «În biblioteca veche am găsit o scrisoare...»"
+  ];
+  let wordIndex = new Date().getDate() % literaryWords.length;
+  let figureIndex = (new Date().getDate() + 1) % literaryFigures.length;
+  let promptIndex = (new Date().getDate() + 2) % writingPrompts.length;
+  function updateLiteraryStudio(){
+    const w=literaryWords[wordIndex], f=literaryFigures[figureIndex];
+    if($('dailyWord')){$('dailyWord').textContent=w[0];$('dailyWordMeaning').textContent=w[1];}
+    if($('figureTitle')){$('figureTitle').textContent=f[0];$('figureText').textContent=f[1];}
+    if($('writingPrompt'))$('writingPrompt').textContent=writingPrompts[promptIndex];
+  }
+  $('nextWord')?.addEventListener('click',()=>{wordIndex=(wordIndex+1)%literaryWords.length;updateLiteraryStudio();});
+  $('nextFigure')?.addEventListener('click',()=>{figureIndex=(figureIndex+1)%literaryFigures.length;updateLiteraryStudio();});
+  $('newPrompt')?.addEventListener('click',()=>{promptIndex=(promptIndex+1)%writingPrompts.length;updateLiteraryStudio();});
+  $('focusModeBtn')?.addEventListener('click',()=>{
+    document.body.classList.toggle('reading-mode');
+    const active=document.body.classList.contains('reading-mode');
+    $('focusModeBtn').textContent=active?'☷ Ieșire din mod lectură':'☷ Mod lectură';
+    toast(active?'Mod lectură activat.':'Mod lectură dezactivat.');
+  });
+  updateLiteraryStudio();
 
   </script>
 </body>
