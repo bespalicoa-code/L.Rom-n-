@@ -410,12 +410,12 @@ table{border-collapse:separate;border-spacing:0;width:100%}thead th{background:#
 
   <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {initializeFirestore,getFirestore,persistentLocalCache,persistentMultipleTabManager,doc,getDoc,setDoc,collection,onSnapshot,getDocs,addDoc,query,orderBy,limit,writeBatch} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyD8cMEmXYelKtYBPxDypGBX6ub6muNpp0g",
-  authDomain:"limba-romina.firebaseapp.com",
+  authDomain:"lro-six.vercel.app",
   projectId:"limba-romina",
   storageBucket:"limba-romina.firebasestorage.app",
   messagingSenderId:"783586319499",
@@ -870,6 +870,8 @@ async function googleLogin(){
   button.disabled=true;
   button.textContent='Se conectează la Google…';
   try{
+    // Păstrăm sesiunea locală înainte de redirect, pentru a putea recupera contul la întoarcere.
+    await setPersistence(auth,browserLocalPersistence);
     // Pe telefoane folosim redirecționarea: ferestrele popup sunt adesea blocate
     // sau întrerupte de browser-ele mobile și de browserele integrate în aplicații.
     if(mobile){await signInWithRedirect(auth,provider);return}
@@ -920,7 +922,14 @@ onAuthStateChanged(auth,user=>{
   page='catalog';showPage('catalog');
   ensureProfile();subscribe();renderAll();
 });
-getRedirectResult(auth).catch(e=>{console.error('Eroare la revenirea din Google:',e);const m=authMessage(e);if(m)authError(m);$('googleLogin').disabled=false});
+getRedirectResult(auth).then(result=>{
+  if(result?.user){console.info('Autentificare Google finalizată:',result.user.email)}
+}).catch(e=>{
+  console.error('Eroare la revenirea din Google:',e);
+  const m=authMessage(e);
+  if(m)authError(m);
+  $('googleLogin').disabled=false;
+});
 
 async function logout(){
   if(me)log('auth','Ieșire din cont');
