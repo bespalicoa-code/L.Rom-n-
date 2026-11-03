@@ -314,6 +314,27 @@ button,select,input,label{touch-action:manipulation}
   body[data-page=settings] .fab,body[data-page=admin] .fab{display:none}
 }
 </style>
+
+<style id="mobile-opt2">
+.photo-import{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 4px}
+.photo-import .form-help{flex:1 1 170px;margin:0}
+@media(max-width:760px){
+  /* sus: o singură bară curată, fără titluri repetate */
+  .content>.page-intro,.hero{display:none}
+  .content{padding-top:12px}
+  .topbar{height:56px;padding:0 12px;gap:10px}
+  .top-left{gap:10px}
+  .mobile-menu{width:38px;height:38px;border:0;border-radius:12px;background:linear-gradient(145deg,#c48ba5,#8d4b6d);font-size:0;display:grid;place-items:center;box-shadow:0 3px 9px rgba(97,38,68,.25)}
+  .mobile-menu::before{content:"L";font:italic 900 21px Georgia,serif;color:#fff;line-height:1}
+  .top-title{font-size:16px;font-weight:850;color:#3f1b2e}
+  .top-right{gap:9px;flex:none}
+  .avatar{display:none}
+  .top-right .pill::after{content:" ▾"}
+  .sync-chip{font-size:0;width:10px;height:10px;padding:0;border:0;border-radius:50%}
+  .sync-chip.ok{background:#2a9b77}.sync-chip.pending{background:#d59a39}.sync-chip.off{background:#b34855}
+  .admin-assist-banner{top:56px}
+}
+</style>
 </head>
 <body>
   <!-- AUTENTIFICARE -->
@@ -531,7 +552,7 @@ button,select,input,label{touch-action:manipulation}
   <div class="modal-backdrop" id="gradeModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="gradeTitle"><div class="modal-head"><div><h2 id="gradeTitle">Adaugă notă</h2><p>Înregistrează o notă pentru un elev.</p></div><button type="button" class="close" data-close="gradeModal" aria-label="Închide">×</button></div><form class="modal-body" id="gradeForm"><div class="form-row"><label for="gradeStudent">Elev</label><select id="gradeStudent" required></select></div><div class="form-row"><label for="gradeValue">Nota</label><input id="gradeValue" type="number" min="1" max="10" step="1" required placeholder="1–10"><div class="grade-picker" id="gradePicker"></div><div class="form-help">Atinge o notă sau scrie-o în câmp (1–10).</div></div><div class="form-row"><label for="gradeDate">Data</label><input id="gradeDate" type="date" required></div><div class="form-row"><label for="gradeSemester">Semestrul</label><select id="gradeSemester"><option>Semestrul I</option><option>Semestrul II</option></select></div><div class="form-row"><label for="gradeNote">Observație (opțional)</label><textarea id="gradeNote" maxlength="200" placeholder="Ex.: evaluare orală, test, proiect..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="gradeModal">Anulează</button><button class="btn primary" type="submit">Salvează nota</button></div></form></div></div>
   <div class="modal-backdrop" id="absenceModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="absenceTitle"><div class="modal-head"><div><h2 id="absenceTitle">Adaugă absență</h2><p>Înregistrează o absență sau o întârziere.</p></div><button type="button" class="close" data-close="absenceModal" aria-label="Închide">×</button></div><form class="modal-body" id="absenceForm"><div class="form-row"><label for="absenceStudent">Elev</label><select id="absenceStudent" required></select></div><div class="form-row"><label for="absenceDate">Data</label><input id="absenceDate" type="date" required></div><div class="form-row"><label for="absenceType">Tip</label><select id="absenceType"><option>Nemotivată</option><option>Motivată</option><option>Întârziere</option></select></div><div class="form-row"><label for="absenceNote">Observație (opțional)</label><textarea id="absenceNote" maxlength="200" placeholder="Ex.: adeverință medicală..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="absenceModal">Anulează</button><button class="btn primary" type="submit">Salvează</button></div></form></div></div>
   <div class="modal-backdrop" id="achievementModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="achTitle"><div class="modal-head"><div><h2 id="achTitle">Adaugă reușită</h2><p>Înregistrează un rezultat sau o participare.</p></div><button type="button" class="close" data-close="achievementModal" aria-label="Închide">×</button></div><form class="modal-body" id="achievementForm"><div class="form-row"><label for="achievementStudent">Elev</label><select id="achievementStudent" required></select></div><div class="form-row"><label for="achievementTitle">Reușita</label><input id="achievementTitle" maxlength="120" placeholder="Ex.: Locul I la olimpiada de limba română" required></div><div class="form-row"><label for="achievementDate">Data</label><input id="achievementDate" type="date" required></div><div class="form-row"><label for="achievementCategory">Categorie</label><select id="achievementCategory"><option>Olimpiadă</option><option>Concurs</option><option>Proiect</option><option>Lectură</option><option>Participare</option><option>Progres</option></select></div><div class="form-row"><label for="achievementNote">Observație (opțional)</label><textarea id="achievementNote" maxlength="200" placeholder="Detalii despre rezultat..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="achievementModal">Anulează</button><button class="btn primary" type="submit">Salvează reușita</button></div></form></div></div>
-  <div class="modal-backdrop" id="classModal"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="classModalTitle"><div class="modal-head"><div><h2 id="classModalTitle">Clasă nouă</h2><p>Introdu numele clasei și elevii, câte un nume pe rând.</p></div><button type="button" class="close" data-close="classModal" aria-label="Închide">×</button></div><form class="modal-body" id="classForm"><div class="form-row"><label for="className">Denumirea clasei</label><input id="className" maxlength="40" required placeholder="Ex.: IX-A"></div><div class="form-row"><label for="classStudents">Lista elevilor</label><textarea id="classStudents" rows="9" required placeholder="Popescu Ana&#10;Rusu Mihai&#10;..."></textarea><div class="form-help">La editare, elevii existenți (același nume) își păstrează notele, absențele și reușitele. Numele trebuie să fie unice.</div></div><div class="modal-actions"><button type="button" class="btn danger push-left hidden" id="classDelete">Șterge clasa</button><button type="button" class="btn white" data-close="classModal">Anulează</button><button class="btn primary" type="submit">Salvează clasa</button></div></form></div></div>
+  <div class="modal-backdrop" id="classModal"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="classModalTitle"><div class="modal-head"><div><h2 id="classModalTitle">Clasă nouă</h2><p>Introdu numele clasei și elevii, câte un nume pe rând.</p></div><button type="button" class="close" data-close="classModal" aria-label="Închide">×</button></div><form class="modal-body" id="classForm"><div class="form-row"><label for="className">Denumirea clasei</label><input id="className" maxlength="40" required placeholder="Ex.: IX-A"></div><div class="form-row"><label for="classStudents">Lista elevilor</label><div class="photo-import"><button type="button" class="btn light" id="classPhotoBtn">📷 Completează din poză</button><input type="file" id="classPhotoFile" accept="image/*" hidden><span class="form-help" id="classPhotoStatus">Fotografiază lista clasei sau alege o poză. Merge cel mai bine cu liste tipărite.</span></div><textarea id="classStudents" rows="9" required placeholder="Popescu Ana&#10;Rusu Mihai&#10;..."></textarea><div class="form-help">La editare, elevii existenți (același nume) își păstrează notele, absențele și reușitele. Numele trebuie să fie unice.</div></div><div class="modal-actions"><button type="button" class="btn danger push-left hidden" id="classDelete">Șterge clasa</button><button type="button" class="btn white" data-close="classModal">Anulează</button><button class="btn primary" type="submit">Salvează clasa</button></div></form></div></div>
   <div class="modal-backdrop" id="studentModal"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="studentModalTitle"><div class="modal-head"><div><h2 id="studentModalTitle">Istoric elev</h2><p id="studentModalSubtitle"></p></div><button type="button" class="close" data-close="studentModal" aria-label="Închide">×</button></div><div class="modal-body"><div id="studentHistoryList"></div><div class="modal-actions"><button type="button" class="btn light" id="studentAddGrade">+ Adaugă notă</button><button type="button" class="btn white" data-close="studentModal">Închide</button></div></div></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -616,7 +637,7 @@ const fmtAvg=v=>v===null||v===undefined?'—':v.toFixed(2).replace('.',',');
 
 /* ---------- pagini ---------- */
 function pageInfo(){const c=cls();const n=hasClass()?`Clasa ${c.name} · `:'';return {catalog:['PREZENTARE GENERALĂ','Catalog de limba și literatura română',`${n}Evidența notelor, absențelor și reușitelor`],grades:['REGISTRU NOTE','Note',`${n}Toate notele înregistrate`],absences:['REGISTRU ABSENȚE','Absențe',`${n}Evidența absențelor și întârzierilor`],achievements:['PORTOFOLIU','Reușite',`${n}Rezultate și participări`],settings:['CONT ȘI PREFERINȚE','Setări','Contul tău, salvarea în cloud și datele'],admin:['CONTROL ADMINISTRATIV','Administrare','Conturi și activități']}[page]}
-function applyPageHeader(){const p=pageInfo();$('pageEyebrow').textContent=p[0];$('pageTitle').textContent=p[1];$('pageSubtitle').textContent=p[2];$('topTitle').textContent=page==='catalog'?'Catalog de limba și literatura română':p[1]}
+function applyPageHeader(){const p=pageInfo();$('pageEyebrow').textContent=p[0];$('pageTitle').textContent=p[1];$('pageSubtitle').textContent=p[2];$('topTitle').textContent=page==='catalog'?(matchMedia('(max-width:760px)').matches?'Catalog':'Catalog de limba și literatura română'):p[1]}
 function showPage(next){
   if(next==='admin'&&!isAdm){toast('Acces permis doar administratorului.',true);return}
   page=next;document.body.dataset.page=next;
@@ -1256,6 +1277,79 @@ document.addEventListener('click',async e=>{
     $('classPill')?.addEventListener('click',()=>{if(matchMedia('(max-width:760px)').matches)setSidebar(true)});
     ['classNew','classEdit','exportBtn','importBtn','logoutBtn'].forEach(id=>$(id)?.addEventListener('click',()=>setSidebar(false)));
     $('classSelect')?.addEventListener('change',()=>setSidebar(false));
+  })();
+  
+  /* ---------- listă clasă din poză ---------- */
+  (function(){
+    const btn=$('classPhotoBtn'),file=$('classPhotoFile'),status=$('classPhotoStatus');
+    if(!btn)return;
+    const say=t=>{status.textContent=t};
+    let tessLoad=null;
+    const loadTess=()=>tessLoad||(tessLoad=new Promise((res,rej)=>{
+      if(window.Tesseract)return res(window.Tesseract);
+      const sc=document.createElement('script');
+      sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+      sc.onload=()=>res(window.Tesseract);sc.onerror=()=>{tessLoad=null;rej(new Error('load'))};
+      document.head.appendChild(sc);
+    }));
+    async function prep(f){
+      const url=URL.createObjectURL(f);
+      const img=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=url});
+      const sc=Math.min(1,2000/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
+      const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+      const d=x.getImageData(0,0,c.width,c.height),a=d.data;
+      for(let i=0;i<a.length;i+=4){let g=a[i]*.299+a[i+1]*.587+a[i+2]*.114;g=(g-128)*1.35+136;a[i]=a[i+1]=a[i+2]=g<0?0:g>255?255:g}
+      x.putImageData(d,0,0);return c;
+    }
+    const HEAD=/^(nr|nume|numele|prenume|prenumele|clasa|lista|catalog|elevi|elevii|data|semn|semnatura|semnătura|total|profesor|diriginte|an|anul)$/i;
+    function parseNames(text){
+      const seen=new Set(),out=[];
+      text.split(/\r?\n/).forEach(raw=>{
+        let t=raw.replace(/ş/g,'ș').replace(/Ş/g,'Ș').replace(/ţ/g,'ț').replace(/Ţ/g,'Ț')
+          .replace(/\d+/g,' ').replace(/[^\p{L}'’\- ]/gu,' ').replace(/\s+/g,' ').trim()
+          .replace(/^[-'’ ]+|[-'’ ]+$/g,'');
+        if(!t)return;
+        let words=t.split(' ').filter(w=>w.replace(/[^\p{L}]/gu,'').length>=2);
+        if(!words.length||words.length>5)return;
+        if(words.some(w=>HEAD.test(w)||/^[IVXivx]+(-[A-Za-z])?$/.test(w)))return;
+        t=words.join(' ');
+        if(t.replace(/[^\p{L}]/gu,'').length<4)return;
+        if(t===t.toLocaleUpperCase('ro'))t=t.split(/([ -])/).map(w=>w.length>1?w.charAt(0)+w.slice(1).toLocaleLowerCase('ro'):w).join('');
+        const k=lc(t);if(seen.has(k))return;seen.add(k);out.push(t);
+      });
+      return out;
+    }
+    btn.addEventListener('click',()=>file.click());
+    file.addEventListener('change',async()=>{
+      const f=file.files[0];file.value='';
+      if(!f)return;
+      btn.disabled=true;
+      try{
+        say('Pregătesc poza…');
+        const canvas=await prep(f);
+        say('Se încarcă cititorul de text (prima dată durează puțin)…');
+        const T=await loadTess();
+        const worker=await T.createWorker('ron',1,{logger:m=>{
+          if(m.status==='recognizing text')say('Citesc lista… '+Math.round(m.progress*100)+'%');
+          else if(/loading/.test(m.status||''))say('Se descarcă datele pentru limba română…');
+        }});
+        try{await worker.setParameters({tessedit_pageseg_mode:'6'})}catch{}
+        const {data}=await worker.recognize(canvas);
+        await worker.terminate();
+        const found=parseNames(data.text||'');
+        if(!found.length){say('Nu am găsit nume clare. Încearcă o poză dreaptă, bine luminată, cu lista pe tot ecranul.');return}
+        const ta=$('classStudents'),have=ta.value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+        const keys=new Set(have.map(lc));
+        const add=found.filter(n=>!keys.has(lc(n)));
+        ta.value=have.concat(add).join('\n');
+        say(`Am găsit ${found.length} nume${add.length<found.length?` (${found.length-add.length} existau deja)`:''}. Verifică și corectează lista, apoi apasă „Salvează clasa”.`);
+        ta.scrollTop=ta.scrollHeight;
+      }catch(e){
+        console.error(e);
+        say('Nu am putut citi poza. Verifică internetul și încearcă din nou.');
+      }finally{btn.disabled=false}
+    });
   })();
   </script>
 </body>
