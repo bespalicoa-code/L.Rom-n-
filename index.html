@@ -134,6 +134,66 @@ body.reading-mode .page{font-size:1.06em}
 .admin-assist-banner>div{display:flex;flex-direction:column;gap:2px}.admin-assist-banner b{font-size:12px;color:#805414}.admin-assist-banner span{font-size:11px;color:#8c7655}.admin-enter-btn{white-space:nowrap;padding:7px 10px;font-size:10px}
 @media(max-width:760px){.admin-assist-banner{top:64px;align-items:flex-start;flex-direction:column}.admin-assist-banner .btn{width:100%}}
 
+
+/* =========================================================
+   LEXIS — interfață profesională, ediția modernă
+   Suprascrieri vizuale; logica JavaScript și structura rămân intacte.
+   ========================================================= */
+:root{
+  --wine:#54243f;--wine-dark:#321629;--rose:#a65d7d;--gold:#b68a45;
+  --ink:#25212a;--muted:#77717c;--bg:#f4f5f8;--panel:#ffffff;
+  --line:#e8e7ec;--green:#23836b;--red:#b34b5b;
+  --shadow:0 8px 28px rgba(34,22,35,.055);--radius:16px;
+}
+body{background:#f4f5f8;color:var(--ink);font-size:14px;line-height:1.55;letter-spacing:.005em}
+button,input,select,textarea{font-family:inherit}
+button{transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.app{grid-template-columns:258px minmax(0,1fr)}
+.sidebar{background:linear-gradient(165deg,#382034 0%,#281522 62%,#21121d 100%);padding:27px 17px 22px;gap:27px;border-right:1px solid rgba(255,255,255,.07);box-shadow:8px 0 28px rgba(29,14,25,.06)}
+.brand{padding:0 9px;gap:13px}.brand-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#c48ba5,#8d4b6d);box-shadow:0 7px 18px #10081055;font-size:25px;opacity:1}
+.brand-title{font-size:19px;letter-spacing:.19em}.brand-sub{font-size:9px;letter-spacing:.11em;color:#d7b9c8}
+.nav-label,.cs-label{font-size:9px;letter-spacing:.17em;color:#bd91a7}
+.nav{gap:5px}.nav button,.class-actions button,.side-btn{padding:11px 13px;border-radius:11px;font-size:12px;color:#e6d7df}
+.nav button:hover,.class-actions button:hover,.side-btn:hover{background:rgba(255,255,255,.09);color:#fff;transform:translateX(2px)}
+.nav button.active,.nav button[aria-current="page"]{background:linear-gradient(100deg,rgba(190,126,157,.25),rgba(190,126,157,.09));color:#fff;box-shadow:inset 3px 0 #d8a7bd}
+.main,.content,.workspace{min-width:0}
+main{min-width:0}
+.topbar,.header,.page-header{border-bottom:1px solid var(--line)}
+.hero{border-radius:20px;background:linear-gradient(115deg,#fff 0%,#fbf7fa 58%,#f4eaf0 100%);border:1px solid #eee5eb;box-shadow:var(--shadow);padding:clamp(22px,3vw,34px);overflow:hidden}
+.hero h1,.page-title{letter-spacing:-.035em;color:#302330;font-weight:800}
+.hero p{color:#746b76;max-width:650px}
+.hero-art{opacity:.32}
+.panel,.stat-card,.studio-card,.auth-card,.admin-card{background:#fff;border:1px solid #e9e7ec;border-radius:16px;box-shadow:var(--shadow)}
+.panel{overflow:hidden}.panel-header,.section-head{padding:17px 20px;border-bottom:1px solid #efedf1}
+.panel-title,.section-title{font-size:14px;font-weight:800;color:#382b38;letter-spacing:-.01em}
+.panel-subtitle,.section-subtitle{color:#89818b}
+.stat-card{padding:18px 19px;min-height:112px;position:relative;overflow:hidden}
+.stat-card:hover,.studio-card:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(45,26,42,.09)}
+.stat-value{font-size:27px;letter-spacing:-.045em;font-weight:850;color:#342635}
+.stat-label{font-size:11px;color:#817783;font-weight:650;letter-spacing:.025em}
+.stat-icon,.section-icon,.activity-icon,.studio-icon{opacity:.8}
+.btn{border-radius:10px;font-weight:750;letter-spacing:.005em;box-shadow:none}
+.btn-primary,.primary-btn{background:linear-gradient(135deg,#66304e,#51233e);border:1px solid #51233e;color:#fff}
+.btn-primary:hover,.primary-btn:hover{background:#3f1b31;box-shadow:0 5px 14px rgba(81,35,62,.2);transform:translateY(-1px)}
+.btn-secondary,.btn-light{background:#fff;border:1px solid #e5dfe6;color:#554653}
+.btn-secondary:hover,.btn-light:hover{background:#faf6f9;border-color:#d4c2ce}
+input,select,textarea{border:1px solid #ded9e1!important;border-radius:9px!important;background:#fff!important;color:#302a33!important;min-height:39px}
+input:focus,select:focus,textarea:focus{border-color:#a76b88!important;box-shadow:0 0 0 3px rgba(167,107,136,.13)!important;outline:0!important}
+label{color:#514653;font-weight:700}
+table{border-collapse:separate;border-spacing:0;width:100%}thead th{background:#f8f6f8;color:#756b77;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.075em;border-bottom:1px solid #e9e5eb;padding:12px 13px}tbody td{padding:12px 13px;border-bottom:1px solid #f0edf1;color:#433b46}tbody tr:hover{background:#fcf9fb}
+.badge,.pill,.tag{border-radius:999px;font-weight:750;letter-spacing:.01em}
+.auth-screen{background:radial-gradient(circle at 15% 15%,#f2e4eb 0,transparent 32%),radial-gradient(circle at 85% 80%,#eadde6 0,transparent 30%),#f5f3f6}
+.auth-card{border-radius:22px;box-shadow:0 24px 70px rgba(45,24,40,.13);border:1px solid rgba(255,255,255,.9)}
+.auth-copy h1{letter-spacing:-.04em;color:#302330}.google-btn{border-radius:11px!important;border:1px solid #e4dfe6!important;box-shadow:0 2px 5px rgba(30,20,30,.035)}
+.modal,.dialog,.dropdown-menu{border-radius:16px;box-shadow:0 22px 65px rgba(30,18,29,.2)}
+.grade-student-card{border-color:#eae5eb;background:#fff;border-radius:12px}.grade-chip{border-radius:8px}
+.admin-assist-banner{border-radius:0;background:linear-gradient(100deg,#fff8e9,#fffdf8);border-bottom:1px solid #eee1c5}
+:focus-visible{outline:3px solid rgba(183,132,160,.45)!important;outline-offset:2px}
+@media(max-width:1000px){.app{grid-template-columns:220px minmax(0,1fr)}.sidebar{padding-left:13px;padding-right:13px}}
+@media(max-width:760px){.app{grid-template-columns:minmax(0,1fr)}.sidebar{position:relative;top:auto;height:auto;min-height:0;padding:13px 14px;gap:12px;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}.brand{padding:0 5px}.brand-mark{width:39px;height:39px}.nav{display:flex;overflow-x:auto;gap:6px;padding:2px 0 5px;scrollbar-width:thin}.nav button{width:auto;white-space:nowrap;flex:none;padding:9px 11px}.nav-label,.cs-label{display:none}.hero{border-radius:15px;padding:20px}.panel,.stat-card,.studio-card{border-radius:13px}.panel-header,.section-head{padding:14px 15px}}
+@media(max-width:460px){.stat-value{font-size:23px}.auth-card{margin:14px;border-radius:18px}}
+@media(prefers-reduced-motion:reduce){button,.stat-card,.studio-card{transition:none!important}}
+
 </style>
 </head>
 <body>
