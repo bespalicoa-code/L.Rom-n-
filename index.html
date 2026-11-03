@@ -2,7 +2,10 @@
 <html lang="ro">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="LEXIS">
   <meta name="theme-color" content="#6b2848">
   <title>LEXIS | Catalog de limba și literatura română</title>
   <style>
@@ -194,6 +197,122 @@ table{border-collapse:separate;border-spacing:0;width:100%}thead th{background:#
 @media(max-width:460px){.stat-value{font-size:23px}.auth-card{margin:14px;border-radius:18px}}
 @media(prefers-reduced-motion:reduce){button,.stat-card,.studio-card{transition:none!important}}
 
+</style>
+
+<style id="mobile-opt">
+/* ===== LEXIS — optimizare pentru telefon ===== */
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent}
+button,select,input,label{touch-action:manipulation}
+.auth-screen{min-height:100dvh}
+.bottom-nav,.fab{display:none}
+.grade-picker{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:2px}
+.grade-picker button{height:44px;border:1px solid #eadfe5;background:#fff;border-radius:11px;font-weight:850;font-size:16px;color:#6b2848}
+.grade-picker button.on{background:#66304e;border-color:#66304e;color:#fff}
+@media(max-width:760px){
+  .app{display:block;min-height:100dvh}
+  /* meniu lateral = sertar */
+  .sidebar{position:fixed;top:0;left:0;height:100dvh;width:min(300px,86vw);z-index:60;transform:translateX(-105%);padding:20px 14px calc(20px + env(safe-area-inset-bottom));gap:18px;overflow:auto;border-bottom:0;box-shadow:12px 0 35px rgba(21,6,17,.4)}
+  .sidebar.open{transform:none}
+  .scrim{position:fixed;inset:0;background:rgba(33,9,22,.5);z-index:55}
+  .scrim.show{display:block}
+  .sidebar .nav{display:grid;overflow:visible;padding:0}
+  .sidebar .nav button:not(.admin-only){display:none}
+  .sidebar .nav-label,.sidebar .sidebar-card{display:none}
+  .sidebar .cs-label{display:block}
+  .side-btn,.class-actions button{min-height:46px}
+  /* bara de sus */
+  .topbar{height:58px}
+  .eyebrow{display:none}
+  .top-left{flex:1;min-width:0}
+  .top-title{overflow:hidden;text-overflow:ellipsis}
+  .top-right .pill{display:inline-flex;cursor:pointer;padding:7px 10px;font-size:11px}
+  .mobile-menu{width:42px;height:42px;flex:none}
+  .admin-assist-banner{top:58px}
+  /* conținut */
+  .content{padding:14px 12px calc(100px + env(safe-area-inset-bottom))}
+  .page-intro{margin-bottom:12px}
+  .page-intro h1{font-size:21px;margin:0 0 3px}
+  .page-intro p{font-size:12px}
+  .intro-actions{display:none}
+  .hero{padding:15px 17px;margin-bottom:12px}
+  .hero h2{font-size:18px;margin:6px 0 0}
+  .hero p,.hero-art{display:none}
+  .literary-studio{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -12px 14px;padding:0 12px 4px;scrollbar-width:none}
+  .literary-studio::-webkit-scrollbar{display:none}
+  .studio-card,.studio-card:first-child{flex:0 0 82%;scroll-snap-align:start;min-height:0}
+  .stat-card{padding:11px;min-height:0}
+  .stat-label{white-space:normal}
+  .grade-overview-panel{display:none}
+  /* câmpuri ușor de atins; 16px împiedică zoom-ul automat pe iPhone */
+  input,select,textarea,.select,.searchbox input{font-size:16px!important;min-height:46px}
+  .btn{min-height:44px}
+  .icon-btn{width:42px;height:42px;font-size:16px}
+  .panel-head .btn{width:100%}
+  /* tabele -> carduri */
+  .table-scroll{overflow:visible}
+  table:has(#studentRows),table:has(#gradesRows),table:has(#absencesRows),table:has(#achievementsRows),table:has(#attendanceRows){display:block;min-width:0!important}
+  table:has(#studentRows) thead,table:has(#gradesRows) thead,table:has(#absencesRows) thead,table:has(#achievementsRows) thead,table:has(#attendanceRows) thead{display:none}
+  #studentRows,#gradesRows,#absencesRows,#achievementsRows,#attendanceRows{display:block;padding:2px 0 6px}
+  #studentRows tr,#gradesRows tr,#absencesRows tr,#achievementsRows tr,#attendanceRows tr{display:grid;gap:6px 10px;margin:8px 12px;padding:12px 14px;background:#fff;border:1px solid #eee3e8;border-radius:14px;box-shadow:0 2px 8px rgba(75,31,55,.045);align-items:center}
+  #studentRows td,#gradesRows td,#absencesRows td,#achievementsRows td,#attendanceRows td{display:block;padding:0!important;border:0!important;min-width:0}
+  #studentRows tr:hover td,#gradesRows tr:hover td,#absencesRows tr:hover td,#achievementsRows tr:hover td,#attendanceRows tr:hover td{background:none}
+  .link-btn{font-size:15px;padding:3px 0}
+  /* catalog */
+  #studentRows tr{grid-template-columns:minmax(0,1fr) auto}
+  #studentRows td:nth-child(1){display:none}
+  #studentRows td:nth-child(2){grid-column:1;grid-row:1}
+  #studentRows td:nth-child(3){grid-column:2;grid-row:1}
+  #studentRows td:nth-child(4){grid-column:1/-1;grid-row:2}
+  #studentRows td:nth-child(5){grid-column:1;grid-row:3}
+  #studentRows td:nth-child(6){grid-column:2;grid-row:3}
+  /* note */
+  #gradesRows tr{grid-template-columns:minmax(0,1fr) auto auto}
+  #gradesRows td:nth-child(2){grid-column:1;grid-row:1}
+  #gradesRows td:nth-child(3){grid-column:2;grid-row:1}
+  #gradesRows td:nth-child(6){grid-column:3;grid-row:1}
+  #gradesRows td:nth-child(1){grid-column:1;grid-row:2;color:#8a7d87;font-size:11px}
+  #gradesRows td:nth-child(4){grid-column:2/4;grid-row:2;text-align:right;color:#8a7d87;font-size:11px}
+  #gradesRows td:nth-child(5){grid-column:1/-1;grid-row:3;font-size:12px;color:#6b5f69}
+  /* istoric absențe */
+  #absencesRows tr{grid-template-columns:minmax(0,1fr) auto auto}
+  #absencesRows td:nth-child(2){grid-column:1;grid-row:1}
+  #absencesRows td:nth-child(3){grid-column:2;grid-row:1}
+  #absencesRows td:nth-child(5){grid-column:3;grid-row:1}
+  #absencesRows td:nth-child(1){grid-column:1;grid-row:2;color:#8a7d87;font-size:11px}
+  #absencesRows td:nth-child(4){grid-column:1/-1;grid-row:3;font-size:12px;color:#6b5f69}
+  /* reușite */
+  #achievementsRows tr{grid-template-columns:minmax(0,1fr) auto}
+  #achievementsRows td:nth-child(2){grid-column:1;grid-row:1}
+  #achievementsRows td:nth-child(6){grid-column:2;grid-row:1}
+  #achievementsRows td:nth-child(3){grid-column:1/-1;grid-row:2}
+  #achievementsRows td:nth-child(1){grid-column:1;grid-row:3;color:#8a7d87;font-size:11px}
+  #achievementsRows td:nth-child(4){grid-column:2;grid-row:3;color:#8a7d87;font-size:11px}
+  #achievementsRows td:nth-child(5){grid-column:1/-1;grid-row:4;font-size:12px;color:#6b5f69}
+  /* prezența zilei */
+  #attendanceRows tr{grid-template-columns:minmax(0,1fr) auto;margin:6px 12px;padding:10px 12px}
+  #attendanceRows td:nth-child(1){display:none}
+  #attendanceRows td:nth-child(2){grid-column:1;grid-row:1}
+  #attendanceRows td:nth-child(3){grid-column:1;grid-row:2}
+  #attendanceRows td:nth-child(4){grid-column:2;grid-row:1/3}
+  #attendanceRows .btn{padding:10px 12px}
+  /* ferestre = foi care urcă de jos */
+  .modal-backdrop{z-index:80;align-items:flex-end;padding:0}
+  .modal,.modal.wide{width:100%;max-height:92dvh;border-radius:20px 20px 0 0;overscroll-behavior:contain}
+  .modal-head{padding:16px 18px;position:sticky;top:0;background:#fff;z-index:1}
+  .modal-body{padding:16px 18px 0}
+  .modal-actions{position:sticky;bottom:0;background:#fff;margin:14px -18px 0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);flex-wrap:nowrap}
+  .modal-actions .btn{flex:1}
+  .modal-actions .push-left{margin-right:0}
+  .toast{left:12px;right:12px;max-width:none;bottom:calc(86px + env(safe-area-inset-bottom));z-index:90}
+  /* bara de jos și butonul + */
+  .bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+  .bottom-nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;padding:4px 2px;border-radius:12px;font-size:10px;font-weight:750;color:#8a7d87}
+  .bottom-nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .bottom-nav button.active{color:var(--wine);background:#f8ecf2}
+  .fab{display:grid;place-items:center;position:fixed;right:16px;bottom:calc(80px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;border:0;background:linear-gradient(135deg,#66304e,#51233e);color:#fff;font-size:32px;line-height:1;box-shadow:0 8px 22px rgba(81,35,62,.4);z-index:41}
+  body[data-page=settings] .fab,body[data-page=admin] .fab{display:none}
+}
 </style>
 </head>
 <body>
@@ -398,10 +517,18 @@ table{border-collapse:separate;border-spacing:0;width:100%}thead th{background:#
 
       </div>
     </main>
+    <nav class="bottom-nav" id="bottomNav" aria-label="Navigare principală">
+      <button type="button" class="active" data-page="catalog"><svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM8 9h8M8 13h6M8 17h4"/></svg>Clasa</button>
+      <button type="button" data-page="grades"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg>Note</button>
+      <button type="button" data-page="absences"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>Absențe</button>
+      <button type="button" data-page="achievements"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM12 13v5M8 20h8M5 5H3a3 3 0 0 0 3 4M19 5h2a3 3 0 0 1-3 4"/></svg>Reușite</button>
+      <button type="button" data-page="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Setări</button>
+    </nav>
+    <button type="button" class="fab" id="fab" aria-label="Adaugă">+</button>
   </div>
 
   <!-- FEREASTRE -->
-  <div class="modal-backdrop" id="gradeModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="gradeTitle"><div class="modal-head"><div><h2 id="gradeTitle">Adaugă notă</h2><p>Înregistrează o notă pentru un elev.</p></div><button type="button" class="close" data-close="gradeModal" aria-label="Închide">×</button></div><form class="modal-body" id="gradeForm"><div class="form-row"><label for="gradeStudent">Elev</label><select id="gradeStudent" required></select></div><div class="form-row"><label for="gradeValue">Nota</label><input id="gradeValue" type="number" min="1" max="10" step="1" required placeholder="1–10"><div class="form-help">Introdu o notă întreagă între 1 și 10.</div></div><div class="form-row"><label for="gradeDate">Data</label><input id="gradeDate" type="date" required></div><div class="form-row"><label for="gradeSemester">Semestrul</label><select id="gradeSemester"><option>Semestrul I</option><option>Semestrul II</option></select></div><div class="form-row"><label for="gradeNote">Observație (opțional)</label><textarea id="gradeNote" maxlength="200" placeholder="Ex.: evaluare orală, test, proiect..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="gradeModal">Anulează</button><button class="btn primary" type="submit">Salvează nota</button></div></form></div></div>
+  <div class="modal-backdrop" id="gradeModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="gradeTitle"><div class="modal-head"><div><h2 id="gradeTitle">Adaugă notă</h2><p>Înregistrează o notă pentru un elev.</p></div><button type="button" class="close" data-close="gradeModal" aria-label="Închide">×</button></div><form class="modal-body" id="gradeForm"><div class="form-row"><label for="gradeStudent">Elev</label><select id="gradeStudent" required></select></div><div class="form-row"><label for="gradeValue">Nota</label><input id="gradeValue" type="number" min="1" max="10" step="1" required placeholder="1–10"><div class="grade-picker" id="gradePicker"></div><div class="form-help">Atinge o notă sau scrie-o în câmp (1–10).</div></div><div class="form-row"><label for="gradeDate">Data</label><input id="gradeDate" type="date" required></div><div class="form-row"><label for="gradeSemester">Semestrul</label><select id="gradeSemester"><option>Semestrul I</option><option>Semestrul II</option></select></div><div class="form-row"><label for="gradeNote">Observație (opțional)</label><textarea id="gradeNote" maxlength="200" placeholder="Ex.: evaluare orală, test, proiect..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="gradeModal">Anulează</button><button class="btn primary" type="submit">Salvează nota</button></div></form></div></div>
   <div class="modal-backdrop" id="absenceModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="absenceTitle"><div class="modal-head"><div><h2 id="absenceTitle">Adaugă absență</h2><p>Înregistrează o absență sau o întârziere.</p></div><button type="button" class="close" data-close="absenceModal" aria-label="Închide">×</button></div><form class="modal-body" id="absenceForm"><div class="form-row"><label for="absenceStudent">Elev</label><select id="absenceStudent" required></select></div><div class="form-row"><label for="absenceDate">Data</label><input id="absenceDate" type="date" required></div><div class="form-row"><label for="absenceType">Tip</label><select id="absenceType"><option>Nemotivată</option><option>Motivată</option><option>Întârziere</option></select></div><div class="form-row"><label for="absenceNote">Observație (opțional)</label><textarea id="absenceNote" maxlength="200" placeholder="Ex.: adeverință medicală..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="absenceModal">Anulează</button><button class="btn primary" type="submit">Salvează</button></div></form></div></div>
   <div class="modal-backdrop" id="achievementModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="achTitle"><div class="modal-head"><div><h2 id="achTitle">Adaugă reușită</h2><p>Înregistrează un rezultat sau o participare.</p></div><button type="button" class="close" data-close="achievementModal" aria-label="Închide">×</button></div><form class="modal-body" id="achievementForm"><div class="form-row"><label for="achievementStudent">Elev</label><select id="achievementStudent" required></select></div><div class="form-row"><label for="achievementTitle">Reușita</label><input id="achievementTitle" maxlength="120" placeholder="Ex.: Locul I la olimpiada de limba română" required></div><div class="form-row"><label for="achievementDate">Data</label><input id="achievementDate" type="date" required></div><div class="form-row"><label for="achievementCategory">Categorie</label><select id="achievementCategory"><option>Olimpiadă</option><option>Concurs</option><option>Proiect</option><option>Lectură</option><option>Participare</option><option>Progres</option></select></div><div class="form-row"><label for="achievementNote">Observație (opțional)</label><textarea id="achievementNote" maxlength="200" placeholder="Detalii despre rezultat..."></textarea></div><div class="modal-actions"><button type="button" class="btn white" data-close="achievementModal">Anulează</button><button class="btn primary" type="submit">Salvează reușita</button></div></form></div></div>
   <div class="modal-backdrop" id="classModal"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="classModalTitle"><div class="modal-head"><div><h2 id="classModalTitle">Clasă nouă</h2><p>Introdu numele clasei și elevii, câte un nume pe rând.</p></div><button type="button" class="close" data-close="classModal" aria-label="Închide">×</button></div><form class="modal-body" id="classForm"><div class="form-row"><label for="className">Denumirea clasei</label><input id="className" maxlength="40" required placeholder="Ex.: IX-A"></div><div class="form-row"><label for="classStudents">Lista elevilor</label><textarea id="classStudents" rows="9" required placeholder="Popescu Ana&#10;Rusu Mihai&#10;..."></textarea><div class="form-help">La editare, elevii existenți (același nume) își păstrează notele, absențele și reușitele. Numele trebuie să fie unice.</div></div><div class="modal-actions"><button type="button" class="btn danger push-left hidden" id="classDelete">Șterge clasa</button><button type="button" class="btn white" data-close="classModal">Anulează</button><button class="btn primary" type="submit">Salvează clasa</button></div></form></div></div>
@@ -492,7 +619,7 @@ function pageInfo(){const c=cls();const n=hasClass()?`Clasa ${c.name} · `:'';re
 function applyPageHeader(){const p=pageInfo();$('pageEyebrow').textContent=p[0];$('pageTitle').textContent=p[1];$('pageSubtitle').textContent=p[2];$('topTitle').textContent=page==='catalog'?'Catalog de limba și literatura română':p[1]}
 function showPage(next){
   if(next==='admin'&&!isAdm){toast('Acces permis doar administratorului.',true);return}
-  page=next;
+  page=next;document.body.dataset.page=next;
   document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==next+'Page'));
   document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===next));
   applyPageHeader();
@@ -793,7 +920,7 @@ function saveClass(e){
 
 /* ---------- formulare ---------- */
 function needClass(){if(!hasClass()||!cls().students.length){toast('Creează mai întâi o clasă cu elevi.',true);return true}return false}
-function openGrade(sid=''){if(needClass())return;fillStudents('gradeStudent');if(sid)$('gradeStudent').value=sid;$('gradeValue').value='';$('gradeDate').value=today();$('gradeNote').value='';openModal('gradeModal')}
+function openGrade(sid=''){if(needClass())return;fillStudents('gradeStudent');if(sid)$('gradeStudent').value=sid;$('gradeValue').value='';document.querySelectorAll('#gradePicker button').forEach(b=>b.classList.remove('on'));$('gradeDate').value=today();$('gradeNote').value='';openModal('gradeModal')}
 function openAbsence(sid=''){if(needClass())return;fillStudents('absenceStudent');if(sid)$('absenceStudent').value=sid;$('absenceDate').value=today();$('absenceType').value='Nemotivată';$('absenceNote').value='';openModal('absenceModal')}
 function openAchievement(sid=''){if(needClass())return;fillStudents('achievementStudent');if(sid)$('achievementStudent').value=sid;$('achievementTitle').value='';$('achievementDate').value=today();$('achievementCategory').value='Concurs';$('achievementNote').value='';openModal('achievementModal')}
 function saveGrade(e){
@@ -1115,5 +1242,20 @@ document.addEventListener('click',async e=>{
   });
   updateLiteraryStudio();
 
+  
+  /* ---------- optimizare telefon ---------- */
+  (function(){
+    const gp=$('gradePicker');
+    if(gp){
+      gp.innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>`<button type="button" data-gv="${n}">${n}</button>`).join('');
+      const mark=()=>gp.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.gv===$('gradeValue').value));
+      gp.addEventListener('click',e=>{const b=e.target.closest('[data-gv]');if(!b)return;$('gradeValue').value=b.dataset.gv;mark()});
+      $('gradeValue').addEventListener('input',mark);
+    }
+    $('fab')?.addEventListener('click',()=>{if(page==='absences')openAbsence();else if(page==='achievements')openAchievement();else openGrade()});
+    $('classPill')?.addEventListener('click',()=>{if(matchMedia('(max-width:760px)').matches)setSidebar(true)});
+    ['classNew','classEdit','exportBtn','importBtn','logoutBtn'].forEach(id=>$(id)?.addEventListener('click',()=>setSidebar(false)));
+    $('classSelect')?.addEventListener('change',()=>setSidebar(false));
+  })();
   </script>
 </body>
