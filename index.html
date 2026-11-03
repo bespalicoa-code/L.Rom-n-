@@ -6,7 +6,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="LEXIS">
-  <meta name="theme-color" content="#6b2848">
+  <meta name="theme-color" content="#6b1a38">
   <title>LEXIS | Catalog de limba și literatura română</title>
   <style>
     :root{--wine:#6b2848;--wine-dark:#47182f;--rose:#a94b73;--gold:#c89b4b;--ink:#2b2630;--muted:#7d7480;--bg:#f7f3f5;--panel:#fff;--line:#eadfe5;--green:#238269;--red:#b34855;--shadow:0 12px 32px rgba(75,31,55,.08);--radius:18px}
@@ -333,6 +333,111 @@ button,select,input,label{touch-action:manipulation}
   .sync-chip{font-size:0;width:10px;height:10px;padding:0;border:0;border-radius:50%}
   .sync-chip.ok{background:#2a9b77}.sync-chip.pending{background:#d59a39}.sync-chip.off{background:#b34855}
   .admin-assist-banner{top:56px}
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style id="theme-bordo">
+/* ===== LEXIS — temă modernă: bordo · roz pudrat · auriu · salvie ===== */
+:root{--brand:#7b1e3f;--brand2:#a63a5f;--ink:#2a1420;--muted:#7a6670;--line:#eddfe3;--wine:#7b1e3f;--wine-dark:#3a0f22;--rose:#a63a5f;--gold:#c9a24d;--shadow:0 10px 30px rgba(90,25,50,.08);--radius:22px}
+::selection{background:#f3c9d6}
+body{font-family:"Plus Jakarta Sans",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background-color:#fbf5f6;background-image:radial-gradient(900px 520px at 100% -10%,rgba(196,88,122,.15),transparent 60%),radial-gradient(700px 480px at -10% 35%,rgba(201,162,77,.12),transparent 60%),radial-gradient(600px 420px at 60% 110%,rgba(166,58,95,.10),transparent 60%);background-attachment:fixed}
+:focus-visible{outline:3px solid rgba(166,58,95,.45)!important}
+input:focus,select:focus,textarea:focus{border-color:#a63a5f!important;box-shadow:0 0 0 4px rgba(166,58,95,.16)!important}
+/* meniu lateral */
+.sidebar{background:radial-gradient(420px 280px at 0% 0%,rgba(196,88,122,.45),transparent 60%),radial-gradient(380px 320px at 100% 100%,rgba(201,162,77,.22),transparent 60%),linear-gradient(170deg,#4a1229,#2b0a19 78%);border-right:0}
+.brand-mark{background:linear-gradient(135deg,#d4788f,#8a2346);box-shadow:0 8px 22px rgba(196,88,122,.4);opacity:1}
+.nav-label,.cs-label{color:#d9a9ba}
+.nav button,.class-actions button,.side-btn{color:#f0d9e1}
+.nav button.active,.nav button[aria-current="page"]{background:linear-gradient(100deg,rgba(196,88,122,.5),rgba(122,30,63,.18));box-shadow:inset 3px 0 #e0b865,0 8px 18px rgba(30,5,15,.4);color:#fff}
+.class-select{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.24)}
+.sidebar-card{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
+.sidebar-card .quote{color:#fff}.sidebar-card p{color:#e3c3cf}.version{color:#b98aa0}
+/* bară sus */
+.topbar{background:rgba(255,255,255,.8);backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid rgba(123,30,63,.1)}
+.eyebrow{color:#a63a5f}.top-title{color:var(--ink)}
+.pill{background:linear-gradient(135deg,#fbe9ef,#fbf0dc);color:#7b1e3f;border:1px solid #f0d3dc}
+.avatar{background:linear-gradient(135deg,#a63a5f,#5c1730)}
+.page-intro h1{font-family:"Fraunces",Georgia,serif;color:var(--ink);font-weight:700;letter-spacing:-.02em}.page-intro p{color:var(--muted)}
+/* butoane */
+.btn.primary,.primary{background:linear-gradient(135deg,#9a2a52,#6b1a38);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(123,30,63,.32)}
+.btn.primary:hover,.primary:hover{background:linear-gradient(135deg,#852147,#571330);box-shadow:0 10px 24px rgba(123,30,63,.42)}
+.btn.light,.light{background:#fbe9ef;color:#7b1e3f;border-color:#f0d3dc}
+.btn.white,.white{background:#fff;color:#5a3a48;border-color:#ecdce1}
+.btn.danger,.danger{background:#fff;color:#be123c;border-color:#f6c9d2}
+.green{background:#e8f5f0;color:#2d7a68;border-color:#c5e6dc}
+#focusModeBtn{color:#7b1e3f;border-color:#f0d3dc}
+/* hero */
+.hero{background:radial-gradient(520px 280px at 92% 0%,rgba(224,184,101,.55),transparent 60%),radial-gradient(440px 280px at 0% 100%,rgba(214,120,150,.42),transparent 60%),linear-gradient(120deg,#4a1229,#7b1e3f 55%,#b03a62);border:0;color:#fff;box-shadow:0 18px 40px rgba(90,20,48,.32)}
+.hero h2{font-family:"Fraunces",Georgia,serif;font-weight:700;letter-spacing:-.01em;color:#fff}
+.hero p{color:#f6e1e8}.hero-label{color:#f0cfda}.hero-art{color:#fff;opacity:.26}
+/* statistici */
+.stat-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.stat-card:nth-child(1){background:linear-gradient(145deg,#fff 45%,#fbeaf0)}
+.stat-card:nth-child(2){background:linear-gradient(145deg,#fff 45%,#e8f5f0)}
+.stat-card:nth-child(3){background:linear-gradient(145deg,#fff 45%,#fbf1dc)}
+.stat-card:nth-child(4){background:linear-gradient(145deg,#fff 45%,#fde8e4)}
+.stat-icon{width:46px;height:46px;border-radius:15px;color:#fff;opacity:1;box-shadow:0 8px 16px rgba(80,20,40,.16)}
+.ic-rose{background:linear-gradient(135deg,#a63a5f,#6b1a38)}.ic-green{background:linear-gradient(135deg,#3f9d85,#2d7a68)}.ic-gold{background:linear-gradient(135deg,#e0b865,#c98a2e)}.ic-violet{background:linear-gradient(135deg,#e0657f,#b8304f)}
+.stat-value{color:var(--ink)}.stat-label{color:#7a6670}.stat-foot{color:#a8949e}
+/* atelier literar */
+.studio-card{border:0;border-radius:22px;box-shadow:var(--shadow)}
+.studio-card:nth-child(1){background:linear-gradient(145deg,#fbeaf0,#f6dfe8)}
+.studio-card:nth-child(2){background:linear-gradient(145deg,#fbf1dc,#f8e6c4)}
+.studio-card:nth-child(3){background:linear-gradient(145deg,#e8f5f0,#dcefe9)}
+.studio-card:nth-child(1):after{background:rgba(196,88,122,.22)}.studio-card:nth-child(2):after{background:rgba(201,162,77,.28)}.studio-card:nth-child(3):after{background:rgba(63,157,133,.2)}
+.studio-card:nth-child(1) .studio-kicker{color:#9a2a52}.studio-card:nth-child(2) .studio-kicker{color:#a9791f}.studio-card:nth-child(3) .studio-kicker{color:#2d7a68}
+.studio-card h3{font-family:"Fraunces",Georgia,serif;font-weight:700;color:var(--ink)}.studio-card p{color:#5f4a55}
+.studio-word{color:#7b1e3f}.studio-tag{background:rgba(255,255,255,.8);color:#5a3a48}.studio-action{color:#7b1e3f}
+/* panouri și tabele */
+.panel,.admin-card,.auth-card{border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.panel-head{border-bottom-color:#f1e6e9}.panel-heading h2{color:var(--ink);font-weight:800}.panel-heading p{color:var(--muted)}
+.section-icon{background:linear-gradient(135deg,#fbeaf0,#f8e3d9);color:#8a2346;opacity:1}
+thead th{background:#fbf6f7;color:#8a7580}
+tbody td{border-bottom-color:#f3e8eb;color:#3a2530}
+tbody tr:hover td{background:#fdf8f9}
+.student-name,.link-btn{color:var(--ink)}.link-btn:hover{color:#9a2a52}
+.rank{color:#b8a3ad}.student-sub,.muted,.sub-count{color:#a8949e}
+.table-foot{background:#fdf9fa;color:#9a8790;border-top-color:#f1e6e9}
+.badge.grade{background:#fbeaf0;color:#8a2346;border-color:#f0d3dc}
+.badge.good{background:#e8f5f0;color:#2d7a68;border-color:#c5e6dc}
+.badge.warn{background:#fbf1dc;color:#a9791f;border-color:#f0dcaa}
+.badge.neutral{background:#f6f1f3;color:#9a8790;border-color:#ecdce1}
+.absence-count{color:#be123c}
+.grade-chip{background:#fbeaf0;border-color:#f0d3dc;color:#8a2346}
+.grade-chip.high{background:#e8f5f0;border-color:#c5e6dc;color:#2d7a68}
+.grade-chip.low{background:#fff1f2;border-color:#f6c9d2;color:#be123c}
+.grade-student-card{border-color:#eddfe3}.grade-student-name{color:var(--ink)}
+.icon-btn{border-color:#ecdce1;color:#a63a5f;opacity:1}.icon-btn:hover{background:#fbeaf0;color:#7b1e3f}
+.bar{background:#f3e8eb}.bar span{background:linear-gradient(90deg,#7b1e3f,#c4587a,#e0b865)}
+.dist-row{color:#5f4a55}.dist-num{color:var(--ink)}
+.activity{border-bottom-color:#f3e8eb}.activity-icon{background:#fbeaf0;color:#8a2346;opacity:1}
+.activity-main strong{color:var(--ink)}.activity-value{color:#2d7a68}
+.achievement-tag{background:#fbf1dc;color:#a9791f;border-color:#f0dcaa}
+.role-tag{background:#fbeaf0;color:#8a2346}
+.profile-avatar{background:linear-gradient(135deg,#a63a5f,#5c1730)}.profile-name,.kv b{color:var(--ink)}
+.week-bar{background:linear-gradient(180deg,#c4587a,#7b1e3f)}
+.admin-grid .admin-card:after{background:#fbeaf0}
+/* ferestre */
+.modal-head h2{color:var(--ink)}.modal-head p{color:var(--muted)}
+.form-row label{color:#4a2a38}
+.grade-picker button{border-color:#f0d3dc;color:#7b1e3f;background:#fff}
+.grade-picker button.on{background:linear-gradient(135deg,#9a2a52,#6b1a38);border-color:transparent;color:#fff;box-shadow:0 6px 14px rgba(123,30,63,.35)}
+.toast{background:#3a0f22}.toast.error{background:#be123c}
+/* autentificare */
+.auth-screen{background:radial-gradient(600px 420px at 10% 0%,rgba(196,88,122,.5),transparent 60%),radial-gradient(520px 420px at 100% 100%,rgba(224,184,101,.4),transparent 60%),linear-gradient(135deg,#3a0f22,#6b1a38)}
+.auth-card{border:0;border-radius:28px;box-shadow:0 30px 80px rgba(30,5,15,.5)}
+.auth-brand{background:linear-gradient(135deg,#4a1229,#7b1e3f 60%,#b03a62)}
+.auth-copy h1{font-family:"Fraunces",Georgia,serif;font-weight:700;color:var(--ink)}
+.google-btn{border-color:#ecdce1!important}.google-btn:hover{background:#fdf8f9;border-color:#c99aad}
+@media(max-width:760px){
+  .mobile-menu{background:linear-gradient(135deg,#a63a5f,#6b1a38);box-shadow:0 4px 12px rgba(123,30,63,.4)}
+  .top-title{color:var(--ink)}
+  .bottom-nav{background:rgba(255,255,255,.93);border-top:1px solid rgba(123,30,63,.12);box-shadow:0 -8px 24px rgba(90,25,50,.08)}
+  .bottom-nav button.active{color:#7b1e3f;background:#fbeaf0}
+  .fab{background:linear-gradient(135deg,#8a2346,#d4788f);box-shadow:0 10px 26px rgba(138,35,70,.45)}
+  #studentRows tr,#gradesRows tr,#absencesRows tr,#achievementsRows tr,#attendanceRows tr{border-color:#eddfe3;box-shadow:0 4px 14px rgba(90,25,50,.06);border-radius:16px}
 }
 </style>
 </head>
