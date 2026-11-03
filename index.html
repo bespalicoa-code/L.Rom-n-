@@ -19,6 +19,7 @@
     @media(max-width:760px){.app{display:block}.sidebar{position:fixed;left:-270px;top:0;width:250px;height:100dvh;z-index:25;min-height:0;transition:left .2s;box-shadow:15px 0 35px #21091640}.sidebar.open{left:0}.scrim{position:fixed;inset:0;background:#21091680;z-index:24;display:none}.scrim.show{display:block}.mobile-menu{display:grid;place-items:center}.topbar{height:64px;padding:0 14px}.top-title{font-size:13px}.top-right .pill,.account-chip{display:none}.content{padding:19px 12px 24px}.page-intro{align-items:flex-start;flex-direction:column}.page-intro h1{font-size:26px}.hero{padding:20px;border-radius:15px}.hero-art{width:80px}.stats{gap:9px}.stat-card{padding:12px 11px;gap:9px}.stat-icon{width:35px;height:35px;border-radius:11px}.stat-value{font-size:21px}.stat-label{font-size:10px}.stat-foot{font-size:9px}.panel-head{padding:14px}.controls{width:100%}.searchbox{min-width:0;flex:1}.select{max-width:150px}.table-foot{padding:12px 14px}.dist-row{grid-template-columns:105px minmax(40px,1fr) 34px}.modal-actions{gap:7px}.auth-card{border-radius:20px}.auth-brand,.auth-copy,.auth-body{padding-left:20px;padding-right:20px}.admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media print{body{background:#fff}.app{display:block}.sidebar,.scrim,.topbar,.intro-actions,.controls,.hero-art,.modal-backdrop,.toast,.btn,.table-foot,.action-row{display:none!important}.content{padding:0;max-width:none}.hero{background:#f8eaf0;color:#47182f;box-shadow:none;border:1px solid #e3ccd7}.hero p,.hero-label{color:#68475a}.stats{grid-template-columns:repeat(4,1fr)}.panel{box-shadow:none;break-inside:avoid}.table-scroll{overflow:visible}table{min-width:0;font-size:9px}thead th{padding:6px}tbody td{padding:5px}}
   .account-chip:empty{display:none}@media(max-width:760px){.searchbox{flex:1 1 100%}.controls .select{max-width:none;flex:1}}.scrim{display:none}.google-btn{width:100%;background:#fff;border:1px solid #dfd5db;color:#4e3845;border-radius:12px;padding:13px 14px;font-weight:800;font-size:14px;display:flex;justify-content:center;gap:11px;align-items:center;transition:background .15s,border-color .15s}.google-btn:hover{background:#fff8fb;border-color:#c99aad}.google-btn:disabled{opacity:.6;cursor:wait}
+  .sync-chip{border-radius:999px;padding:7px 11px;font-size:11px;font-weight:800;white-space:nowrap;border:1px solid transparent}.sync-chip.ok{background:#e7f7f0;color:#176d59;border-color:#ccefe0}.sync-chip.pending{background:#fff4e7;color:#9a6313;border-color:#f5dfb8}.sync-chip.off{background:#fff0f1;color:#b34855;border-color:#f2d6d8}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.profile{display:flex;align-items:center;gap:16px;padding:20px 19px 8px}.profile-avatar{width:64px;height:64px;flex:none;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,#bd6d91,#692644);color:#fff;font-weight:850;font-size:26px}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-info{min-width:0}.profile-name{font-size:17px;font-weight:850;color:#431c31;overflow-wrap:anywhere}.profile-email{font-size:12px;color:var(--muted);margin:2px 0 7px;overflow-wrap:anywhere}.sync-line{margin:12px 19px 4px;padding:10px 12px;border-radius:11px;font-size:12px;font-weight:700;border:1px solid transparent}.sync-line.ok{background:#e7f7f0;color:#176d59;border-color:#ccefe0}.sync-line.pending{background:#fff4e7;color:#9a6313;border-color:#f5dfb8}.sync-line.off{background:#fff0f1;color:#b34855;border-color:#f2d6d8}.btn-row{display:flex;gap:10px;flex-wrap:wrap;padding:14px 19px 16px}.kv-list{padding:6px 19px 0}.kv{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #f1eaed;font-size:13px;color:#685668}.kv:last-child{border-bottom:0}.kv b{color:#431c31;font-size:14px}@media(max-width:900px){.settings-grid{grid-template-columns:1fr}}@media(max-width:760px){.sync-chip{font-size:10px;padding:6px 9px}}
   </style>
 </head>
 <body>
@@ -49,6 +50,7 @@
         <button type="button" data-page="grades"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg>Note</button>
         <button type="button" data-page="absences"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>Absențe</button>
         <button type="button" data-page="achievements"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM12 13v5M8 20h8M5 5H3a3 3 0 0 0 3 4M19 5h2a3 3 0 0 1-3 4"/></svg>Reușite</button>
+        <button type="button" data-page="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Setări</button>
         <button type="button" class="admin-only" id="adminNav" data-page="admin"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 17V9M10 17V5M14 17v-3M18 17V7"/></svg>Administrare</button>
       </nav>
       <div class="spacer"></div>
@@ -65,7 +67,7 @@
     <main class="main">
       <header class="topbar">
         <div class="top-left"><button class="mobile-menu" id="menuToggle" aria-label="Deschide meniul">☰</button><div><div class="eyebrow">Spațiu educațional digital</div><div class="top-title" id="topTitle">Catalog de limba și literatura română</div></div></div>
-        <div class="top-right"><span class="account-chip" id="accountChip"></span><span class="pill" id="classPill">CLASA IX-A</span><span class="avatar" id="classAvatar">IX</span></div>
+        <div class="top-right"><span class="sync-chip pending" id="syncChip">⟳ Se salvează...</span><span class="account-chip" id="accountChip"></span><span class="pill" id="classPill">CLASA IX-A</span><span class="avatar" id="classAvatar">IX</span></div>
       </header>
       <div class="content">
         <div class="page-intro">
@@ -105,6 +107,25 @@
         <section class="page hidden" id="absencesPage"><div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">!</div><div><h2>Absențe</h2><p>Registrul absențelor și întârzierilor clasei active.</p></div></div><div class="controls"><select class="select" id="absenceFilter" aria-label="Filtru absențe"><option value="all">Toate înregistrările</option><option value="nemotivată">Nemotivate</option><option value="motivată">Motivate</option><option value="întârziere">Întârzieri</option></select><button class="btn primary" data-action="add-absence">+ Adaugă absență</button></div></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Tip</th><th>Observație</th><th></th></tr></thead><tbody id="absencesRows"></tbody></table><div class="empty hidden" id="absencesEmpty">Nu există absențe înregistrate.</div></div></div></section>
 
         <section class="page hidden" id="achievementsPage"><div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">🏅</div><div><h2>Reușite și participări</h2><p>Premii, concursuri, proiecte și progresul elevilor.</p></div></div><button class="btn primary" data-action="add-achievement">+ Adaugă reușită</button></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Reușită</th><th>Categorie</th><th>Observație</th><th></th></tr></thead><tbody id="achievementsRows"></tbody></table><div class="empty hidden" id="achievementsEmpty">Nu există reușite înregistrate.</div></div><div class="card-note">Folosește această secțiune pentru rezultate la olimpiade, concursuri, lectură, proiecte și implicare.</div></div></section>
+
+        <section class="page hidden" id="settingsPage">
+          <div class="settings-grid">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-heading"><div class="section-icon">♙</div><div><h2>Contul meu</h2><p>Conectat cu Google</p></div></div></div>
+              <div class="profile"><div class="profile-avatar" id="setAvatar">?</div><div class="profile-info"><div class="profile-name" id="setName"></div><div class="profile-email" id="setEmail"></div><div id="setRole"></div></div></div>
+              <div class="sync-line" id="setSync"></div>
+              <div class="btn-row"><button type="button" class="btn primary" id="setSwitch">⇄ &nbsp;Schimbă contul</button><button type="button" class="btn white" id="setLogout">↪ &nbsp;Ieșire din cont</button></div>
+              <div class="card-note">După ieșire te poți conecta cu alt cont Google, sau cu același cont de pe alt dispozitiv. Datele rămân în cont și nu se pierd.</div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-heading"><div class="section-icon">⌂</div><div><h2>Datele mele</h2><p>Ce este salvat în acest cont</p></div></div></div>
+              <div class="kv-list" id="setCounts"></div>
+              <div class="btn-row"><button type="button" class="btn white" id="setExport">⇩ &nbsp;Exportă datele</button><button type="button" class="btn white" id="setImport">⇧ &nbsp;Importă datele</button></div>
+              <div class="btn-row" style="padding-top:0"><button type="button" class="btn danger" id="setWipe">Șterge toate datele mele</button></div>
+              <div class="card-note">Datele se salvează automat în cloud, în contul tău, și apar identic pe orice dispozitiv. Exportul creează o copie de siguranță (.json).</div>
+            </div>
+          </div>
+        </section>
 
         <section class="page hidden" id="adminPage">
           <div class="page-intro" style="margin-bottom:16px"><div><div class="eyebrow">CONTROL ADMINISTRATIV</div><h1 style="font-size:25px">Panou administrator</h1><p>Toate conturile și activitățile din aplicație.</p></div><button class="btn danger" id="clearActivity">Golește jurnalul</button></div>
@@ -159,7 +180,7 @@ try{fdb=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:per
 
 /* ---------- stare ---------- */
 const EMPTY={id:'',name:'—',students:[],grades:[],absences:[],achievements:[]};
-let me=null,isAdm=false,classes=[],activeId='',page='catalog',editingClass=null,currentStudentId='',unsubClasses=null,promptedFirst=false,adminActs=[],adminToken=0;
+let me=null,isAdm=false,classes=[],activeId='',page='catalog',editingClass=null,currentStudentId='',unsubClasses=null,promptedFirst=false,adminActs=[],adminToken=0,syncState='pending',loaded=false;
 const cls=()=>classes.find(c=>c.id===activeId)||classes[0]||EMPTY;
 const hasClass=()=>classes.length>0;
 
@@ -204,7 +225,7 @@ const nameOf=id=>cls().students.find(s=>s.id===id)?.name||'Elev eliminat';
 const fmtAvg=v=>v===null||v===undefined?'—':v.toFixed(2).replace('.',',');
 
 /* ---------- pagini ---------- */
-function pageInfo(){const c=cls();const n=hasClass()?`Clasa ${c.name} · `:'';return {catalog:['PREZENTARE GENERALĂ','Catalog de limba și literatura română',`${n}Evidența notelor, absențelor și reușitelor`],grades:['REGISTRU NOTE','Note',`${n}Toate notele înregistrate`],absences:['REGISTRU ABSENȚE','Absențe',`${n}Evidența absențelor și întârzierilor`],achievements:['PORTOFOLIU','Reușite',`${n}Rezultate și participări`],admin:['CONTROL ADMINISTRATIV','Administrare','Conturi și activități']}[page]}
+function pageInfo(){const c=cls();const n=hasClass()?`Clasa ${c.name} · `:'';return {catalog:['PREZENTARE GENERALĂ','Catalog de limba și literatura română',`${n}Evidența notelor, absențelor și reușitelor`],grades:['REGISTRU NOTE','Note',`${n}Toate notele înregistrate`],absences:['REGISTRU ABSENȚE','Absențe',`${n}Evidența absențelor și întârzierilor`],achievements:['PORTOFOLIU','Reușite',`${n}Rezultate și participări`],settings:['CONT ȘI PREFERINȚE','Setări','Contul tău, salvarea în cloud și datele'],admin:['CONTROL ADMINISTRATIV','Administrare','Conturi și activități']}[page]}
 function applyPageHeader(){const p=pageInfo();$('pageEyebrow').textContent=p[0];$('pageTitle').textContent=p[1];$('pageSubtitle').textContent=p[2];$('topTitle').textContent=page==='catalog'?'Catalog de limba și literatura română':p[1]}
 function showPage(next){
   if(next==='admin'&&!isAdm){toast('Acces permis doar administratorului.',true);return}
@@ -217,6 +238,7 @@ function showPage(next){
   $('quickAbsence').classList.toggle('hidden',!['catalog','absences'].includes(next));
   setSidebar(false);
   if(next==='admin')renderAdmin();
+  if(next==='settings')renderSettings();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -279,7 +301,7 @@ function renderAchievements(){
   $('achievementsRows').innerHTML=rows.map(a=>`<tr><td>${fmtDate(a.date)}</td><td><strong class="student-name">${esc(nameOf(a.studentId))}</strong></td><td><span class="achievement-tag">${esc(a.title)}</span></td><td>${esc(a.category)}</td><td>${esc(a.note||'—')}</td><td><button type="button" class="icon-btn" data-delete-achievement="${esc(a.id)}" title="Șterge reușita" aria-label="Șterge reușita">×</button></td></tr>`).join('');
   $('achievementsEmpty').classList.toggle('hidden',rows.length>0);
 }
-function renderAll(){if(!me)return;renderClasses();renderStats();renderCatalog();renderDistribution();renderActivity();renderGrades();renderAbsences();renderAchievements();applyPageHeader()}
+function renderAll(){if(!me)return;renderClasses();renderStats();renderCatalog();renderDistribution();renderActivity();renderGrades();renderAbsences();renderAchievements();renderSettings();applyPageHeader()}
 
 /* ---------- administrare ---------- */
 async function renderAdmin(){
@@ -433,12 +455,15 @@ async function ensureProfile(){
 function subscribe(){
   if(unsubClasses)unsubClasses();
   let saved='';try{saved=localStorage.getItem(activeKey())||''}catch{}
-  activeId=saved;promptedFirst=false;
-  unsubClasses=onSnapshot(collection(fdb,'users',me.uid,'classes'),snap=>{
-    classes=snap.docs.map(d=>normClass({...d.data(),id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
-    if(!classes.some(c=>c.id===activeId))activeId=classes[0]?.id||'';
-    renderAll();
-    if(!classes.length&&!snap.metadata.fromCache&&!promptedFirst){promptedFirst=true;openClass()}
+  activeId=saved;promptedFirst=false;loaded=false;setSyncState('pending');
+  unsubClasses=onSnapshot(collection(fdb,'users',me.uid,'classes'),{includeMetadataChanges:true},snap=>{
+    setSyncState(snap.metadata.hasPendingWrites||snap.metadata.fromCache?'pending':'ok');
+    if(!loaded||snap.docChanges().length){
+      classes=snap.docs.map(d=>normClass({...d.data(),id:d.id})).sort((a,b)=>(a.order||0)-(b.order||0));
+      if(!classes.some(c=>c.id===activeId))activeId=classes[0]?.id||'';
+      loaded=true;renderAll();
+    }
+    if(!snap.metadata.fromCache&&!classes.length&&!promptedFirst){promptedFirst=true;openClass()}
   },err=>{console.error(err);toast(err.code==='permission-denied'?'Acces refuzat. Publică regulile Firestore.':'Nu s-au putut încărca datele.',true)});
 }
 onAuthStateChanged(auth,user=>{
@@ -448,7 +473,7 @@ onAuthStateChanged(auth,user=>{
     $('appShell').classList.add('hidden');$('authScreen').classList.remove('hidden');$('googleLogin').disabled=false;
     return;
   }
-  me={uid:user.uid,email:normEmail(user.email),name:user.displayName||user.email};
+  me={uid:user.uid,email:normEmail(user.email),name:user.displayName||user.email,photo:user.photoURL||''};
   isAdm=me.email===ADMIN_EMAIL&&user.emailVerified===true;
   $('authScreen').classList.add('hidden');$('appShell').classList.remove('hidden');
   $('adminNav').classList.toggle('visible',isAdm);
@@ -463,7 +488,49 @@ async function logout(){
   toast('Ai ieșit din cont.');
 }
 
+/* ---------- setări și sincronizare ---------- */
+function setSyncState(s){syncState=s;renderSync()}
+function renderSync(){
+  const off=typeof navigator!=='undefined'&&navigator.onLine===false;
+  const map={ok:['☁ Salvat în cloud','ok','Toate modificările sunt salvate în contul tău.'],pending:['⟳ Se salvează...','pending','Se sincronizează modificările cu contul tău...'],offline:['⚠ Fără conexiune','off','Ești offline. Modificările se salvează în cont când revine internetul.']};
+  const m=map[off?'offline':syncState]||map.pending;
+  const chip=$('syncChip');if(chip){chip.textContent=m[0];chip.className='sync-chip '+m[1]}
+  const s=$('setSync');if(s){s.textContent=m[2];s.className='sync-line '+m[1]}
+}
+function renderSettings(){
+  if(!me)return;
+  $('setAvatar').innerHTML=me.photo?`<img src="${esc(me.photo)}" alt="" referrerpolicy="no-referrer">`:esc((me.name||'?').trim().charAt(0).toUpperCase());
+  $('setName').textContent=me.name;$('setEmail').textContent=me.email;
+  $('setRole').innerHTML=isAdm?'<span class="role-tag">ADMINISTRATOR</span>':'<span class="role-tag">PROFESOR</span>';
+  const sum=k=>classes.reduce((n,c)=>n+c[k].length,0);
+  const rows=[['Clase',classes.length],['Elevi',sum('students')],['Note',sum('grades')],['Absențe și întârzieri',sum('absences')],['Reușite',sum('achievements')]];
+  $('setCounts').innerHTML=rows.map(r=>`<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('');
+  renderSync();
+}
+async function switchAccount(){
+  if(me)log('auth','Schimbare cont');
+  try{await signOut(auth)}catch{}
+  toast('Ai ieșit din cont. Alege alt cont Google pentru a continua.');
+}
+async function wipeData(){
+  if(!hasClass())return toast('Nu ai date de șters.',true);
+  const t=prompt('Toate clasele, notele, absențele și reușitele din contul tău vor fi șterse definitiv.\nScrie ȘTERGE pentru confirmare:');
+  if(!t||t.trim().toLocaleUpperCase('ro')!=='ȘTERGE')return;
+  try{
+    const b=writeBatch(fdb);classes.forEach(c=>b.delete(classRef(c.id)));
+    log('class','Toate datele contului au fost șterse');promptedFirst=false;
+    await b.commit();toast('Datele au fost șterse.');
+  }catch(e){fail(e)}
+}
+
 /* ---------- evenimente ---------- */
+$('setLogout').addEventListener('click',logout);
+$('setSwitch').addEventListener('click',switchAccount);
+$('setExport').addEventListener('click',exportData);
+$('setImport').addEventListener('click',()=>$('importFile').click());
+$('setWipe').addEventListener('click',wipeData);
+window.addEventListener('online',renderSync);
+window.addEventListener('offline',renderSync);
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 $('googleLogin').addEventListener('click',googleLogin);
 $('classSelect').addEventListener('change',e=>{if(!e.target.value)return;setActive(e.target.value);renderAll()});
