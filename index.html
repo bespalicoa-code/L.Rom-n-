@@ -104,7 +104,22 @@
 
         <section class="page hidden" id="gradesPage"><div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">★</div><div><h2>Note</h2><p>Toate notele înregistrate pentru clasa activă.</p></div></div><button class="btn primary" data-action="add-grade">+ Adaugă notă</button></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Nota</th><th>Semestrul</th><th>Observație</th><th></th></tr></thead><tbody id="gradesRows"></tbody></table><div class="empty hidden" id="gradesEmpty">Nu există note înregistrate.</div></div></div></section>
 
-        <section class="page hidden" id="absencesPage"><div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">!</div><div><h2>Absențe</h2><p>Registrul absențelor și întârzierilor clasei active.</p></div></div><div class="controls"><select class="select" id="absenceFilter" aria-label="Filtru absențe"><option value="all">Toate înregistrările</option><option value="nemotivată">Nemotivate</option><option value="motivată">Motivate</option><option value="întârziere">Întârzieri</option></select><button class="btn primary" data-action="add-absence">+ Adaugă absență</button></div></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Tip</th><th>Observație</th><th></th></tr></thead><tbody id="absencesRows"></tbody></table><div class="empty hidden" id="absencesEmpty">Nu există absențe înregistrate.</div></div></div></section>
+        <section class="page hidden" id="absencesPage">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-heading"><div class="section-icon">!</div><div><h2>Prezența clasei</h2><p>Toți elevii apar în listă. Marchează absent pentru ziua selectată.</p></div></div>
+              <div class="controls"><label style="font-size:12px;font-weight:800;color:#68475a">Data: <input class="select" type="date" id="attendanceDate" aria-label="Data prezenței"></label></div>
+            </div>
+            <div class="table-scroll"><table style="min-width:600px"><thead><tr><th>Nr.</th><th>Nume și prenume</th><th>Statut pentru această zi</th><th style="text-align:right">Acțiune</th></tr></thead><tbody id="attendanceRows"></tbody></table><div class="empty hidden" id="attendanceEmpty">Adaugă mai întâi elevii în lista clasei.</div></div>
+            <div class="table-foot"><span id="attendanceCount">0 elevi</span><span>Absențele se păstrează în istoric și nu se șterg la schimbarea zilei.</span></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div class="panel-heading"><div class="section-icon">◷</div><div><h2>Istoricul absențelor</h2><p>Toate absențele și întârzierile înregistrate anterior.</p></div></div>
+              <div class="controls"><select class="select" id="absenceFilter" aria-label="Filtru absențe"><option value="all">Toate înregistrările</option><option value="nemotivată">Nemotivate</option><option value="motivată">Motivate</option><option value="întârziere">Întârzieri</option></select><button class="btn primary" data-action="add-absence">+ Adaugă manual</button></div>
+            </div>
+            <div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Tip</th><th>Observație</th><th></th></tr></thead><tbody id="absencesRows"></tbody></table><div class="empty hidden" id="absencesEmpty">Nu există absențe înregistrate.</div></div>
+          </div>
+        </section>
 
         <section class="page hidden" id="achievementsPage"><div class="panel"><div class="panel-head"><div class="panel-heading"><div class="section-icon">🏅</div><div><h2>Reușite și participări</h2><p>Premii, concursuri, proiecte și progresul elevilor.</p></div></div><button class="btn primary" data-action="add-achievement">+ Adaugă reușită</button></div><div class="table-scroll"><table><thead><tr><th>Data</th><th>Elev</th><th>Reușită</th><th>Categorie</th><th>Observație</th><th></th></tr></thead><tbody id="achievementsRows"></tbody></table><div class="empty hidden" id="achievementsEmpty">Nu există reușite înregistrate.</div></div><div class="card-note">Folosește această secțiune pentru rezultate la olimpiade, concursuri, lectură, proiecte și implicare.</div></div></section>
 
@@ -291,8 +306,19 @@ function renderGrades(){
   $('gradesEmpty').classList.toggle('hidden',rows.length>0);
 }
 function renderAbsences(){
-  const f=$('absenceFilter').value;
-  const rows=[...cls().absences].filter(a=>f==='all'||lc(a.type)===f).sort((a,b)=>b.date.localeCompare(a.date));
+  const c=cls(), f=$('absenceFilter').value;
+  if(!$('attendanceDate').value)$('attendanceDate').value=today();
+  const date=$('attendanceDate').value;
+  const todays=c.absences.filter(a=>a.date===date&&a.type!==LATE);
+  $('attendanceRows').innerHTML=c.students.map((student,i)=>{
+    const existing=todays.find(a=>a.studentId===student.id);
+    return `<tr><td class="rank">${i+1}</td><td><strong class="student-name">${esc(student.name)}</strong></td>
+      <td>${existing?`<span class="badge warn">Absent · ${esc(existing.type)}</span>`:'<span class="badge good">Prezent</span>'}</td>
+      <td><div class="action-row">${existing?'<span class="muted">Înregistrat</span>':`<button type="button" class="btn danger" data-mark-absence="${esc(student.id)}">Marchează absent</button>`}</div></td></tr>`;
+  }).join('');
+  $('attendanceEmpty').classList.toggle('hidden',c.students.length>0);
+  $('attendanceCount').textContent=`${c.students.length} elevi · ${todays.length} absenți`;
+  const rows=[...c.absences].filter(a=>f==='all'||lc(a.type)===f).sort((a,b)=>b.date.localeCompare(a.date));
   $('absencesRows').innerHTML=rows.map(a=>`<tr><td>${fmtDate(a.date)}</td><td><strong class="student-name">${esc(nameOf(a.studentId))}</strong></td><td><span class="badge ${a.type==='Nemotivată'?'warn':a.type==='Motivată'?'good':'grade'}">${esc(a.type)}</span></td><td>${esc(a.note||'—')}</td><td><button type="button" class="icon-btn" data-delete-absence="${esc(a.id)}" title="Șterge" aria-label="Șterge">×</button></td></tr>`).join('');
   $('absencesEmpty').classList.toggle('hidden',rows.length>0);
 }
@@ -539,6 +565,7 @@ $('classEdit').addEventListener('click',()=>openClass(hasClass()?cls().id:null))
 $('classForm').addEventListener('submit',saveClass);
 $('gradeForm').addEventListener('submit',saveGrade);
 $('absenceForm').addEventListener('submit',saveAbsence);
+$('attendanceDate').addEventListener('change',renderAbsences);
 $('achievementForm').addEventListener('submit',saveAchievement);
 $('searchInput').addEventListener('input',renderCatalog);
 $('sortSelect').addEventListener('change',renderCatalog);
@@ -588,6 +615,13 @@ document.addEventListener('click',async e=>{
   if(el=q('[data-achievement]'))return openAchievement(el.dataset.achievement);
   if(q('[data-action="add-grade"]'))return openGrade();
   if(q('[data-action="add-absence"]'))return openAbsence();
+  if(el=q('[data-mark-absence]')){
+    const c=cls(),sid=el.dataset.markAbsence,date=$('attendanceDate').value||today();
+    if(c.absences.some(a=>a.studentId===sid&&a.date===date&&a.type!==LATE))return toast('Absența acestui elev este deja înregistrată pentru data aleasă.',true);
+    c.absences.push({id:uid(),studentId:sid,date,type:'Nemotivată',note:''});
+    persist(c);log('absence',`Nemotivată · ${nameOf(sid)} · ${fmtDate(date)} · clasa ${c.name}`);
+    renderAll();return toast(`Absența lui ${nameOf(sid)} a fost salvată.`);
+  }
   if(q('[data-action="add-achievement"]'))return openAchievement();
   if(el=q('[data-delete-grade]')){if(!confirm('Ștergi această notă?'))return;const c=cls(),g=c.grades.find(x=>x.id===el.dataset.deleteGrade);c.grades=c.grades.filter(x=>x.id!==el.dataset.deleteGrade);persist(c);log('grade',`Notă ștearsă · ${g?nameOf(g.studentId):''}`);renderAll();return toast('Nota a fost ștearsă.')}
   if(el=q('[data-delete-absence]')){if(!confirm('Ștergi această înregistrare?'))return;const c=cls(),a=c.absences.find(x=>x.id===el.dataset.deleteAbsence);c.absences=c.absences.filter(x=>x.id!==el.dataset.deleteAbsence);persist(c);log('absence',`Absență ștearsă · ${a?nameOf(a.studentId):''}`);renderAll();return toast('Înregistrarea a fost ștearsă.')}
